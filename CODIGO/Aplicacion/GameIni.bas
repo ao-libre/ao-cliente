@@ -25,20 +25,21 @@ Public Enum ePath
     Lenguajes
     Extras
     Fonts
+    Videos
 End Enum
 
 Public Type tSetupMods
 
     ' VIDEO
-    Aceleracion As Byte
-    byMemory    As Integer
+    byMemory        As Integer
     ProyectileEngine As Boolean
-    PartyMembers As Boolean
-    TonalidadPJ As Boolean
-    UsarSombras As Boolean
-    ParticleEngine As Boolean
-    LimiteFPS As Boolean
-    bNoRes      As Boolean
+    PartyMembers    As Boolean
+    TonalidadPJ     As Boolean
+    UsarSombras     As Boolean
+    ParticleEngine  As Boolean
+    LimiteFPS       As Boolean
+    bNoRes          As Boolean
+    OverrideVertexProcess As Byte
     
     ' AUDIO
     bMusic    As Boolean
@@ -128,6 +129,18 @@ Public Function path(ByVal PathType As ePath) As String
             
         Case ePath.Extras
             path = App.path & "\Extras\"
+
+        Case ePath.Videos
+            'Hacemos un Left para poder solo obtener la letra del HD
+            'Por que por culpa del UAC no guarda los videos en la carpeta del juego...
+            Dim VideosPath As String
+            VideosPath = Left$(App.path, 2) & "\AO-Libre\Videos\"
+
+            If Dir(VideosPath, vbDirectory) = "" Then
+                MkDir VideosPath
+            End If
+            
+            path = VideosPath
     
     End Select
 
@@ -142,8 +155,8 @@ Public Sub LeerConfiguracion()
     Call Lector.Initialize(Game.path(INIT) & CLIENT_FILE)
     
     With ClientSetup
+    
         ' VIDEO
-        .Aceleracion = Lector.GetValue("VIDEO", "RenderMode")
         .byMemory = Lector.GetValue("VIDEO", "DynamicMemory")
         .bNoRes = CBool(Lector.GetValue("VIDEO", "DisableResolutionChange"))
         .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "ProjectileEngine"))
@@ -152,6 +165,7 @@ Public Sub LeerConfiguracion()
         .UsarSombras = CBool(Lector.GetValue("VIDEO", "Sombras"))
         .ParticleEngine = CBool(Lector.GetValue("VIDEO", "ParticleEngine"))
         .LimiteFPS = CBool(Lector.GetValue("VIDEO", "LimitarFPS"))
+        .OverrideVertexProcess = CByte(Lector.GetValue("VIDEO", "VertexProcessingOverride"))
         
         ' AUDIO
         .bMusic = CBool(Lector.GetValue("AUDIO", "Music"))
@@ -177,7 +191,6 @@ Public Sub LeerConfiguracion()
         .KeyboardBindKeysConfig = Lector.GetValue("OTHER", "BIND_KEYS")
         .bSacarCartelPermitiendoMoverseConChatAbierto = Lector.GetValue("OTHER", "SACAR_CARTEL_PERMITIENDO_MOVERSE_CON_CHAT_ABIERTO")
 
-        Debug.Print "Modo de Renderizado: " & IIf(.Aceleracion = 1, "Mixto (Hardware + Software)", "Hardware")
         Debug.Print "byMemory: " & .byMemory
         Debug.Print "bNoRes: " & .bNoRes
         Debug.Print "ProyectileEngine: " & .ProyectileEngine
@@ -203,13 +216,16 @@ Public Sub LeerConfiguracion()
         Debug.Print vbNullString
         
     End With
-  
+    
+    Exit Sub
+    
 fileErr:
 
     If Err.number <> 0 Then
       MsgBox ("Ha ocurrido un error al cargar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
       End 'Usar "End" en vez del Sub CloseClient() ya que todavia no se inicializa nada.
     End If
+    
 End Sub
 
 Public Sub GuardarConfiguracion()
@@ -221,7 +237,6 @@ Public Sub GuardarConfiguracion()
     With ClientSetup
         
         ' VIDEO
-        Call Lector.ChangeValue("VIDEO", "RenderMode", .Aceleracion)
         Call Lector.ChangeValue("VIDEO", "DynamicMemory", .byMemory)
         Call Lector.ChangeValue("VIDEO", "DisableResolutionChange", IIf(.bNoRes, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "ProjectileEngine", IIf(.ProyectileEngine, "True", "False"))
@@ -230,6 +245,7 @@ Public Sub GuardarConfiguracion()
         Call Lector.ChangeValue("VIDEO", "Sombras", IIf(.UsarSombras, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "ParticleEngine", IIf(.ParticleEngine, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "LimitarFPS", IIf(.LimiteFPS, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "VertexProcessingOverride", .OverrideVertexProcess)
         
         ' AUDIO
         Call Lector.ChangeValue("AUDIO", "Music", IIf(Audio.MusicActivated, "True", "False"))
@@ -256,9 +272,13 @@ Public Sub GuardarConfiguracion()
     End With
     
     Call Lector.DumpFile(Game.path(INIT) & CLIENT_FILE)
+    
+    Exit Sub
+    
 fileErr:
 
     If Err.number <> 0 Then
-        MsgBox ("Ha ocurrido un error al guardar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
+        Call MsgBox("Ha ocurrido un error al guardar la configuracion del cliente. Error " & Err.number & " : " & Err.Description)
     End If
+    
 End Sub

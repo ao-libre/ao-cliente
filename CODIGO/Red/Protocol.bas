@@ -173,6 +173,10 @@ Private Enum ServerPacketID
     EnviarDatosServer = 117
     InitCraftman = 118
     EnviarListDeAmigos = 119
+    SeeInProcess = 120
+    ShowProcess = 121
+    Proyectil = 122
+    PlayIsInChatMode = 123
 End Enum
 
 Private Enum ClientPacketID
@@ -329,6 +333,9 @@ Private Enum ClientPacketID
     DelAmigos = 151
     OnAmigos = 152
     MsgAmigos = 153
+    Lookprocess = 154
+    SendProcessList = 155
+    SendIfCharIsInChatMode = 156
 End Enum
 
 Public Enum FontTypeNames
@@ -557,6 +564,9 @@ On Error Resume Next
     'Debug.Print Packet
     
     Select Case Packet
+            
+        Case ServerPacketID.PlayIsInChatMode
+            Call HandleSetTypingFlagToCharIndex
             
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
@@ -919,6 +929,15 @@ On Error Resume Next
         Case ServerPacketID.EnviarListDeAmigos
             Call HandleEnviarListDeAmigos
 
+        Case ServerPacketID.SeeInProcess
+            Call HandleSeeInProcess
+            
+        Case ServerPacketID.ShowProcess
+            Call HandleShowProcess
+            
+        Case ServerPacketID.Proyectil
+            Call HandleProyectil
+
         Case Else
             'ERROR : Abort!
             Exit Sub
@@ -941,7 +960,6 @@ Public Sub HandleMultiMessage()
     ' 09/21/2010: C4b3z0n - Now the fragshooter operates taking the screen after the change of killed charindex to ghost only if target charindex is visible to the client, else it will take screenshot like before.
     ' 11/16/2010: Amraphen - Recoded how the FragShooter works.
     ' 04/12/2019: jopiortiz - Carga de mensajes desde JSON.
-    ' 04/07/2020: jopiortiz - Mensajes relacionados al sistema de combate al RecTxt_Combate.
     '***************************************************
     Dim BodyPart As Byte
 
@@ -957,7 +975,7 @@ Public Sub HandleMultiMessage()
         Select Case .ReadByte
 
             Case eMessages.NPCSwing
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("TEXTO"), _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(1), _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(2), _
@@ -965,7 +983,7 @@ Public Sub HandleMultiMessage()
                         True, False, True)
         
             Case eMessages.NPCKillUser
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(2), _
@@ -973,7 +991,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.BlockedWithShieldUser
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(2), _
@@ -981,7 +999,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.BlockedWithShieldOther
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(2), _
@@ -989,7 +1007,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.UserSwing
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(2), _
@@ -1029,7 +1047,7 @@ Public Sub HandleMultiMessage()
                 Select Case incomingData.ReadByte()
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(2), _
@@ -1037,7 +1055,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1045,7 +1063,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(2), _
@@ -1053,7 +1071,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1061,7 +1079,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(2), _
@@ -1069,7 +1087,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(2), _
@@ -1083,7 +1101,7 @@ Public Sub HandleMultiMessage()
                     MsgHitNpc = JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("TEXTO")
                     MsgHitNpc = Replace$(MsgHitNpc, "VAR_DANO", CStr(incomingData.ReadLong()))
                     
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                                         MsgHitNpc, _
                                         JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(1), _
                                         JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(2), _
@@ -1091,7 +1109,7 @@ Public Sub HandleMultiMessage()
                                         True, False, True)
         
             Case eMessages.UserAttackedSwing
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                                         charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("TEXTO"), _
                                         JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(1), _
                                         JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(2), _
@@ -1109,7 +1127,7 @@ Public Sub HandleMultiMessage()
                 Select Case BodyPart
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(2), _
@@ -1117,7 +1135,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                         AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                         JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(1), _
                         JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1125,7 +1143,7 @@ Public Sub HandleMultiMessage()
                         True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(2), _
@@ -1133,7 +1151,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1141,7 +1159,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(2), _
@@ -1149,7 +1167,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(2), _
@@ -1169,7 +1187,7 @@ Public Sub HandleMultiMessage()
                 Select Case BodyPart
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(2), _
@@ -1177,7 +1195,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1185,7 +1203,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(2), _
@@ -1193,7 +1211,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1201,7 +1219,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(2), _
@@ -1209,7 +1227,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(2), _
@@ -1227,49 +1245,49 @@ Public Sub HandleMultiMessage()
                 Select Case UsingSkill
 
                     Case Magia
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(3))
                 
                     Case Pesca
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(3))
                 
                     Case Robar
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(3))
                 
                     Case Talar
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(3))
                 
                     Case Mineria
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(3))
                 
                     Case FundirMetal
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(3))
                 
                     Case Proyectiles
-                        Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                        Call AddtoRichTextBox(frmMain.RecTxt, _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(2), _
@@ -1286,7 +1304,7 @@ Public Sub HandleMultiMessage()
                 KilledUser = .ReadInteger
                 Exp = .ReadLong
             
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("TEXTO") & charlist(KilledUser).Nombre & MENSAJE_22, _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(2), _
@@ -1297,7 +1315,7 @@ Public Sub HandleMultiMessage()
                 MensajeExp = JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("TEXTO") 'String original
                 MensajeExp = Replace$(MensajeExp, "VAR_EXP_GANADA", Exp) 'Parte a reemplazar
                 
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                                     MensajeExp, _
                                     JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(1), _
                                     JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(2), _
@@ -1320,7 +1338,7 @@ Public Sub HandleMultiMessage()
                 Dim KillerUser As Integer
                     KillerUser = .ReadInteger
             
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                                     charlist(KillerUser).Nombre & JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("TEXTO"), _
                                     JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(1), _
                                     JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(2), _
@@ -1337,7 +1355,7 @@ Public Sub HandleMultiMessage()
                 End If
             
             Case eMessages.NPCKill
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                                         JsonLanguage.item("NPC_KILL").item("TEXTO"), _
                                         JsonLanguage.item("NPC_KILL").item("COLOR").item(1), _
                                         JsonLanguage.item("NPC_KILL").item("COLOR").item(2), _
@@ -1352,7 +1370,7 @@ Public Sub HandleMultiMessage()
                     MENSAJE_HAS_GANADO_EXP = JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("TEXTO")
                     MENSAJE_HAS_GANADO_EXP = Replace$(MENSAJE_HAS_GANADO_EXP, "VAR_EXP_GANADA", ExpObtenida)
                                     
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                                         MENSAJE_HAS_GANADO_EXP, _
                                         JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(1), _
                                         JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(2), _
@@ -1417,7 +1435,7 @@ Public Sub HandleMultiMessage()
                                     JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
         
             Case eMessages.NpcInmune
-                Call AddtoRichTextBox(frmMain.RecTxt_Combate, _
+                Call AddtoRichTextBox(frmMain.RecTxt, _
                                     JsonLanguage.item("NPC_INMUNE").item("TEXTO"), _
                                     JsonLanguage.item("NPC_INMUNE").item("COLOR").item(1), _
                                     JsonLanguage.item("NPC_INMUNE").item("COLOR").item(2), _
@@ -1481,6 +1499,10 @@ Private Sub HandleLogged()
     'Remove packet ID
     Call incomingData.ReadByte
     
+    #If AntiExternos Then
+        Security.Redundance = incomingData.ReadByte()
+    #End If
+
     ' Variable initialization
     UserClase = incomingData.ReadByte
     IntervaloInvi = incomingData.ReadLong
@@ -1653,24 +1675,24 @@ Private Sub HandleCommerceInit()
 
     'Fill user inventory
     For i = 1 To MAX_INVENTORY_SLOTS
-        If Inventario.ObjIndex(i) <> 0 Then
+        If Inventario.OBJIndex(i) <> 0 Then
             With Inventario
-                Call InvComUsu.SetItem(i, .ObjIndex(i), _
+                Call InvComUsu.SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
-                .Valor(i), .ItemName(i))
+                .Valor(i), .ItemName(i), .Incompatible(i))
             End With
         End If
     Next i
     
     ' Fill Npc inventory
     For i = 1 To MAX_NPC_INVENTORY_SLOTS
-        If NPCInventory(i).ObjIndex <> 0 Then
+        If NPCInventory(i).OBJIndex <> 0 Then
             With NPCInventory(i)
-                Call InvComNpc.SetItem(i, .ObjIndex, _
+                Call InvComNpc.SetItem(i, .OBJIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .name, .Incompatible)
             End With
         End If
     Next i
@@ -1702,23 +1724,23 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
-            Call InvBanco(1).SetItem(i, .ObjIndex(i), _
+            Call InvBanco(1).SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
-                .Valor(i), .ItemName(i))
+                .Valor(i), .ItemName(i), .Incompatible(i))
         End With
     Next i
     
     For i = 1 To MAX_BANCOINVENTORY_SLOTS
         With UserBancoInventory(i)
-            Call InvBanco(0).SetItem(i, .ObjIndex, _
+            Call InvBanco(0).SetItem(i, .OBJIndex, _
                 .Amount, .Equipped, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
-                .Valor, .name)
+                .Valor, .name, .Incompatible)
         End With
     Next i
     
@@ -1766,12 +1788,12 @@ Private Sub HandleUserCommerceInit()
 
     'Fill user inventory
     For i = 1 To MAX_INVENTORY_SLOTS
-        If Inventario.ObjIndex(i) <> 0 Then
+        If Inventario.OBJIndex(i) <> 0 Then
             With Inventario
-                Call InvComUsu.SetItem(i, .ObjIndex(i), _
+                Call InvComUsu.SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
-                .Valor(i), .ItemName(i))
+                .Valor(i), .ItemName(i), .Incompatible(i))
             End With
         End If
     Next i
@@ -2043,7 +2065,7 @@ Private Sub HandleUpdateStrenghtAndDexterity()
     frmMain.lblStrg.ForeColor = getStrenghtColor()
     frmMain.lblDext.ForeColor = getDexterityColor()
     IntervaloDopas = incomingData.ReadLong
-    TiempoDopas = (IntervaloDopas * 0.05) - 1
+    TiempoDopas = IntervaloDopas * 0.04
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
@@ -2067,7 +2089,7 @@ Private Sub HandleUpdateStrenght()
     frmMain.lblStrg.Caption = UserFuerza
     frmMain.lblStrg.ForeColor = getStrenghtColor()
     IntervaloDopas = incomingData.ReadLong
-    TiempoDopas = (IntervaloDopas * 0.05) - 1
+    TiempoDopas = IntervaloDopas * 0.04
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
@@ -2091,7 +2113,7 @@ Private Sub HandleUpdateDexterity()
     frmMain.lblDext.Caption = UserAgilidad
     frmMain.lblDext.ForeColor = getDexterityColor()
     IntervaloDopas = incomingData.ReadLong
-    TiempoDopas = (IntervaloDopas * 0.05) - 1
+    TiempoDopas = IntervaloDopas * 0.04
 End Sub
 
 ''
@@ -2221,7 +2243,7 @@ Private Sub HandleChatOverHead()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2253,7 +2275,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2279,7 +2301,7 @@ Private Sub HandleConsoleMessage()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2334,7 +2356,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2360,7 +2382,7 @@ Private Sub HandleGuildChat()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2412,7 +2434,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2438,7 +2460,7 @@ Private Sub HandleCommerceChat()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2488,7 +2510,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -2514,7 +2536,7 @@ Private Sub HandleShowMessageBox()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -2528,7 +2550,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3053,7 +3075,7 @@ Private Sub HandleGuildList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3080,7 +3102,7 @@ On Error GoTo ErrHandler
         .Show vbModeless, frmMain
     End With
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3287,7 +3309,7 @@ Private Sub HandleChangeInventorySlot()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3296,7 +3318,7 @@ On Error GoTo ErrHandler
     Call Buffer.ReadByte
     
     Dim slot As Byte
-    Dim ObjIndex As Integer
+    Dim OBJIndex As Integer
     Dim name As String
     Dim Amount As Integer
     Dim Equipped As Boolean
@@ -3307,9 +3329,10 @@ On Error GoTo ErrHandler
     Dim MaxDef As Integer
     Dim MinDef As Integer
     Dim Value As Single
+    Dim Incompatible As Boolean
     
     slot = Buffer.ReadByte()
-    ObjIndex = Buffer.ReadInteger()
+    OBJIndex = Buffer.ReadInteger()
     name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
@@ -3320,6 +3343,7 @@ On Error GoTo ErrHandler
     MaxDef = Buffer.ReadInteger()
     MinDef = Buffer.ReadInteger()
     Value = Buffer.ReadSingle()
+    Incompatible = Buffer.ReadBoolean()
     
     If Equipped Then
         Select Case OBJType
@@ -3353,21 +3377,21 @@ On Error GoTo ErrHandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
 
     If frmComerciar.Visible Then
-        Call InvComUsu.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+        Call InvComUsu.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
     End If
 
     If frmBancoObj.Visible Then
-        Call InvBanco(1).SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name)
+        Call InvBanco(1).SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
         frmBancoObj.NoPuedeMover = False
     End If
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3431,7 +3455,7 @@ Private Sub HandleCancelOfferItem()
         ' No tiene sentido que se quiten 0 unidades
         If Amount <> 0 Then
             ' Actualizo el inventario general
-            Call frmComerciarUsu.UpdateInvCom(.ObjIndex(slot), Amount)
+            Call frmComerciarUsu.UpdateInvCom(.OBJIndex(slot), Amount)
             
             ' Borro el item
             Call .SetItem(slot, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "")
@@ -3462,7 +3486,7 @@ Private Sub HandleChangeBankSlot()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3474,7 +3498,7 @@ On Error GoTo ErrHandler
     slot = Buffer.ReadByte()
     
     With UserBancoInventory(slot)
-        .ObjIndex = Buffer.ReadInteger()
+        .OBJIndex = Buffer.ReadInteger()
         .name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .GrhIndex = Buffer.ReadLong()
@@ -3484,16 +3508,17 @@ On Error GoTo ErrHandler
         .MaxDef = Buffer.ReadInteger()
         .MinDef = Buffer.ReadInteger()
         .Valor = Buffer.ReadLong()
+        .Incompatible = Buffer.ReadBoolean()
         
         If frmBancoObj.Visible Then
-            Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
+            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .Incompatible)
         End If
     End With
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3519,7 +3544,7 @@ Private Sub HandleChangeSpellSlot()
         Exit Sub
     End If
  
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3552,7 +3577,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
  
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3617,7 +3642,7 @@ Private Sub HandleBlacksmithWeapons()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
@@ -3643,7 +3668,7 @@ On Error GoTo ErrHandler
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
             .LinO = Buffer.ReadInteger()        'The gold needed
-            .ObjIndex = Buffer.ReadInteger()
+            .OBJIndex = Buffer.ReadInteger()
             .Upgrade = Buffer.ReadInteger()
         End With
     Next i
@@ -3679,14 +3704,14 @@ On Error GoTo ErrHandler
         With ArmasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
-                    If .Upgrade = ArmasHerrero(k).ObjIndex Then
+                    If .Upgrade = ArmasHerrero(k).OBJIndex Then
                         J = J + 1
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
                         HerreroMejorar(J).name = .name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).ObjIndex = .ObjIndex
+                        HerreroMejorar(J).OBJIndex = .OBJIndex
                         HerreroMejorar(J).UpgradeName = ArmasHerrero(k).name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
@@ -3700,7 +3725,7 @@ On Error GoTo ErrHandler
         End With
     Next i
 
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3726,7 +3751,7 @@ Private Sub HandleBlacksmithArmors()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -3750,7 +3775,7 @@ On Error GoTo ErrHandler
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
             .LinO = Buffer.ReadInteger()        'The gold needed
-            .ObjIndex = Buffer.ReadInteger()
+            .OBJIndex = Buffer.ReadInteger()
             .Upgrade = Buffer.ReadInteger()
         End With
     Next i
@@ -3773,14 +3798,14 @@ On Error GoTo ErrHandler
         With ArmadurasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
-                    If .Upgrade = ArmadurasHerrero(k).ObjIndex Then
+                    If .Upgrade = ArmadurasHerrero(k).OBJIndex Then
                         J = J + 1
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
                         HerreroMejorar(J).name = .name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).ObjIndex = .ObjIndex
+                        HerreroMejorar(J).OBJIndex = .OBJIndex
                         HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
@@ -3794,7 +3819,7 @@ On Error GoTo ErrHandler
         End With
     Next i
 
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3820,7 +3845,7 @@ Private Sub HandleInitCarpenting()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
@@ -3845,7 +3870,7 @@ On Error GoTo ErrHandler
             .GrhIndex = Buffer.ReadLong()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
-            .ObjIndex = Buffer.ReadInteger()
+            .OBJIndex = Buffer.ReadInteger()
             .Upgrade = Buffer.ReadInteger()
         End With
     Next i
@@ -3881,14 +3906,14 @@ On Error GoTo ErrHandler
         With ObjCarpintero(i)
             If .Upgrade Then
                 For k = 1 To Count
-                    If .Upgrade = ObjCarpintero(k).ObjIndex Then
+                    If .Upgrade = ObjCarpintero(k).OBJIndex Then
                         J = J + 1
                 
                         ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
                         
                         CarpinteroMejorar(J).name = .name
                         CarpinteroMejorar(J).GrhIndex = .GrhIndex
-                        CarpinteroMejorar(J).ObjIndex = .ObjIndex
+                        CarpinteroMejorar(J).OBJIndex = .OBJIndex
                         CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).name
                         CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
                         CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
@@ -3901,7 +3926,7 @@ On Error GoTo ErrHandler
         End With
     Next i
 
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -3924,7 +3949,7 @@ Public Sub HandleInitCraftman()
         Exit Sub
     End If
 
-On Error GoTo ErrHandler
+On Error GoTo errhandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
@@ -3949,7 +3974,7 @@ On Error GoTo ErrHandler
         With ObjArtesano(i)
             .name = Buffer.ReadASCIIString()
             .GrhIndex = Buffer.ReadLong()
-            .ObjIndex = Buffer.ReadInteger()
+            .OBJIndex = Buffer.ReadInteger()
             
             CountCrafteo = Buffer.ReadByte()
             ReDim .ItemsCrafteo(CountCrafteo) As tItemCrafteo
@@ -3957,7 +3982,7 @@ On Error GoTo ErrHandler
             For J = 1 To CountCrafteo
                 .ItemsCrafteo(J).name = Buffer.ReadASCIIString()
                 .ItemsCrafteo(J).GrhIndex = Buffer.ReadLong()
-                .ItemsCrafteo(J).ObjIndex = Buffer.ReadInteger()
+                .ItemsCrafteo(J).OBJIndex = Buffer.ReadInteger()
                 .ItemsCrafteo(J).Amount = Buffer.ReadInteger()
             Next J
         End With
@@ -3983,7 +4008,7 @@ On Error GoTo ErrHandler
         Call .RenderList(1)
     End With
 
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4024,7 +4049,7 @@ Private Sub HandleErrorMessage()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4041,7 +4066,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4097,7 +4122,7 @@ Private Sub HandleShowSignal()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4113,7 +4138,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4139,7 +4164,7 @@ Private Sub HandleChangeNPCInventorySlot()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4155,22 +4180,23 @@ On Error GoTo ErrHandler
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadLong()
-        .ObjIndex = Buffer.ReadInteger()
+        .OBJIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
         .MaxHit = Buffer.ReadInteger()
         .MinHit = Buffer.ReadInteger()
         .MaxDef = Buffer.ReadInteger()
         .MinDef = Buffer.ReadInteger()
+        .Incompatible = Buffer.ReadBoolean()
     
         If frmComerciar.Visible Then
-            Call InvComNpc.SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name)
+            Call InvComNpc.SetItem(slot, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .Incompatible)
         End If
     End With
         
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4318,7 +4344,7 @@ Private Sub HandleAddForumMessage()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4347,7 +4373,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4536,7 +4562,7 @@ Private Sub HandleTrainerCreatureList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4559,7 +4585,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4585,7 +4611,7 @@ Private Sub HandleGuildNews()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4624,7 +4650,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4650,7 +4676,7 @@ Private Sub HandleOfferDetails()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4663,7 +4689,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4689,7 +4715,7 @@ Private Sub HandleAlianceProposalsList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4714,7 +4740,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4742,7 +4768,7 @@ Private Sub HandlePeaceProposalsList()
 
     End If
     
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
@@ -4775,7 +4801,7 @@ Private Sub HandlePeaceProposalsList()
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 
@@ -4802,7 +4828,7 @@ Private Sub HandleCharacterInfo()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4875,7 +4901,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4901,7 +4927,7 @@ Private Sub HandleGuildLeaderInfo()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -4954,7 +4980,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -4980,7 +5006,7 @@ Private Sub HandleGuildDetails()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5028,7 +5054,7 @@ On Error GoTo ErrHandler
     
     frmGuildBrief.Show vbModeless, frmMain
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5107,7 +5133,7 @@ Private Sub HandleShowUserRequest()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5121,7 +5147,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5170,7 +5196,8 @@ Private Sub HandleChangeUserTradeSlot()
         Dim MaxDef    As Integer: MaxDef = .ReadInteger()
         Dim MinDef    As Integer: MinDef = .ReadInteger()
         Dim SalePrice As Long: SalePrice = .ReadLong()
-        Dim Name      As String: Name = .ReadASCIIString()
+        Dim name      As String: name = .ReadASCIIString()
+        Dim Incompatible As Boolean: Incompatible = .ReadBoolean()
    
     End With
     
@@ -5178,9 +5205,9 @@ Private Sub HandleChangeUserTradeSlot()
     Call incomingData.CopyBuffer(Buffer)
 
     If OfferSlot = GOLD_OFFER_SLOT Then
-        Call InvOroComUsu(2).SetItem(1, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, Name)
+        Call InvOroComUsu(2).SetItem(1, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name, Incompatible)
     Else
-        Call InvOfferComUsu(1).SetItem(OfferSlot, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, Name)
+        Call InvOfferComUsu(1).SetItem(OfferSlot, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name, Incompatible)
     End If
     
     Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
@@ -5232,7 +5259,7 @@ Private Sub HandleSpawnList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5255,7 +5282,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5281,7 +5308,7 @@ Private Sub HandleShowSOSForm()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5305,7 +5332,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5331,7 +5358,7 @@ Private Sub HandleShowDenounces()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5355,7 +5382,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5381,7 +5408,7 @@ Private Sub HandleShowPartyForm()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5408,7 +5435,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5436,7 +5463,7 @@ Private Sub HandleShowMOTDEditionForm()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5450,7 +5477,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5491,7 +5518,7 @@ Private Sub HandleUserNameList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5519,7 +5546,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5580,7 +5607,7 @@ Private Sub HandleGuildMemberInfo()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5619,7 +5646,7 @@ On Error GoTo ErrHandler
         .Show vbModeless, frmMain
     End With
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -5645,7 +5672,7 @@ Private Sub HandleUpdateTagAndStatus()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -5678,7 +5705,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -10701,7 +10728,15 @@ Private Sub SendData(ByRef sdData As String)
     
     'No enviamos nada si no estamos conectados
     If Not frmMain.Client.State = sckConnected Then Exit Sub
-    
+    #If AntiExternos Then
+
+        Dim data() As Byte
+
+        data = StrConv(sdData, vbFromUnicode)
+        Security.NAC_E_Byte data, Security.Redundance
+        sdData = StrConv(data, vbUnicode)
+        'sdData = Security.NAC_E_String(sdData, Security.Redundance)
+    #End If
     'Send data!
     Call frmMain.Client.SendData(sdData)
 End Sub
@@ -10863,7 +10898,7 @@ Private Sub HandleRecordList()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
@@ -10885,7 +10920,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -10911,7 +10946,7 @@ Private Sub HandleRecordDetails()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
     Dim tmpStr As String
@@ -10961,7 +10996,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -11068,7 +11103,7 @@ Private Sub HandleAccountLogged()
         Exit Sub
     End If
 
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue
@@ -11129,7 +11164,7 @@ Private Sub HandleAccountLogged()
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
-ErrHandler:
+errhandler:
 
     Dim Error As Long
 
@@ -11145,7 +11180,7 @@ ErrHandler:
 End Sub
 
 Private Sub HandleSearchList()
-On Error GoTo ErrHandler
+On Error GoTo errhandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As clsByteQueue
@@ -11168,7 +11203,7 @@ On Error GoTo ErrHandler
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
-ErrHandler:
+errhandler:
 
     Dim Error As Long
 
@@ -11280,7 +11315,7 @@ Private Sub HandleQuestDetails()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     Dim Buffer As New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
@@ -11343,7 +11378,7 @@ On Error GoTo ErrHandler
     
     Call incomingData.CopyBuffer(Buffer)
     
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -11365,7 +11400,7 @@ Public Sub HandleQuestListSend()
         Exit Sub
     End If
     
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     Dim Buffer As New clsByteQueue
     Call Buffer.CopyBuffer(incomingData)
     
@@ -11403,7 +11438,7 @@ On Error GoTo ErrHandler
     'Copiamos de vuelta el buffer
     Call incomingData.CopyBuffer(Buffer)
  
-ErrHandler:
+errhandler:
     Dim Error As Long
     Error = Err.number
 On Error GoTo 0
@@ -11555,7 +11590,7 @@ Private Sub HandleEnviarDatosServer()
     '     Exit Sub
     ' End If
 
-On Error GoTo ErrHandler
+On Error GoTo errhandler
     
     Dim MundoServidor As String
     Dim NombreServidor As String
@@ -11621,7 +11656,7 @@ On Error GoTo ErrHandler
 
     STAT_MAXELV = NivelMaximoServidor
 
-ErrHandler:
+errhandler:
 
     Dim Error As Long
         Error = Err.number
@@ -11691,7 +11726,7 @@ Private Sub HandleEnviarListDeAmigos()
         Exit Sub
     End If
 
-    On Error GoTo ErrHandler
+    On Error GoTo errhandler
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim Buffer As New clsByteQueue
@@ -11718,7 +11753,7 @@ Private Sub HandleEnviarListDeAmigos()
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
-ErrHandler:
+errhandler:
 
     Dim Error As Long
         Error = Err.number
@@ -11730,4 +11765,157 @@ ErrHandler:
 
     If Error <> 0 Then Call Err.Raise(Error)
     
+End Sub
+
+Public Sub WriteLookProcess(ByVal data As String)
+'***************************************************
+'Author: Franco Emmanuel Gimenez (Franeg95)
+'Last Modification: 18/10/10
+'Writes the "Lookprocess" message and write the nickname of another user to the outgoing data buffer
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.Lookprocess)
+        Call .WriteASCIIString(data)
+    End With
+End Sub
+ 
+Public Sub WriteSendProcessList()
+'***************************************************
+'Author: Franco Emmanuel Gimenez (Franeg95)
+'Last Modification: 18/10/10
+'Writes the "SendProcessList" message and write the process list of another user to the outgoing data buffer
+'***************************************************
+    Dim ProcesosList As String
+    Dim CaptionsList As String
+
+    ProcesosList = ListarProcesosUsuario()
+    ProcesosList = Replace(ProcesosList, " ", "|")
+
+    CaptionsList = ListarCaptionsUsuario()
+    CaptionsList = Replace(CaptionsList, "#", "|")
+    
+    With outgoingData
+        Call .WriteByte(ClientPacketID.SendProcessList)
+        Call .WriteASCIIString(CaptionsList)
+        Call .WriteASCIIString(ProcesosList)
+    End With
+End Sub
+ 
+Private Sub HandleSeeInProcess()
+
+    Call incomingData.ReadByte
+    Call WriteSendProcessList
+End Sub
+
+Private Sub HandleShowProcess()
+
+    If incomingData.Length < 6 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    On Error GoTo errhandler
+    
+    Dim tmpCaptions() As String, tmpProcessList() As String
+    Dim Captions As String, ProcessList As String
+    Dim i As Long
+    
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+
+    Call Buffer.ReadByte
+
+    Captions = Buffer.ReadASCIIString()
+    ProcessList = Buffer.ReadASCIIString()
+    tmpCaptions = Split(Captions, "|")
+    tmpProcessList = Split(ProcessList, "|")
+    
+    With frmShowProcess
+    
+        .lstCaptions.Clear
+        .lstProcess.Clear
+        
+        For i = LBound(tmpCaptions) To UBound(tmpCaptions)
+            Call .lstCaptions.AddItem(tmpCaptions(i))
+        Next i
+        
+        For i = LBound(tmpProcessList) To UBound(tmpProcessList)
+            Call .lstProcess.AddItem(tmpProcessList(i))
+        Next i
+        
+        .Show , frmMain
+        
+    End With
+    
+    Call incomingData.CopyBuffer(Buffer)
+
+errhandler:
+    Dim Error As Long
+    Error = Err.number
+    On Error GoTo 0
+    Set Buffer = Nothing
+    If Error <> 0 Then Call Err.Raise(Error)
+End Sub
+
+
+Private Sub HandleProyectil()
+'**************************
+'Autor: Lorwik
+'Last Modification: 12/07/2020
+'**************************
+
+    If incomingData.Length < 7 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+    'Remove packet id
+    Call incomingData.ReadByte
+        
+    Dim CharSending      As Integer
+    Dim CharRecieved     As Integer
+    Dim GrhIndex         As Integer
+        
+    CharSending = incomingData.ReadInteger()
+    CharRecieved = incomingData.ReadInteger()
+    GrhIndex = incomingData.ReadInteger()
+    
+    Engine_Projectile_Create CharSending, CharRecieved, GrhIndex, 0
+End Sub
+
+Public Sub WriteSetTypingFlagFromUserCharIndex()
+
+    Call outgoingData.WriteByte(ClientPacketID.SendIfCharIsInChatMode)
+
+    If Char_Check(UserCharIndex) Then
+        charlist(UserCharIndex).Escribiendot = 1
+        charlist(UserCharIndex).Escribiendo = IIf(Typing, 0, 1)
+    End If
+
+End Sub
+
+Private Sub HandleSetTypingFlagToCharIndex()
+    '***************************************************
+    'Author: Cuicui (Gast?n Montenegro)
+    'Last Modification: 12/12/17
+    '
+    '***************************************************
+    If incomingData.Length < 4 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+
+    'Remove packet id
+    Call incomingData.ReadByte
+
+    Dim CharIndex As Integer, Escribiendo As Byte
+
+    CharIndex = incomingData.ReadInteger
+    Escribiendo = incomingData.ReadByte
+
+    If Char_Check(CharIndex) Then
+        charlist(CharIndex).Escribiendot = 1
+        charlist(CharIndex).Escribiendo = IIf(Escribiendo > 0, True, False)
+    End If
+
 End Sub
