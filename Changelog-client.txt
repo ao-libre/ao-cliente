@@ -854,3 +854,14 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 14/08/2020: Ahora los videos se guardan en la carpeta AO-Libre en el root del hd por que no deja grabar cosas en la carpeta del juego por el UAC. (Recox)
 * 14/08/2020: Borro imagen de interface que no se usa (Recox)
 * 14/08/2020: Ahora podemos mover el personaje usando la configuracion WASD mientras estamos escribiendo en el chat en caso de que no sea GM para no entorpecer la jugabilidad y que se pueda borrar cartel (Recox)
+
+* 14/08/2020:
+Se implementa nuevo dungeon para NO Magicos: Caverna ancestral(4 mapas con nuevos npcs)
+Se implementa nuevo dugeon:Piramide (4 mapas con nuevos npcs)
+se implementa montaña de las valkirias en dugeon pretoriano(proximo dugeon ahi)
+se implementa modificación de lindos: Se agrego el punte que cruzaba en el medio y se arreglaron slots bugeados.
+Se corrigue erres de traslado de nix, se volvio a poner un unico camino y tanto en el norte como en el este de nix hay 2 slots mas que el mapa anterior.también se agrego boveda externa , se redujo 3 slots la boveda techada.todos los mapas adyacentes a nix se adaptaron para poder corregir los errores de traslado
+Se corrigieron 41 mapas (costas y traslados) de mapas( entre ellas esta mapa 24 entrada a dd, todo el desierto y toda la costa del lado este de nix.)
+Se agregaron 2 mapas para en DI con el fin de reubicar el titan de fuego.Ahora se puede tirar invi en el mapa de la entrada y los otros dos son sin invi.
+Se enprolijo intercatas.
+Se retoco el mapa del fuerte pretoriano haciendo mas similar al fuerte original, se elimino el dragon rojo que habia ahi. (Ronin)
