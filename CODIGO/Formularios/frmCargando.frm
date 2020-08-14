@@ -132,7 +132,6 @@ End Function
 
 Private Function CheckIfRunningLastVersion() As Boolean
 On Error Resume Next
-    Call LogError(123123, "lalalalalla", "clsAudio.Initialize")
 
     Dim responseGithub As String
     Dim JsonObject     As Object
