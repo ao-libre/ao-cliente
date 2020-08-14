@@ -1872,5 +1872,13 @@
     },
     "FRM_MAPA_TEXTO" : {
         "TEXTO": "Mapa de Argentum Online, Presione Arriba y Abajo para cambiar entre mapa global / laberintos. Presione cualquier otra tecla para salir."
+    },
+    "MENSAJE_ERRORES_LOG_CARPETA": {
+        "TEXTO": "Errores fueron encontrados y se pusieron en el archivo Errores.log. Por favor envia el contenido de este archivo a los desarrolladores con el boton reporte de errores asi ayudas a mejorar el juego.",
+        "COLOR": [
+            252,
+            257,
+            220
+        ]
     }
 }

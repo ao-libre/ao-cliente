@@ -42,6 +42,8 @@ Private Const ERROR_ALREADY_EXISTS = 183&
 
 Private mutexHID As Long
 
+Private sNotepadTaskId As String
+
 ''
 ' Checks if this is the active (foreground) application or not.
 '
@@ -127,9 +129,21 @@ Public Sub LogError(ByVal Numero As Long, ByVal Descripcion As String, ByVal Com
 'Guarda una descripcion detallada del error en Errores.log
 '**********************************************************
     Dim file As Integer
-        file = FreeFile
+    file = FreeFile
+
+    'Hacemos un Left para poder solo obtener la letra del HD
+    'Por que por culpa del UAC no guarda los logs en la carpeta del juego...
+    Dim ErroresPath As String
+    ErroresPath = Left$(App.path, 2) & "\AO-Libre\Errores\"
+
+    If Dir(ErroresPath, vbDirectory) = "" Then
+        MkDir ErroresPath
+    End If
+
+    'Matamos Notepad para evitar abrir decenas de block de notas.
+    Shell ("taskkill /PID " & sNotepadTaskId)
         
-    Open App.path & "\Errores.log" For Append As #file
+    Open ErroresPath & "\Errores.log" For Append As #file
     
         Print #file, "Error: " & Numero
         Print #file, "Descripcion: " & Descripcion
@@ -148,5 +162,13 @@ Public Sub LogError(ByVal Numero As Long, ByVal Descripcion As String, ByVal Com
                 "Descripcion: " & Descripcion & vbNewLine & _
                 "Componente: " & Componente & vbNewLine & _
                 "Fecha y Hora: " & Date$ & "-" & Time$ & vbNewLine
-                
+
+    sNotepadTaskId = Shell("Notepad " & ErroresPath & "\Errores.log")
+
+    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("TEXTO"), _
+                            JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("COLOR").item(1), _
+                            JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("COLOR").item(2), _
+                            JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("COLOR").item(3), _
+                            False, False, True)
+
 End Sub

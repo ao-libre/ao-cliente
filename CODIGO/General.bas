@@ -761,6 +761,15 @@ Private Sub LoadInitialConfig()
 '15/03/2011: ZaMa - Initialize classes lazy way.
 '30/10/2019: Recox - Initialize Mouse icons
 '***************************************************
+    'Hacemos un Left para poder solo obtener la letra del HD
+    'Por que por culpa del UAC no guarda archivos en la carpeta del juego...
+    Dim AOLibreHelperFolder As String
+    AOLibreHelperFolder = Left$(App.path, 2) & "\AO-Libre\"
+
+    If Dir(AOLibreHelperFolder, vbDirectory) = "" Then
+        MkDir AOLibreHelperFolder
+    End If
+
     ' Mouse Pointer and Mouse Icon (Loaded before opening any form with buttons in it)
     Set picMouseIcon = LoadPicture(Game.Path(Graficos) & "MouseIcons\Baston.ico")
 
