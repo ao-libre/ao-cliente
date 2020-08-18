@@ -1651,28 +1651,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 If KeyCode = vbKey0 Then
                     'Si es CTRL+0 muestro la ventana de configuracion de teclas.
                     Call frmCustomKeys.Show(vbModal, Me)
-                    
-                ElseIf KeyCode >= vbKey1 And KeyCode <= vbKey9 Then
+                
+                'Si es CTRL+1..9 .... lo dejo por si queremos poner macros algun dia.
+                'ElseIf KeyCode >= vbKey1 And KeyCode <= vbKey9 Then
 
-                    'Si es CTRL+1..9 cambio la configuracion.
-                    If KeyCode - vbKey0 = CustomKeys.CurrentConfig Then Exit Sub
-                    
-                    CustomKeys.CurrentConfig = KeyCode - vbKey0
-                    
-                    Dim sMsg As String
-                    sMsg = JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("TEXTO")
-                        
-                    If CustomKeys.CurrentConfig = 0 Then
-                        sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.item("PREDETERMINADA").item("TEXTO"))
-                    Else
-                        sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.item("PERSONALIZADA").item("TEXTO"))
-                        sMsg = Replace$(sMsg, "VAR_CONFIG_CUSTOM_NUMERO", CStr(CustomKeys.CurrentConfig))
-                    End If
-
-                    Call ShowConsoleMsg(sMsg, JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(1), _
-                                              JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(2), _
-                                              JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(3), _
-                                        True)
                                         
                 End If
                 
@@ -2301,8 +2283,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
             ' Pressed "0", so Msg Number is 9
             If NroMsg = -1 Then NroMsg = 9
             
-            'Como es KeyDown, si mantenes _
-             apretado el mensaje llena la consola
+            'Como es KeyDown, si mantenes apretado el mensaje llena la consola
 
             If CustomMessages.Message(NroMsg) = SendTxt.Text Then
                 Exit Sub
@@ -2864,7 +2845,7 @@ Private Sub SendTxt_Change()
                 tempstr = tempstr & Chr$(CharAscii)
             End If
         Next i
-        
+
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush
@@ -2923,7 +2904,6 @@ Public Sub SendCMSTXT_SendText()
 End Sub
 
 Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
-
     If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
 End Sub
 
@@ -2945,7 +2925,7 @@ Private Sub SendCMSTXT_Change()
                 tempstr = tempstr & Chr$(CharAscii)
             End If
         Next i
-        
+
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush

@@ -316,10 +316,11 @@ Private Sub CheckKeys()
     If pausa Then Exit Sub
     
     If Traveling Then bCantMove = True
-    
-    'Hacemos esta validacion para los usuarios que usan teclado normal puedan
-    'Sacar cartel de hechizos mientras juegan, si usan config customizada con wasd no se puede mover ya que entorpece
-    If ClientSetup.KeyboardBindKeysConfig <> "Normal" Then
+
+    'Si esta activada la opcion de sacar cartel, no nos movemos con chat abierto, sino si nos movemos.
+    'Esto es mas que nada por la configuracion de teclas alternativa con WASD (RecoX)
+    If EsGm(UserCharIndex) Then
+
         'Si esta chateando, no mover el pj, tanto para chat de clanes y normal
         If frmMain.SendTxt.Visible Then Exit Sub
         If frmMain.SendCMSTXT.Visible Then Exit Sub
@@ -1208,6 +1209,7 @@ Public Function EsGM(ByVal CharIndex As Integer) As Boolean
 
     If charlist(CharIndex).priv >= 1 And charlist(CharIndex).priv <= 5 Or charlist(CharIndex).priv = 25 Then
         EsGM = True
+        Exit Function
     End If
     
     EsGM = False
@@ -1218,6 +1220,7 @@ Public Function EsNPC(ByVal CharIndex As Integer) As Boolean
 
     If charlist(CharIndex).iHead = 0 Then
         EsNPC = True
+        Exit Function
     End If
     
     EsNPC = False
