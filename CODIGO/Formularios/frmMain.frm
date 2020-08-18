@@ -1896,10 +1896,12 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendTxt.Visible = True
                 SendTxt.SetFocus
+
                 If Not Typing Then
                     Call WriteSetTypingFlagFromUserCharIndex
                     Typing = True
                 End If
+                
             End If
             
     End Select
