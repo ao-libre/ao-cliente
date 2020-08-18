@@ -865,3 +865,7 @@ Se corrigieron 41 mapas (costas y traslados) de mapas( entre ellas esta mapa 24 
 Se agregaron 2 mapas para en DI con el fin de reubicar el titan de fuego.Ahora se puede tirar invi en el mapa de la entrada y los otros dos son sin invi.
 Se enprolijo intercatas.
 Se retoco el mapa del fuerte pretoriano haciendo mas similar al fuerte original, se elimino el dragon rojo que habia ahi. (Ronin)
+
+
+* 18/08/2020: Cuando escribo un comando estando muerto el juego tira error, lo arreglo (Recox)
+* 18/08/2020: Agrego validacion para no enviar paquetes para mostrar ... cuando estoy invisible (Recox)
