@@ -169,7 +169,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/BALANCE"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -178,7 +181,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/QUIETO"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -187,7 +193,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/ACOMPANAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -196,7 +205,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/LIBERAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -205,7 +217,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/ENTRENAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -214,7 +229,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/DESCANSAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -225,7 +243,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -249,7 +270,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/COMERCIAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 
@@ -264,7 +288,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/BOVEDA"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -291,7 +318,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/CREARPARTY"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -300,7 +330,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/PARTY"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -309,7 +342,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/COMPARTIRNPC"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -319,7 +355,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/NOCOMPARTIRNPC"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -402,7 +441,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/DESC"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -431,7 +473,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/APOSTAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -450,7 +495,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/RETIRARFACCION"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -460,7 +508,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/RETIRAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -478,7 +529,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/DEPOSITAR"
                 If UserEstado = 1 Then 'Muerto
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                            JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
                     End With
                     Exit Sub
                 End If
@@ -1724,7 +1778,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
     ElseIf Left$(Comando, 1) = "\" Then
         If UserEstado = 1 Then 'Muerto
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
             End With
             Exit Sub
         End If
@@ -1734,7 +1791,10 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
     ElseIf Left$(Comando, 1) = "-" Then
         If UserEstado = 1 Then 'Muerto
             With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                                Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USER_MUERTO").item("TEXTO").item(2), _
+                                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(1), _
+                                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(2), _
+                                                    JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
             End With
             Exit Sub
         End If
