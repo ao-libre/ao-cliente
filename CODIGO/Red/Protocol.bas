@@ -11880,7 +11880,7 @@ Private Sub HandleProyectil()
     CharRecieved = incomingData.ReadInteger()
     GrhIndex = incomingData.ReadInteger()
     
-    Engine_Projectile_Create CharSending, CharRecieved, GrhIndex, 0
+    Call Engine_Projectile_Create(CharSending, CharRecieved, GrhIndex, 0)
 End Sub
 
 Public Sub WriteSetTypingFlagFromUserCharIndex()
