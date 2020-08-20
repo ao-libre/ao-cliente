@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -664,6 +664,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -1291,7 +1292,7 @@ Private Sub DownloadFfmpeg()
         uAOProgressDownloadFfmpeg.Visible = True
 
         lSizeInBytes = 53521905
-        uAOProgressDownloadFfmpeg.max = lSizeInBytes
+        uAOProgressDownloadFfmpeg.Max = lSizeInBytes
 
         InetDownloadFfmpeg.AccessType = icUseDefault
         InetDownloadFfmpeg.URL = "https://github.com/ao-libre/ao-website/releases/download/v1.0/ffmpeg.exe"
@@ -1344,7 +1345,7 @@ Private Sub InetDownloadFfmpeg_StateChanged(ByVal State As Integer)
                     
                     vtData = InetDownloadFfmpeg.GetChunk(1024, icByteArray)
 
-                    uAOProgressDownloadFfmpeg.min = uAOProgressDownloadFfmpeg.min + Len(vtData) * 2
+                    uAOProgressDownloadFfmpeg.Min = uAOProgressDownloadFfmpeg.Min + Len(vtData) * 2
                     'Percentage = (uAOProgressDownloadFfmpeg.Value / uAOProgressDownloadFfmpeg.max) * 100
                     'uAOProgressDownloadFfmpeg.Text = "[" & Percentage & "% de " & lSizeInBytes & " MBs.]"
                     
@@ -3278,11 +3279,11 @@ Public Sub UpdateProgressExperienceLevelBar(ByVal UserExp As Long)
         frmMain.lblPorcLvl.Caption = "[N/A]"
 
         'Si no tiene mas niveles que subir ponemos la barra al maximo.
-        frmMain.uAOProgressExperienceLevel.max = 100
+        frmMain.uAOProgressExperienceLevel.Max = 100
         frmMain.uAOProgressExperienceLevel.Value = 100
     Else
         frmMain.lblPorcLvl.Caption = "[" & Round(CDbl(UserExp) * CDbl(100) / CDbl(UserPasarNivel), 2) & "%]"
-        frmMain.uAOProgressExperienceLevel.max = UserPasarNivel
+        frmMain.uAOProgressExperienceLevel.Max = UserPasarNivel
         frmMain.uAOProgressExperienceLevel.Value = UserExp
     End If
 End Sub

@@ -260,13 +260,13 @@ Public Property Get Amount(ByVal slot As Byte) As Long
     End If
 End Property
 
-Public Property Get ObjIndex(ByVal slot As Byte) As Integer
+Public Property Get OBJIndex(ByVal slot As Byte) As Integer
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modify Date: 27/07/04
 'Retrieves the selected item's object index
 '***************************************************
-    ObjIndex = Inventory(slot).ObjIndex
+    OBJIndex = Inventory(slot).OBJIndex
 End Property
 
 Public Property Get OBJType(ByVal slot As Byte) As Integer
@@ -371,7 +371,7 @@ Public Sub SetItem(ByVal slot As Byte, ByVal eOBJIndex As Integer, ByVal eAmount
         .MaxHit = eMaxHit
         .MinHit = eMinHit
         .name = eName
-        .ObjIndex = eOBJIndex
+        .OBJIndex = eOBJIndex
         .OBJType = eObjType
         .Valor = eValor
         .Incompatible = eIncompatible
@@ -415,7 +415,13 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 End Function
 
 Public Sub DrawInventory()
+    ' Este sub se llama al actualizar el inventario y solo tenemos que volver a dibujar si NO estamos dibujando en cada frame (WyroX)
+    If ClientSetup.LimiteFPS Then
+        Call RenderInventory(True)
+    End If
+End Sub
 
+Public Sub RenderInventory(Optional ByVal UseBuffer As Boolean = False)
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
     'Last Modify Date: 18/01/2020
@@ -504,20 +510,17 @@ Public Sub DrawInventory()
     
         Call Draw_GrhIndex(Inventory(DragItem).GrhIndex, MouseX - 16, MouseY - 16, 0, Normal_RGBList())
         
-        ' Si estamos arrastrando un item, dibujamos normal
-        InventoryWindow.AutoRedraw = False
-        
-        Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
-        
-    Else
+    End If
+    
+    If UseBuffer Then
         ' WyroX:
         ' Brujeria necesaria para que no quede negro el inventario.
         ' En realidad: con el AutoRedraw desactivado, copiamos una "foto" del inventario a un buffer en memoria.
         ' Activamos el AutoDraw, lo copiamos de vuelta al inventario y lo dejamos como imagen estatica.
-
+        
         InventoryWindow.AutoRedraw = False
 
-        Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
+        Call Engine_EndScene(DestRect, InventoryWindow.hwnd)
 
         Call DrawBuffer.LoadPictureBlt(InventoryWindow.hdc)
 
@@ -526,7 +529,9 @@ Public Sub DrawInventory()
         Call DrawBuffer.PaintPicture(InventoryWindow.hdc, 0, 0, InventoryWindow.ScaleWidth, InventoryWindow.ScaleHeight, 0, 0, vbSrcCopy)
 
         InventoryWindow.Picture = InventoryWindow.Image
-
+        
+    Else
+        Call Engine_EndScene(DestRect, InventoryWindow.hwnd)
     End If
 
 End Sub
@@ -535,7 +540,7 @@ Public Sub DrawDragAndDrop()
 
     If ((DragItem <> 0 And Drag = 1) And (timeGetTime - InventoryTickCount > 40)) Then
 
-        Call Inventario.DrawInventory
+        Call Inventario.RenderInventory
 
     End If
 
