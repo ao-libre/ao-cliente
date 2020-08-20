@@ -866,6 +866,8 @@ Se agregaron 2 mapas para en DI con el fin de reubicar el titan de fuego.Ahora s
 Se enprolijo intercatas.
 Se retoco el mapa del fuerte pretoriano haciendo mas similar al fuerte original, se elimino el dragon rojo que habia ahi. (Ronin)
 
-
 * 18/08/2020: Cuando escribo un comando estando muerto el juego tira error, lo arreglo (Recox)
 * 18/08/2020: Agrego validacion para no enviar paquetes para mostrar ... cuando estoy invisible (Recox)
+
+-v0.13.50
+* 14/08/2020: Ahora me puedo equipar y desequipar mochilas con doble click y las cuchillas se pueden usar con doble click (Recox)
