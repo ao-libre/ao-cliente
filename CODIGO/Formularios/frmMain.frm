@@ -2754,12 +2754,13 @@ Private Sub picInv_DblClick()
     
     Select Case Inventario.OBJType(Inventario.SelectedItem)
         
-        Case eObjType.otcasco, eObjType.otAnillo, eObjType.otArmadura, eObjType.otescudo, eObjType.otFlechas
+        Case eObjType.otcasco, eObjType.otAnillo, eObjType.otArmadura, eObjType.otescudo, eObjType.otFlechas, eObjType.otMochilas
             Call EquiparItem
     
         Case eObjType.otWeapon
-            'Para los arcos hacemos esta validacion, asi se pueden usar con doble click en ves de andar equipando o desequipando (Recox)
-            If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Then
+            'Para los arcos y cuchillas hacemos esta validacion, asi se pueden usar con doble click en ves de andar equipando o desequipando (Recox)
+            If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Or _
+               InStr(Inventario.ItemName(Inventario.SelectedItem), "Cuchillas") > 0 Then
                 If Inventario.Equipped(Inventario.SelectedItem) Then
                     Call UsarItem
                     Exit Sub
