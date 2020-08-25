@@ -871,3 +871,7 @@ Se retoco el mapa del fuerte pretoriano haciendo mas similar al fuerte original,
 
 -v0.13.50
 * 14/08/2020: Ahora me puedo equipar y desequipar mochilas con doble click y las cuchillas se pueden usar con doble click (Recox)
+
+-v0.13.51
+* 25/08/2020: Nueva música de dugeons y lugares nuevos (Ronin)
+* 25/08/2020: Se baja un poco la calidad de la musica a 135kbps para reducir peso (Recox)
