@@ -1250,7 +1250,7 @@
         "TEXTO": "Reportar Bug"
     },
     "BTN_REPORTAR_BUG_MESSAGE": {
-        "TEXTO": "Si reportas un bug que no este en la lista de reportados, te vamos a obsequiar 5000 oro. Es muy simple tan solo una captura de pantalla explicando lo que sucede."
+        "TEXTO": "Si reportas un bug que no este en la lista de reportados, te vamos a obsequiar algo. Es muy simple tan solo una captura de pantalla explicando lo que sucede."
     },
     "BTN_RECORD_VIDEO_DESCARGAR_APLICACION": {
         "TEXTO": "Se descargara la aplicacion FFMPEG para poder hacer uso del mismo para grabar. Desea continuar? Por favor tenga en cuenta que el juego estara inactivo mientras la descarga del mismo este se este realizando"
@@ -1872,5 +1872,13 @@
     },
     "FRM_MAPA_TEXTO" : {
         "TEXTO": "Mapa de Argentum Online, Presione Arriba y Abajo para cambiar entre mapa global / laberintos. Presione cualquier otra tecla para salir."
+    },
+    "MENSAJE_ERRORES_LOG_CARPETA": {
+        "TEXTO": "Errores fueron encontrados y se pusieron en el archivo Errores.log. Por favor envia el contenido de este archivo a los desarrolladores con el boton reporte de errores asi ayudas a mejorar el juego.",
+        "COLOR": [
+            252,
+            257,
+            220
+        ]
     }
 }

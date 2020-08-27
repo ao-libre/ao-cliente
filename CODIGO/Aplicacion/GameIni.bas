@@ -130,7 +130,16 @@ Public Function path(ByVal PathType As ePath) As String
             path = App.path & "\Extras\"
 
         Case ePath.Videos
-            path = App.path & "\Videos\"
+            'Hacemos un Left para poder solo obtener la letra del HD
+            'Por que por culpa del UAC no guarda los videos en la carpeta del juego...
+            Dim VideosPath As String
+            VideosPath = Left$(App.path, 2) & "\AO-Libre\Videos\"
+
+            If Dir(VideosPath, vbDirectory) = "" Then
+                MkDir VideosPath
+            End If
+            
+            path = VideosPath
     
     End Select
 

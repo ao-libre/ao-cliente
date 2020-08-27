@@ -1,5 +1,5 @@
 [INIT]
-Cant=7
+Cant=4
 
 [S1]
 Desc=Rol - Alkon 0.13.X
@@ -8,37 +8,19 @@ PJ=7666
 Mundo=Alkon
 
 [S2]
-Desc= Agite - Alkon 0.13.X - Europa
-IP=109.230.236.97
-PJ=7666
-Mundo=Alkon
-
-[S3]
-Desc=LaPlataVive - Alkon 0.13.X - Exp/Oro x10
+Desc=Agite - Alkon 0.13.X - Exp/Oro x23
 IP=win.laplatavive.net
 PJ=7666
 Mundo=Alkon
 
-[S4]
-Desc= RexonAo 0.13 Rol y Agite
-IP=186.158.92.59
-PJ=7666
-Mundo=Alkon
-
-[S5]
+[S3]
 Desc=Test BattleServer [Master Branch]
 IP=18.230.151.33
 PJ=7667
 Mundo=Alkon
 
-[S6]
+[S4]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
-PJ=7666
-Mundo=Alkon
-
-[S7]
-Desc=Culi-Ao Fast, ROL AGITE
-IP=190.188.22.47
 PJ=7666
 Mundo=Alkon

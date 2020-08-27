@@ -1251,7 +1251,7 @@ Private FirstTimeClanChat  As Boolean
 
 Private bIsRecordingVideo  As Boolean
 
-Private iFfmpegTaskId As String
+Private sFfmpegTaskId As String
 
 'Peso del archivo ffmpeg
 Dim lSizeInBytes As Long
@@ -1383,10 +1383,10 @@ Private Sub btnGrabarVideo_Click()
         Dim sFfmpegCommand As String
         sFfmpegCommand = sFfmpegExeFilePath & " -f gdigrab -framerate 30 -i title=""Argentum Online Libre"" " & Game.path(Videos) & FileName
 
-        iFfmpegTaskId = Shell(sFfmpegCommand)
+        sFfmpegTaskId = Shell(sFfmpegCommand)
     Else
         'Matamos ffmpeg por lo cual se guarda el video :)
-        Shell ("taskkill /PID " & iFfmpegTaskId)
+        Shell ("taskkill /PID " & sFfmpegTaskId)
         bIsRecordingVideo = False
         btnGrabarVideo.Caption = JsonLanguage.item("BTN_RECORD_VIDEO").item("TEXTO")
         Call MsgBox(JsonLanguage.item("BTN_RECORD_VIDEO_MESSAGE_FINISH").item("TEXTO"))
@@ -1650,28 +1650,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 If KeyCode = vbKey0 Then
                     'Si es CTRL+0 muestro la ventana de configuracion de teclas.
                     Call frmCustomKeys.Show(vbModal, Me)
-                    
-                ElseIf KeyCode >= vbKey1 And KeyCode <= vbKey9 Then
+                
+                'Si es CTRL+1..9 .... lo dejo por si queremos poner macros algun dia.
+                'ElseIf KeyCode >= vbKey1 And KeyCode <= vbKey9 Then
 
-                    'Si es CTRL+1..9 cambio la configuracion.
-                    If KeyCode - vbKey0 = CustomKeys.CurrentConfig Then Exit Sub
-                    
-                    CustomKeys.CurrentConfig = KeyCode - vbKey0
-                    
-                    Dim sMsg As String
-                    sMsg = JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("TEXTO")
-                        
-                    If CustomKeys.CurrentConfig = 0 Then
-                        sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.item("PREDETERMINADA").item("TEXTO"))
-                    Else
-                        sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.item("PERSONALIZADA").item("TEXTO"))
-                        sMsg = Replace$(sMsg, "VAR_CONFIG_CUSTOM_NUMERO", CStr(CustomKeys.CurrentConfig))
-                    End If
-
-                    Call ShowConsoleMsg(sMsg, JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(1), _
-                                              JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(2), _
-                                              JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(3), _
-                                        True)
                                         
                 End If
                 
@@ -1913,10 +1895,12 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             If (Not Comerciando) And (Not MirandoAsignarSkills) And (Not frmMSG.Visible) And (Not MirandoForo) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
                 SendTxt.Visible = True
                 SendTxt.SetFocus
+
                 If Not Typing Then
                     Call WriteSetTypingFlagFromUserCharIndex
                     Typing = True
                 End If
+                
             End If
             
     End Select
@@ -2300,8 +2284,7 @@ Private Sub SendTxt_KeyDown(KeyCode As Integer, Shift As Integer)
             ' Pressed "0", so Msg Number is 9
             If NroMsg = -1 Then NroMsg = 9
             
-            'Como es KeyDown, si mantenes _
-             apretado el mensaje llena la consola
+            'Como es KeyDown, si mantenes apretado el mensaje llena la consola
 
             If CustomMessages.Message(NroMsg) = SendTxt.Text Then
                 Exit Sub
@@ -2770,12 +2753,13 @@ Private Sub picInv_DblClick()
     
     Select Case Inventario.OBJType(Inventario.SelectedItem)
         
-        Case eObjType.otcasco, eObjType.otAnillo, eObjType.otArmadura, eObjType.otescudo, eObjType.otFlechas
+        Case eObjType.otcasco, eObjType.otAnillo, eObjType.otArmadura, eObjType.otescudo, eObjType.otFlechas, eObjType.otMochilas
             Call EquiparItem
     
         Case eObjType.otWeapon
-            'Para los arcos hacemos esta validacion, asi se pueden usar con doble click en ves de andar equipando o desequipando (Recox)
-            If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Then
+            'Para los arcos y cuchillas hacemos esta validacion, asi se pueden usar con doble click en ves de andar equipando o desequipando (Recox)
+            If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Or _
+               InStr(Inventario.ItemName(Inventario.SelectedItem), "Cuchillas") > 0 Then
                 If Inventario.Equipped(Inventario.SelectedItem) Then
                     Call UsarItem
                     Exit Sub
@@ -2863,7 +2847,7 @@ Private Sub SendTxt_Change()
                 tempstr = tempstr & Chr$(CharAscii)
             End If
         Next i
-        
+
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush
@@ -2922,7 +2906,6 @@ Public Sub SendCMSTXT_SendText()
 End Sub
 
 Private Sub SendCMSTXT_KeyPress(KeyAscii As Integer)
-
     If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
 End Sub
 
@@ -2944,7 +2927,7 @@ Private Sub SendCMSTXT_Change()
                 tempstr = tempstr & Chr$(CharAscii)
             End If
         Next i
-        
+
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush

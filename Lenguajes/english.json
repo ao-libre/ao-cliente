@@ -1250,7 +1250,7 @@
         "TEXTO": "Bug Report"
     },
     "BTN_REPORTAR_BUG_MESSAGE": {
-        "TEXTO": "If you report a bug that is not on the reported list, we will give you 5000 gold. It is very simple just a screenshot explaining what happens."
+        "TEXTO": "If you report a bug that is not on the reported list, we will give you a reward. It is very simple just a screenshot explaining what happens."
     },
     "BTN_RECORD_VIDEO_DESCARGAR_APLICACION": {
         "TEXTO": "Do you wish to download FFMPEG to record the game? Please be aware that the game will not respond to you until the download is finished"
@@ -1878,5 +1878,13 @@
     },
     "FRM_MAPA_TEXTO" : {
         "TEXTO": "Argentum Online Map, Press Up and Down to switch between global map / mazes. Press any other key to exit."
+    },
+    "MENSAJE_ERRORES_LOG_CARPETA": {
+        "TEXTO": "Errors were logged in the Errores.log file, please send this file to the developers to help fix these problems.",
+        "COLOR": [
+            252,
+            257,
+            220
+        ]
     }
 }

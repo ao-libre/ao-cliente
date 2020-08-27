@@ -109,14 +109,6 @@ Private Sub Form_Load()
     LOGO.Picture = LoadPicture(Game.path(Interfaces) & "ImagenCargando" & RandomNumber(1, 14) & ".jpg")
 End Sub
 
-Private Sub LOGO_KeyPress(KeyAscii As Integer)
-    Debug.Print 2
-End Sub
-
-Private Sub Status_KeyPress(KeyAscii As Integer)
-    Debug.Print 1
-End Sub
-
 Function Analizar()
 On Error Resume Next
     Dim binaryFileToOpen As String

@@ -101,7 +101,7 @@ Dim ProjectileIndex As Integer
     ProjectileList(ProjectileIndex).X = charlist(AttackerIndex).Pos.X * 32
     ProjectileList(ProjectileIndex).Y = charlist(AttackerIndex).Pos.Y * 32
     
-    InitGrh ProjectileList(ProjectileIndex).Grh, GrhIndex
+    Call InitGrh(ProjectileList(ProjectileIndex).Grh, GrhIndex)
     
 End Sub
 
