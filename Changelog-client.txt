@@ -876,3 +876,7 @@ Se retoco el mapa del fuerte pretoriano haciendo mas similar al fuerte original,
 * 25/08/2020: Nueva música de dugeons y lugares nuevos (Ronin)
 * 25/08/2020: Se le saca la cara a este body ya que si te equipabas las alas se veía atrás la cara q venia con el grafico.El propósito también es utilizar este body para un npc llamado Valkiria. (Ronin)
 * 25/08/2020: Se baja un poco la calidad de la musica a 135kbps para reducir peso (Recox)
+
+-v0.13.52
+* 27/08/2020: Actualizo Minimapas (Ronin - ReyarB)
+* 27/08/2020: Ahora no se cierra el juego al tratar de mover la pantalla en fullscreen (Recox)
