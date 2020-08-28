@@ -1156,7 +1156,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         timerTicksPerFrame = timerElapsedTime * Engine_BaseSpeed
         
         Call Engine_EndScene(MainScreenRect, 0)
-            
+
+        Call Inventario.DrawDragAndDrop
+
     End If
     
 ErrorHandler:
