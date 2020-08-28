@@ -230,7 +230,8 @@ End Type
 'Info de cada mapa
 Public Type mapInfo
     Music As String
-    name As String
+    Name As String
+    Zona As String
     StartPos As WorldPos
     MapVersion As Integer
 End Type
