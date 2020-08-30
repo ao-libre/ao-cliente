@@ -1778,7 +1778,7 @@
         ]
     },
     "MENSAJE_MONTURA_SALIR": {
-        "TEXTO": "No puedes caminar aqui con tu montura, bajate para poder entrar a un lugar con techo."
+        "TEXTO": "No puedes caminar aqui con tu montura, bajate para poder entrar a un lugar con techo o dungeons."
     },
     "FRMCONNECT_LBL_DESCRIPCION_SERVER": {
         "TEXTO": "Obteniendo datos del server por favor espere... si no los obtengo en pocos segundos y tira error significa que el servidor esta offline..."
