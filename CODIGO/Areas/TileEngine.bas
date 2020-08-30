@@ -230,7 +230,8 @@ End Type
 'Info de cada mapa
 Public Type mapInfo
     Music As String
-    name As String
+    Name As String
+    Zona As String
     StartPos As WorldPos
     MapVersion As Integer
 End Type
@@ -929,7 +930,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
     If colorRender <> 240 Then
         Call DrawText(frmMain.MainViewPic.Width / 2, 50, renderText, render_msg(0), True, 2)
     End If
-    
+
     '   Set Offsets
     LastOffsetX = ParticleOffsetX
     LastOffsetY = ParticleOffsetY
@@ -1155,9 +1156,9 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         timerTicksPerFrame = timerElapsedTime * Engine_BaseSpeed
         
         Call Engine_EndScene(MainScreenRect, 0)
-    
+
         Call Inventario.DrawDragAndDrop
-    
+
     End If
     
 ErrorHandler:

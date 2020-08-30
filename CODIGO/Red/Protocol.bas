@@ -2134,7 +2134,11 @@ Private Sub HandleChangeMap()
     
     UserMap = incomingData.ReadInteger()
     nameMap = incomingData.ReadASCIIString
+    mapInfo.Zona = incomingData.ReadASCIIString
     
+    'Convertimos esto a mayuscula para evitar problemas por que entran mal los datos en los .dat (Recox)
+    mapInfo.Zona = mapInfo.Zona.ToUpper()
+
     'TODO: Once on-the-fly editor is implemented check for map version before loading....
     'For now we just drop it
     Call incomingData.ReadInteger
