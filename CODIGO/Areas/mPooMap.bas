@@ -258,10 +258,7 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
       End If
       
       'Esta el usuario Equitando bajo un techo?
-      If UserEquitando And _ 
-         MapData(X, Y).Trigger = eTrigger.BAJOTECHO Or _ 
-         MapData(X, Y).Trigger = eTrigger.CASA Or _
-         mapInfo.Zona = "DUNGEON" Then
+      If UserEquitando And MapData(X, Y).Trigger = eTrigger.BAJOTECHO Or MapData(X, Y).Trigger = eTrigger.CASA Then
             
             If Not frmMain.MsgTimeadoOn Then
                 
