@@ -1386,7 +1386,6 @@ Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
     Traveling = False
     UserNavegando = False
     UserEvento = False
-    bFogata = False
     bRain = False
     bFogata = False
     Comerciando = False
