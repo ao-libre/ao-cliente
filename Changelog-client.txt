@@ -880,3 +880,8 @@ Se retoco el mapa del fuerte pretoriano haciendo mas similar al fuerte original,
 -v0.13.52
 * 27/08/2020: Actualizo Minimapas (Ronin - ReyarB)
 * 27/08/2020: Ahora no se cierra el juego al tratar de mover la pantalla en fullscreen (Recox)
+
+-v0.13.53
+* 02/09/2020: FK.IND NUEVO QUE HACE QUE NO LLUEVA EN DUNGEONS (LORELEI-REYARB-WYROX)
+* 02/09/2020: Fix Inter Ciudades (ReyarB)
+* 02/09/2020: Ahora obtenemos el dato de ZONA en mapas para validarvalidar si caminar o no en dungeons. (Recox)
