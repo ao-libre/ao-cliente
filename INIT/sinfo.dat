@@ -1,5 +1,5 @@
 [INIT]
-Cant=5
+Cant=6
 
 [S1]
 Desc=Rol - Alkon 0.13.X (Europa)
@@ -20,12 +20,18 @@ PJ=7666
 Mundo=Alkon
 
 [S4]
+Desc=Test no usar
+IP=190.245.145.3
+PJ=7667
+Mundo=Alkon
+
+[S5]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
 
-[S5]
+[S6]
 Desc=Test BattleServer [Master Branch]
 IP=93.176.180.82
 PJ=7667
