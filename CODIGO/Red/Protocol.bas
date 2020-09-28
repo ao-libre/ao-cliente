@@ -1724,7 +1724,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
@@ -1878,12 +1878,12 @@ Private Sub HandleUpdateSta()
     
     Dim bWidth As Byte
     
-    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 83)
+    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 89)
     
-    frmMain.shpEnergia.Width = 83 - bWidth
-    frmMain.shpEnergia.Left = 797 + (83 - frmMain.shpEnergia.Width)
+    frmMain.shpEnergia.Width = 89 - bWidth
+    frmMain.shpEnergia.Left = 794 + (89 - frmMain.shpEnergia.Width)
     
-    frmMain.shpEnergia.Visible = (bWidth <> 83)
+    frmMain.shpEnergia.Visible = (bWidth <> 89)
     
 End Sub
 
@@ -1913,12 +1913,12 @@ Private Sub HandleUpdateMana()
     Dim bWidth As Byte
     
     If UserMaxMAN > 0 Then _
-        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 90)
+        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 89) 'ReyarB
         
-    frmMain.shpMana.Width = 90 - bWidth
-    frmMain.shpMana.Left = 902 + (90 - frmMain.shpMana.Width)
+    frmMain.shpMana.Width = 89 - bWidth
+    frmMain.shpMana.Left = 919 + (89 - frmMain.shpMana.Width)
     
-    frmMain.shpMana.Visible = (bWidth <> 90)
+    frmMain.shpMana.Visible = (bWidth <> 89)
 End Sub
 
 ''
@@ -1946,10 +1946,10 @@ Private Sub HandleUpdateHP()
     
     Dim bWidth As Byte
     
-    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 90)
+    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 89)
     
-    frmMain.shpVida.Width = 90 - bWidth
-    frmMain.shpVida.Left = 902 + (90 - frmMain.shpVida.Width)
+    frmMain.shpVida.Width = 89 - bWidth
+    frmMain.shpVida.Left = 919 + (89 - frmMain.shpVida.Width)
     
     frmMain.shpVida.Visible = (bWidth <> 90)
     
@@ -3265,28 +3265,28 @@ Private Sub HandleUpdateUserStats()
     
     '***************************
     If UserMaxMAN > 0 Then _
-        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 90)
+        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 89)
         
-    frmMain.shpMana.Width = 90 - bWidth
-    frmMain.shpMana.Left = 902 + (90 - frmMain.shpMana.Width)
+    frmMain.shpMana.Width = 89 - bWidth
+    frmMain.shpMana.Left = 919 + (90 - frmMain.shpMana.Width)
     
-    frmMain.shpMana.Visible = (bWidth <> 90)
+    frmMain.shpMana.Visible = (bWidth <> 89)
     '***************************
     
-    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 90)
+    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 89)
     
-    frmMain.shpVida.Width = 90 - bWidth
-    frmMain.shpVida.Left = 902 + (90 - frmMain.shpVida.Width)
+    frmMain.shpVida.Width = 89 - bWidth
+    frmMain.shpVida.Left = 919 + (89 - frmMain.shpVida.Width)
     
-    frmMain.shpVida.Visible = (bWidth <> 90)
+    frmMain.shpVida.Visible = (bWidth <> 89)
     '***************************
     
-    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 83)
+    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 89)
     
     frmMain.shpEnergia.Width = 83 - bWidth
-    frmMain.shpEnergia.Left = 797 + (83 - frmMain.shpEnergia.Width)
+    frmMain.shpEnergia.Left = 794 + (89 - frmMain.shpEnergia.Width)
     
-    frmMain.shpEnergia.Visible = (bWidth <> 83)
+    frmMain.shpEnergia.Visible = (bWidth <> 89)
     '***************************
     
     If UserMinHP = 0 Then
@@ -4238,20 +4238,20 @@ Private Sub HandleUpdateHungerAndThirst()
 
     Dim bWidth As Byte
     
-    bWidth = (((UserMinHAM / 100) / (UserMaxHAM / 100)) * 83)
+    bWidth = (((UserMinHAM / 100) / (UserMaxHAM / 100)) * 89)
     
-    frmMain.shpHambre.Width = 83 - bWidth
-    frmMain.shpHambre.Left = 797 + (83 - frmMain.shpHambre.Width)
+    frmMain.shpHambre.Width = 89 - bWidth
+    frmMain.shpHambre.Left = 794 + (89 - frmMain.shpHambre.Width)
     
-    frmMain.shpHambre.Visible = (bWidth <> 83)
+    frmMain.shpHambre.Visible = (bWidth <> 89)
     '*********************************
     
-    bWidth = (((UserMinAGU / 100) / (UserMaxAGU / 100)) * 83)
+    bWidth = (((UserMinAGU / 100) / (UserMaxAGU / 100)) * 89)
     
-    frmMain.shpSed.Width = 83 - bWidth
-    frmMain.shpSed.Left = 797 + (83 - frmMain.shpSed.Width)
+    frmMain.shpSed.Width = 89 - bWidth
+    frmMain.shpSed.Left = 794 + (89 - frmMain.shpSed.Width)
     
-    frmMain.shpSed.Visible = (bWidth <> 83)
+    frmMain.shpSed.Visible = (bWidth <> 89)
     
 End Sub
 
