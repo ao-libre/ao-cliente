@@ -66,8 +66,8 @@ Begin VB.Form frmMain
    End
    Begin VB.Timer timerPasarSegundo 
       Interval        =   1000
-      Left            =   960
-      Top             =   2880
+      Left            =   4560
+      Top             =   2640
    End
    Begin AOLibre.uAOProgress uAOProgressExperienceLevel 
       Height          =   330
@@ -316,8 +316,8 @@ Begin VB.Form frmMain
          _Version        =   393216
       End
       Begin VB.Timer tmrCounters 
-         Left            =   5760
-         Top             =   840
+         Left            =   5040
+         Top             =   360
       End
       Begin VB.Timer trainingMacro 
          Enabled         =   0   'False
@@ -412,7 +412,7 @@ Begin VB.Form frmMain
       Left            =   12600
       TabIndex        =   33
       TabStop         =   0   'False
-      Top             =   9240
+      Top             =   7320
       Width           =   1455
       _ExtentX        =   2566
       _ExtentY        =   450
@@ -664,6 +664,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2302
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -2718,7 +2719,7 @@ Private Sub btnInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
@@ -2746,7 +2747,7 @@ Private Sub btnHechizos_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
 
 End Sub
 
@@ -2811,8 +2812,8 @@ Private Sub RecTxt_Change()
            (Not frmCantidad.Visible) And _
            (Not MirandoParty) Then
 
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2826,8 +2827,8 @@ End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2908,8 +2909,8 @@ Public Sub SendCMSTXT_SendText()
             Typing = False
         End If
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
