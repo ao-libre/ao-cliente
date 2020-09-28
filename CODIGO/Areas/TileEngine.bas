@@ -1868,7 +1868,7 @@ Exit Sub
 
 Error:
     If Err.number = 9 And Grh.FrameCounter < 1 Then
-        Grh.FrameCounter = 0.5000001
+        Grh.FrameCounter = 1
         Resume
     Else
         'Call Log_Engine("Error in Draw_Grh, " & Err.Description & ", (" & Err.number & ")")
