@@ -1724,7 +1724,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
@@ -1916,7 +1916,7 @@ Private Sub HandleUpdateMana()
         bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 89) 'ReyarB
         
     frmMain.shpMana.Width = 89 - bWidth
-    frmMain.shpMana.Left = 919 + (89 - frmMain.shpMana.Width)
+    frmMain.shpMana.Left = 794 + (89 - frmMain.shpMana.Width)
     
     frmMain.shpMana.Visible = (bWidth <> 89)
 End Sub
@@ -1939,7 +1939,7 @@ Private Sub HandleUpdateHP()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    'Get data and update form
+    'Get data and update form .....
     UserMinHP = incomingData.ReadInteger()
     
     frmMain.lblVida = UserMinHP & "/" & UserMaxHP
@@ -1949,7 +1949,7 @@ Private Sub HandleUpdateHP()
     bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 89)
     
     frmMain.shpVida.Width = 89 - bWidth
-    frmMain.shpVida.Left = 919 + (89 - frmMain.shpVida.Width)
+    frmMain.shpVida.Left = 794 + (89 - frmMain.shpVida.Width)
     
     frmMain.shpVida.Visible = (bWidth <> 90)
     
@@ -3268,7 +3268,7 @@ Private Sub HandleUpdateUserStats()
         bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 89)
         
     frmMain.shpMana.Width = 89 - bWidth
-    frmMain.shpMana.Left = 919 + (90 - frmMain.shpMana.Width)
+    frmMain.shpMana.Left = 794 + (90 - frmMain.shpMana.Width)
     
     frmMain.shpMana.Visible = (bWidth <> 89)
     '***************************
@@ -3276,7 +3276,7 @@ Private Sub HandleUpdateUserStats()
     bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 89)
     
     frmMain.shpVida.Width = 89 - bWidth
-    frmMain.shpVida.Left = 919 + (89 - frmMain.shpVida.Width)
+    frmMain.shpVida.Left = 794 + (89 - frmMain.shpVida.Width)
     
     frmMain.shpVida.Visible = (bWidth <> 89)
     '***************************
@@ -4241,7 +4241,7 @@ Private Sub HandleUpdateHungerAndThirst()
     bWidth = (((UserMinHAM / 100) / (UserMaxHAM / 100)) * 89)
     
     frmMain.shpHambre.Width = 89 - bWidth
-    frmMain.shpHambre.Left = 794 + (89 - frmMain.shpHambre.Width)
+    frmMain.shpHambre.Left = 919 + (89 - frmMain.shpHambre.Width)
     
     frmMain.shpHambre.Visible = (bWidth <> 89)
     '*********************************
@@ -4249,7 +4249,7 @@ Private Sub HandleUpdateHungerAndThirst()
     bWidth = (((UserMinAGU / 100) / (UserMaxAGU / 100)) * 89)
     
     frmMain.shpSed.Width = 89 - bWidth
-    frmMain.shpSed.Left = 794 + (89 - frmMain.shpSed.Width)
+    frmMain.shpSed.Left = 919 + (89 - frmMain.shpSed.Width)
     
     frmMain.shpSed.Visible = (bWidth <> 89)
     

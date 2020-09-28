@@ -66,8 +66,8 @@ Begin VB.Form frmMain
    End
    Begin VB.Timer timerPasarSegundo 
       Interval        =   1000
-      Left            =   960
-      Top             =   2880
+      Left            =   4560
+      Top             =   2640
    End
    Begin AOLibre.uAOProgress uAOProgressExperienceLevel 
       Height          =   330
@@ -211,13 +211,13 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   3375
-      Left            =   12120
-      ScaleHeight     =   225
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   159
+      Left            =   12000
+      ScaleHeight     =   224
+      ScaleMode       =   0  'User
+      ScaleWidth      =   153.293
       TabIndex        =   16
       Top             =   3000
-      Width           =   2385
+      Width           =   2400
    End
    Begin VB.TextBox SendTxt 
       Appearance      =   0  'Flat
@@ -316,8 +316,8 @@ Begin VB.Form frmMain
          _Version        =   393216
       End
       Begin VB.Timer tmrCounters 
-         Left            =   5760
-         Top             =   840
+         Left            =   5040
+         Top             =   360
       End
       Begin VB.Timer trainingMacro 
          Enabled         =   0   'False
@@ -409,10 +409,10 @@ Begin VB.Form frmMain
    End
    Begin AOLibre.uAOButton btnEstadisticas 
       Height          =   255
-      Left            =   12480
+      Left            =   12600
       TabIndex        =   33
       TabStop         =   0   'False
-      Top             =   9240
+      Top             =   7320
       Width           =   1455
       _ExtentX        =   2566
       _ExtentY        =   450
@@ -970,7 +970,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H000000FF&
       Height          =   255
-      Left            =   13920
+      Left            =   14400
       TabIndex        =   6
       Top             =   10605
       Width           =   975
@@ -992,7 +992,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   14400
       TabIndex        =   5
-      Top             =   10920
+      Top             =   11040
       Width           =   975
    End
    Begin VB.Label lblHelm 
@@ -1010,7 +1010,7 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H000080FF&
       Height          =   255
-      Left            =   12360
+      Left            =   11400
       TabIndex        =   4
       Top             =   10605
       Width           =   975
@@ -1056,9 +1056,9 @@ Begin VB.Form frmMain
       Caption         =   "9999/9999"
       ForeColor       =   &H80000018&
       Height          =   180
-      Left            =   13875
+      Left            =   11955
       TabIndex        =   11
-      Top             =   7770
+      Top             =   8085
       Width           =   1215
    End
    Begin VB.Label lblEnergia 
@@ -1068,9 +1068,9 @@ Begin VB.Form frmMain
       Caption         =   "999/999"
       ForeColor       =   &H80000018&
       Height          =   180
-      Left            =   12000
+      Left            =   11955
       TabIndex        =   10
-      Top             =   7800
+      Top             =   8400
       Width           =   1095
    End
    Begin VB.Label lblVida 
@@ -1080,9 +1080,9 @@ Begin VB.Form frmMain
       Caption         =   "999/999"
       ForeColor       =   &H80000018&
       Height          =   180
-      Left            =   13875
+      Left            =   11955
       TabIndex        =   12
-      Top             =   8085
+      Top             =   7815
       Width           =   1215
    End
    Begin VB.Label lblHambre 
@@ -1092,9 +1092,9 @@ Begin VB.Form frmMain
       Caption         =   "999/999"
       ForeColor       =   &H80000018&
       Height          =   180
-      Left            =   12000
+      Left            =   13920
       TabIndex        =   13
-      Top             =   8085
+      Top             =   8100
       Width           =   1095
    End
    Begin VB.Label lblSed 
@@ -1104,44 +1104,44 @@ Begin VB.Form frmMain
       Caption         =   "999/999"
       ForeColor       =   &H80000018&
       Height          =   180
-      Left            =   12000
+      Left            =   13920
       TabIndex        =   14
-      Top             =   8385
+      Top             =   7785
       Width           =   1095
    End
    Begin VB.Shape shpEnergia 
       FillStyle       =   0  'Solid
       Height          =   165
       Left            =   11910
-      Top             =   7815
+      Top             =   8415
       Width           =   1335
    End
    Begin VB.Shape shpMana 
       FillStyle       =   0  'Solid
-      Height          =   150
-      Left            =   13785
-      Top             =   7815
+      Height          =   165
+      Left            =   11910
+      Top             =   8100
       Width           =   1335
    End
    Begin VB.Shape shpVida 
       FillStyle       =   0  'Solid
       Height          =   165
-      Left            =   13785
-      Top             =   8115
+      Left            =   11910
+      Top             =   7830
       Width           =   1335
    End
    Begin VB.Shape shpHambre 
       FillStyle       =   0  'Solid
       Height          =   165
-      Left            =   11910
+      Left            =   13785
       Top             =   8115
       Width           =   1335
    End
    Begin VB.Shape shpSed 
       FillStyle       =   0  'Solid
       Height          =   180
-      Left            =   11910
-      Top             =   8400
+      Left            =   13785
+      Top             =   7800
       Width           =   1335
    End
    Begin VB.Menu mnuObj 
