@@ -664,7 +664,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2302
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -764,9 +763,9 @@ Begin VB.Form frmMain
    End
    Begin VB.Image imgAsignarSkill 
       Height          =   405
-      Left            =   14400
+      Left            =   14520
       MousePointer    =   99  'Custom
-      Top             =   840
+      Top             =   960
       Width           =   405
    End
    Begin VB.Label lblDropGold 
@@ -858,10 +857,10 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFC0C0&
       Height          =   495
-      Left            =   11520
+      Left            =   11400
       TabIndex        =   41
       Top             =   600
-      Width           =   3705
+      Width           =   3825
    End
    Begin VB.Label lblLvl 
       AutoSize        =   -1  'True
@@ -1071,7 +1070,7 @@ Begin VB.Form frmMain
       Left            =   11955
       TabIndex        =   10
       Top             =   8400
-      Width           =   1095
+      Width           =   1215
    End
    Begin VB.Label lblVida 
       Alignment       =   2  'Center
