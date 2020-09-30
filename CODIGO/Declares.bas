@@ -239,14 +239,14 @@ End Enum
 
 'Objetos
 ' Cantidad de "slots" en el inventario sin mochila
-Public Const MAX_NORMAL_INVENTORY_SLOTS As Byte = 25
+Public Const MAX_NORMAL_INVENTORY_SLOTS As Byte = 24
 
 ' Cantidad de "slots" en el inventario con mochila chica
-Public Const MAX_MOCHILA_CHICA_INVENTORY_SLOTS As Byte = 30
+Public Const MAX_MOCHILA_CHICA_INVENTORY_SLOTS As Byte = 36
 
 ' Cantidad de "slots" en el inventario con alforja
-Public Const MAX_INVENTORY_SLOTS        As Byte = 35
-
+Public Const MAX_MAININVENTORY_SLOTS As Byte = 42
+Public Const MAX_INVENTORY_SLOTS As Byte = 35
 
 Public Const MAX_INVENTORY_OBJS As Integer = 10000
 Public Const MAX_NPC_INVENTORY_SLOTS As Byte = 50
@@ -259,7 +259,7 @@ Public Const MAXSKILLPOINTS As Byte = 100
 
 Public Const MAXATRIBUTOS As Byte = 40
 
-Public Const FLAGORO As Integer = MAX_INVENTORY_SLOTS + 1
+Public Const FLAGORO As Integer = 200
 Public Const GOLD_OFFER_SLOT As Integer = INV_OFFER_SLOTS + 1
 
 Public Enum eClass
@@ -384,10 +384,15 @@ End Enum
 
 Public MaxInventorySlots As Byte
 
-Public Const GRH_SLOT_INVENTARIO_NEGRO As Integer = 26095
-Public Const GRH_SLOT_INVENTARIO_ROJO As Integer = 26096
-Public Const GRH_SLOT_INVENTARIO_VIOLETA As Integer = 6834
-Public Const GRH_SLOT_INVENTARIO_DORADO As Integer = 6840
+'Slots de Inventarios Generales
+Public Const GRH_SLOT_INVENTARIO_NEGRO As Long = 26095
+Public Const GRH_SLOT_INVENTARIO_ROJO As Long = 26096
+
+'Slots de Inventario Principal
+Public Const GRH_INVENTORYSLOT As Long = 32870
+Public Const GRH_INVENTORYSLOT_EXTRA As Long = 32871
+Public Const GRH_INVENTORYSLOT_LOCKED As Long = 32872
+Public Const GRH_INVENTORYSLOT_SELECTED As Long = 32873
 
 Public Const FundirMetal As Integer = 88
 
@@ -742,6 +747,7 @@ Public UserNavegando As Boolean
 Public UserEquitando As Boolean
 Public UserEvento As Boolean
 Public UserHogar As eCiudad
+Public UserInvUnlocked As Byte
 
 Public UserFuerza As Byte
 Public UserAgilidad As Byte

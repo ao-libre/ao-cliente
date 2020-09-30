@@ -210,14 +210,14 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   3375
-      Left            =   12000
-      ScaleHeight     =   224
+      Height          =   3810
+      Left            =   11775
+      ScaleHeight     =   252.871
       ScaleMode       =   0  'User
-      ScaleWidth      =   153.293
+      ScaleWidth      =   201.197
       TabIndex        =   16
-      Top             =   3000
-      Width           =   2400
+      Top             =   3120
+      Width           =   3150
    End
    Begin VB.TextBox SendTxt 
       Appearance      =   0  'Flat
@@ -2481,7 +2481,7 @@ Private Sub TirarItem()
         End With
     Else
 
-        If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
+        If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_MAININVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
             If Inventario.Amount(Inventario.SelectedItem) = 1 Then
                 Call WriteDrop(Inventario.SelectedItem, 1)
             Else
@@ -2512,7 +2512,7 @@ Private Sub UsarItem()
     
     If Comerciando Then Exit Sub
     
-    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then
+    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_MAININVENTORY_SLOTS + 1) Then
         Call WriteUseItem(Inventario.SelectedItem)
     End If
     
@@ -2530,7 +2530,7 @@ Private Sub EquiparItem()
     
         If Comerciando Then Exit Sub
         
-        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then
+        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_MAININVENTORY_SLOTS + 1) Then
             Call WriteEquipItem(Inventario.SelectedItem)
         End If
         
