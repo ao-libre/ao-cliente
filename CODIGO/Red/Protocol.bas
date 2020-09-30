@@ -4643,7 +4643,9 @@ On Error GoTo errhandler
     
     'Get Allied guilds list
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
-    
+
+    Upper_guildList = UBound(guildList)
+
     For i = 0 To Upper_guildList
         sTemp = frmGuildNews.txtClanesAliados.Text
         frmGuildNews.txtClanesAliados.Text = sTemp & guildList(i) & vbCrLf
