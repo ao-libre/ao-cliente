@@ -38,8 +38,11 @@ Option Explicit
 Private InventoryOffset As Long             'Number of lines we scrolled down from topmost
 Private InvSelectedItem As Long             'Currently selected item
 Private MouseDownSelectedItem As Long
-Private ownTilePixelWidth As Integer
-Private ownTilePixelHeight As Integer
+Private SlotWidth As Integer
+Private SlotHeight As Integer
+Private SlotSpaceX As Integer
+Private SlotSpaceY As Integer
+Private SlotSelectedGrh As Long
 Private startdX As Integer
 Private startdY As Integer
 Private prevSelItem As Long
@@ -119,7 +122,7 @@ Public Function CanScroll(ByVal Up As Boolean)
     '***************************************************
     
     If Up Then
-        CanScroll = (InventoryOffset + (InventoryWindow.ScaleHeight \ ownTilePixelHeight)) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) < UBound(Inventory)
+        CanScroll = (InventoryOffset + (InventoryWindow.ScaleHeight \ (SlotHeight + SlotSpaceY))) * (InventoryWindow.ScaleWidth \ (SlotWidth + SlotSpaceX)) < UBound(Inventory)
     
     Else
         CanScroll = InventoryOffset > 0
@@ -394,10 +397,10 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
     Dim temp_x   As Long
     Dim temp_y   As Long
     
-    temp_x = X \ ownTilePixelWidth
-    temp_y = Y \ ownTilePixelHeight
+    temp_x = X \ (SlotWidth + SlotSpaceX)
+    temp_y = Y \ (SlotHeight + SlotSpaceY)
     
-    TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
+    TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ (SlotWidth + SlotSpaceX)) + 1
     TempSlot = TempItem
 
     'Make sure it's within limits
@@ -410,6 +413,8 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
             ClickItem = 0
         End If
 
+    Else
+        ClickItem = 0
     End If
 
 End Function
@@ -439,49 +444,48 @@ Public Sub DrawInventory()
     'Clear the inventory window
     Call Engine_BeginScene
 
-    For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1 To UBound(Inventory)
+    For LoopC = InventoryOffset * (InventoryWindow.ScaleWidth \ (SlotWidth + SlotSpaceX)) + 1 To UBound(Inventory)
             
-        startdX = ((LoopC - 1) Mod (frmMain.PicInv.Width / 32)) * 32
-        startdY = ((LoopC - 1) \ (frmMain.PicInv.Width / 32)) * 32
+        startdX = ((LoopC - 1) Mod (InventoryWindow.ScaleWidth / (SlotWidth + SlotSpaceX))) * (SlotWidth + SlotSpaceX)
+        startdY = ((LoopC - 1) \ (InventoryWindow.ScaleWidth / (SlotHeight + SlotSpaceY))) * (SlotHeight + SlotSpaceY)
 
-
-        'Si se renderiza el inventario del pj hace la validacion para renderizar de un color correcto los slots especiales de mochila y alforja
-        'Sino renderiza todo negro (Recox)
         If isInventory Then
             
-            If (LoopC > MAX_NORMAL_INVENTORY_SLOTS) And (LoopC <= MAX_MOCHILA_CHICA_INVENTORY_SLOTS) Then
-                Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_VIOLETA, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
-            
-            ElseIf (LoopC > MAX_MOCHILA_CHICA_INVENTORY_SLOTS) And (LoopC <= MAX_INVENTORY_SLOTS) Then
-                Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_DORADO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
-            
+            'Inventario Principal
+            If (LoopC > MAX_NORMAL_INVENTORY_SLOTS) Then
+                startdY = startdY + 9
+                If (LoopC - MAX_NORMAL_INVENTORY_SLOTS) <= (UserInvUnlocked * (InventoryWindow.ScaleWidth / (SlotHeight + SlotSpaceY))) Then
+                    'Slot Desbloqueado
+                    Call Draw_GrhIndex(GRH_INVENTORYSLOT_EXTRA, startdX, startdY, 0, Normal_RGBList(), 0, False)
+                Else
+                    'Slot Bloqueado
+                    Call Draw_GrhIndex(GRH_INVENTORYSLOT_LOCKED, startdX, startdY, 0, Normal_RGBList(), 0, False)
+                End If
             Else
-                Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
-            
+                'Slot Default
+                Call Draw_GrhIndex(GRH_INVENTORYSLOT, startdX, startdY, 0, Normal_RGBList(), 0, False)
             End If
             
         Else
+        
             Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_NEGRO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo
         
         End If
-
             
         If Inventory(LoopC).GrhIndex Then
 
             ' Draw Item
             If LoopC <> DragItem Then
                     
-                If LoopC = SelectedItem Then
-                    Call Draw_GrhIndex(GRH_SLOT_INVENTARIO_ROJO, startdX, startdY, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
-
+                If LoopC = SelectedItem And SlotSelectedGrh <> 0 Then
+                    Call Draw_GrhIndex(SlotSelectedGrh, startdX + (SlotWidth - GrhData(SlotSelectedGrh).pixelWidth) / 2, startdY + (SlotHeight - GrhData(SlotSelectedGrh).pixelHeight) / 2, 0, Normal_RGBList(), 0, False) 'Dibuja el fondo cuando lo seleccionamos
                 End If
 
-                Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX, startdY, 0, Normal_RGBList())
+                Call Draw_GrhIndex(Inventory(LoopC).GrhIndex, startdX + (SlotWidth - GrhData(Inventory(LoopC).GrhIndex).pixelWidth) / 2, startdY + (SlotHeight - GrhData(Inventory(LoopC).GrhIndex).pixelHeight) / 2, 0, Normal_RGBList())
 
                 'If equipped we render "E"
                 If Inventory(LoopC).Equipped Then
                     Call DrawText(startdX + 20, startdY + 20, "E", -1)
-
                 End If
 
                 'Si el usuario no puede usar este item por su raza, sexo o clase, dibujamos una "X"
@@ -489,7 +493,6 @@ Public Sub DrawInventory()
                     Dim ColorText As Long
                     ColorText = D3DColorARGB(255, 200, 30, 30)
                     Call DrawText(startdX + 20, startdY + 20, "X", ColorText)
-
                 End If
                     
                 Call DrawText(startdX, startdY, Inventory(LoopC).Amount, -1)
@@ -517,7 +520,7 @@ Public Sub DrawInventory()
 
         InventoryWindow.AutoRedraw = False
 
-        Call Engine_EndScene(DestRect, InventoryWindow.hWnd)
+        Call Engine_EndScene(DestRect, InventoryWindow.hwnd)
 
         Call DrawBuffer.LoadPictureBlt(InventoryWindow.hdc)
 
@@ -560,8 +563,8 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     If X > InventoryWindow.Width - 16 Then X = InventoryWindow.Width - 16
     If Y > InventoryWindow.Height - 16 Then Y = InventoryWindow.Height - 16
         
-    temp_x = X \ ownTilePixelWidth
-    temp_y = Y \ ownTilePixelHeight
+    temp_x = X \ (SlotWidth + SlotSpaceX)
+    temp_y = Y \ (SlotHeight + SlotSpaceY)
     
     TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
     TempSlot = TempItem
@@ -621,7 +624,7 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As 
 
 End Sub
 
-Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVal MaxObjs As Byte, Optional ByVal FontSize As Integer = 7, Optional ByVal TileWidth As Integer = 32, Optional ByVal TileHeight As Integer = 32, Optional ByVal startX As Integer = 0, Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, Optional ByVal bShowText As Boolean = True, Optional thisInventory As Boolean = False)
+Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVal MaxObjs As Byte, Optional ByVal FontSize As Integer = 7, Optional ByVal tmpSlotWidth As Integer = 32, Optional ByVal tmpSlotHeight As Integer = 32, Optional ByVal startX As Integer = 0, Optional ByVal startY As Integer = 0, Optional ByVal bImgContainer As Boolean = True, Optional ByVal bShowText As Boolean = True, Optional thisInventory As Boolean = False, Optional ByVal tmpSlotSpaceX As Integer = 0, Optional ByVal tmpSlotSpaceY As Integer = 0, Optional ByVal tmpSlotSelectedGrh As Long = GRH_SLOT_INVENTARIO_ROJO)
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
     'Last Modify Date: 03/12/09
@@ -647,10 +650,13 @@ Public Sub Initialize(ByRef DirectD3D As D3DX8, ByRef InvPic As PictureBox, ByVa
     'Make sure DirectD3D was correctly initialized
     If DirectD3D Is Nothing Then Exit Sub
     
-    ownTilePixelHeight = TileHeight
-    ownTilePixelWidth = TileWidth
+    SlotHeight = tmpSlotHeight
+    SlotWidth = tmpSlotWidth
     startdX = startX
     startdY = startY
+    SlotSpaceX = tmpSlotSpaceX
+    SlotSpaceY = tmpSlotSpaceY
+    SlotSelectedGrh = tmpSlotSelectedGrh
     
     ImgContainer = bImgContainer
     ShowValue = bShowText
