@@ -44,25 +44,17 @@ Begin VB.Form frmMain
       ToolTipText     =   "Descarga ffmpeg"
       Top             =   2040
       Width           =   2895
-      _ExtentX        =   5106
-      _ExtentY        =   450
-      Min             =   1
-      Value           =   1
-      Animate         =   0   'False
-      UseBackground   =   0   'False
-      BackgroundColor =   65280
-      ForeColor       =   12632319
-      BackColor       =   16512
-      BorderColor     =   0
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   5106
+      _extenty        =   450
+      min             =   1
+      value           =   1
+      animate         =   0
+      usebackground   =   0
+      backgroundcolor =   65280
+      forecolor       =   12632319
+      backcolor       =   16512
+      bordercolor     =   0
+      font            =   "frmMain.frx":3F5C9
    End
    Begin VB.Timer timerPasarSegundo 
       Interval        =   1000
@@ -76,24 +68,16 @@ Begin VB.Form frmMain
       ToolTipText     =   "Experiencia necesaria para pasar de nivel"
       Top             =   1500
       Width           =   3135
-      _ExtentX        =   5530
-      _ExtentY        =   582
-      Min             =   1
-      Value           =   55
-      Animate         =   0   'False
-      UseBackground   =   0   'False
-      ForeColor       =   -2147483624
-      BackColor       =   49152
-      BorderColor     =   0
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Arial"
-         Size            =   9
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   5530
+      _extenty        =   582
+      min             =   1
+      value           =   55
+      animate         =   0
+      usebackground   =   0
+      forecolor       =   -2147483624
+      backcolor       =   49152
+      bordercolor     =   0
+      font            =   "frmMain.frx":3F5ED
    End
    Begin VB.PictureBox picSM 
       Appearance      =   0  'Flat
@@ -212,9 +196,9 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   3810
       Left            =   11775
-      ScaleHeight     =   252.871
-      ScaleMode       =   0  'User
-      ScaleWidth      =   201.197
+      ScaleHeight     =   254
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   210
       TabIndex        =   16
       Top             =   3120
       Width           =   3150
@@ -238,7 +222,7 @@ Begin VB.Form frmMain
       MultiLine       =   -1  'True
       TabIndex        =   2
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":40D2D
+      Text            =   "frmMain.frx":3F611
       ToolTipText     =   "Chat"
       Top             =   1830
       Visible         =   0   'False
@@ -268,7 +252,7 @@ Begin VB.Form frmMain
       MultiLine       =   -1  'True
       TabIndex        =   1
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":40D5D
+      Text            =   "frmMain.frx":3F641
       ToolTipText     =   "Chat"
       Top             =   10800
       Visible         =   0   'False
@@ -334,25 +318,17 @@ Begin VB.Form frmMain
       Top             =   9600
       Visible         =   0   'False
       Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
-      TX              =   "Mapa"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":40D93
-      PICF            =   "frmMain.frx":417BD
-      PICH            =   "frmMain.frx":4247F
-      PICV            =   "frmMain.frx":43411
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2566
+      _extenty        =   450
+      tx              =   "Mapa"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":3F677
+      picf            =   "frmMain.frx":400A3
+      pich            =   "frmMain.frx":40D67
+      picv            =   "frmMain.frx":41CFB
+      font            =   "frmMain.frx":42BFF
    End
    Begin AOLibre.uAOButton btnGrupo 
       Height          =   255
@@ -362,25 +338,17 @@ Begin VB.Form frmMain
       Top             =   9600
       Visible         =   0   'False
       Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
-      TX              =   "Grupo"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":44313
-      PICF            =   "frmMain.frx":44D3D
-      PICH            =   "frmMain.frx":459FF
-      PICV            =   "frmMain.frx":46991
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2566
+      _extenty        =   450
+      tx              =   "Grupo"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":42C27
+      picf            =   "frmMain.frx":43653
+      pich            =   "frmMain.frx":44317
+      picv            =   "frmMain.frx":452AB
+      font            =   "frmMain.frx":461AF
    End
    Begin AOLibre.uAOButton btnOpciones 
       Height          =   255
@@ -390,25 +358,17 @@ Begin VB.Form frmMain
       Top             =   120
       Visible         =   0   'False
       Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
-      TX              =   "Opciones"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":47893
-      PICF            =   "frmMain.frx":482BD
-      PICH            =   "frmMain.frx":48F7F
-      PICV            =   "frmMain.frx":49F11
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2566
+      _extenty        =   450
+      tx              =   "Opciones"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":461D7
+      picf            =   "frmMain.frx":46C03
+      pich            =   "frmMain.frx":478C7
+      picv            =   "frmMain.frx":4885B
+      font            =   "frmMain.frx":4975F
    End
    Begin AOLibre.uAOButton btnEstadisticas 
       Height          =   255
@@ -418,25 +378,17 @@ Begin VB.Form frmMain
       Top             =   7320
       Visible         =   0   'False
       Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
-      TX              =   "Estadisticas"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":4AE13
-      PICF            =   "frmMain.frx":4B83D
-      PICH            =   "frmMain.frx":4C4FF
-      PICV            =   "frmMain.frx":4D491
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2566
+      _extenty        =   450
+      tx              =   "Estadisticas"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":49787
+      picf            =   "frmMain.frx":4A1B3
+      pich            =   "frmMain.frx":4AE77
+      picv            =   "frmMain.frx":4BE0B
+      font            =   "frmMain.frx":4CD0F
    End
    Begin AOLibre.uAOButton btnClanes 
       Height          =   255
@@ -446,25 +398,17 @@ Begin VB.Form frmMain
       Top             =   9600
       Visible         =   0   'False
       Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
-      TX              =   "Clanes"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":4E393
-      PICF            =   "frmMain.frx":4EDBD
-      PICH            =   "frmMain.frx":4FA7F
-      PICV            =   "frmMain.frx":50A11
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2566
+      _extenty        =   450
+      tx              =   "Clanes"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":4CD37
+      picf            =   "frmMain.frx":4D763
+      pich            =   "frmMain.frx":4E427
+      picv            =   "frmMain.frx":4F3BB
+      font            =   "frmMain.frx":502BF
    End
    Begin AOLibre.uAOButton btnInventario 
       Height          =   375
@@ -473,25 +417,17 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   2400
       Width           =   1815
-      _ExtentX        =   3201
-      _ExtentY        =   661
-      TX              =   "Inventario"
-      ENAB            =   -1  'True
-      FCOL            =   8421504
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":51913
-      PICF            =   "frmMain.frx":52A97
-      PICH            =   "frmMain.frx":5443B
-      PICV            =   "frmMain.frx":564CF
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   3201
+      _extenty        =   661
+      tx              =   "Inventario"
+      enab            =   -1
+      fcol            =   8421504
+      ocol            =   16777215
+      pice            =   "frmMain.frx":502E7
+      picf            =   "frmMain.frx":5146B
+      pich            =   "frmMain.frx":52E0F
+      picv            =   "frmMain.frx":54EA3
+      font            =   "frmMain.frx":56F07
    End
    Begin AOLibre.uAOButton btnHechizos 
       Height          =   375
@@ -500,25 +436,17 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   2400
       Width           =   1695
-      _ExtentX        =   2990
-      _ExtentY        =   661
-      TX              =   "Hechizos"
-      ENAB            =   -1  'True
-      FCOL            =   8421504
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":58533
-      PICF            =   "frmMain.frx":596B7
-      PICH            =   "frmMain.frx":5B05B
-      PICV            =   "frmMain.frx":5D0EF
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2990
+      _extenty        =   661
+      tx              =   "Hechizos"
+      enab            =   -1
+      fcol            =   8421504
+      ocol            =   16777215
+      pice            =   "frmMain.frx":56F2F
+      picf            =   "frmMain.frx":580B3
+      pich            =   "frmMain.frx":59A57
+      picv            =   "frmMain.frx":5BAEB
+      font            =   "frmMain.frx":5DB4F
    End
    Begin AOLibre.uAOButton btnLanzar 
       Height          =   615
@@ -528,25 +456,17 @@ Begin VB.Form frmMain
       Top             =   6360
       Visible         =   0   'False
       Width           =   1935
-      _ExtentX        =   3413
-      _ExtentY        =   1085
-      TX              =   "Lanzar"
-      ENAB            =   -1  'True
-      FCOL            =   8421504
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":5F153
-      PICF            =   "frmMain.frx":602D7
-      PICH            =   "frmMain.frx":61C7B
-      PICV            =   "frmMain.frx":63D0F
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   15.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   3413
+      _extenty        =   1085
+      tx              =   "Lanzar"
+      enab            =   -1
+      fcol            =   8421504
+      ocol            =   16777215
+      pice            =   "frmMain.frx":5DB77
+      picf            =   "frmMain.frx":5ECFB
+      pich            =   "frmMain.frx":6069F
+      picv            =   "frmMain.frx":62733
+      font            =   "frmMain.frx":64797
    End
    Begin AOLibre.uAOButton btnInfo 
       Height          =   615
@@ -556,25 +476,17 @@ Begin VB.Form frmMain
       Top             =   6360
       Visible         =   0   'False
       Width           =   1095
-      _ExtentX        =   1931
-      _ExtentY        =   1085
-      TX              =   "Info"
-      ENAB            =   -1  'True
-      FCOL            =   8421504
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":65D73
-      PICF            =   "frmMain.frx":66EF7
-      PICH            =   "frmMain.frx":6889B
-      PICV            =   "frmMain.frx":6A92F
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   15.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   1931
+      _extenty        =   1085
+      tx              =   "Info"
+      enab            =   -1
+      fcol            =   8421504
+      ocol            =   16777215
+      pice            =   "frmMain.frx":647BF
+      picf            =   "frmMain.frx":65943
+      pich            =   "frmMain.frx":672E7
+      picv            =   "frmMain.frx":6937B
+      font            =   "frmMain.frx":6B3DF
    End
    Begin AOLibre.uAOButton btnRetos 
       Height          =   255
@@ -584,25 +496,17 @@ Begin VB.Form frmMain
       Top             =   10560
       Visible         =   0   'False
       Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
-      TX              =   "Retos"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":6C993
-      PICF            =   "frmMain.frx":6D3BD
-      PICH            =   "frmMain.frx":6E07F
-      PICV            =   "frmMain.frx":6F011
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2566
+      _extenty        =   450
+      tx              =   "Retos"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":6B407
+      picf            =   "frmMain.frx":6BE33
+      pich            =   "frmMain.frx":6CAF7
+      picv            =   "frmMain.frx":6DA8B
+      font            =   "frmMain.frx":6E98F
    End
    Begin AOLibre.uAOButton btnAmigos 
       Height          =   255
@@ -612,25 +516,17 @@ Begin VB.Form frmMain
       Top             =   10440
       Visible         =   0   'False
       Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
-      TX              =   "Amigos"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":6FF13
-      PICF            =   "frmMain.frx":7093D
-      PICH            =   "frmMain.frx":715FF
-      PICV            =   "frmMain.frx":72591
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2566
+      _extenty        =   450
+      tx              =   "Amigos"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":6E9B7
+      picf            =   "frmMain.frx":6F3E3
+      pich            =   "frmMain.frx":700A7
+      picv            =   "frmMain.frx":7103B
+      font            =   "frmMain.frx":71F3F
    End
    Begin AOLibre.uAOButton btnQuests 
       Height          =   255
@@ -640,25 +536,17 @@ Begin VB.Form frmMain
       Top             =   10560
       Visible         =   0   'False
       Width           =   1455
-      _ExtentX        =   2566
-      _ExtentY        =   450
-      TX              =   "Quests"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":73493
-      PICF            =   "frmMain.frx":73EBD
-      PICH            =   "frmMain.frx":74B7F
-      PICV            =   "frmMain.frx":75B11
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Calibri"
-         Size            =   12
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2566
+      _extenty        =   450
+      tx              =   "Quests"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":71F67
+      picf            =   "frmMain.frx":72993
+      pich            =   "frmMain.frx":73657
+      picv            =   "frmMain.frx":745EB
+      font            =   "frmMain.frx":754EF
    End
    Begin RichTextLib.RichTextBox RecTxt 
       Height          =   1305
@@ -672,11 +560,10 @@ Begin VB.Form frmMain
       _ExtentY        =   2302
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmMain.frx":76A13
+      TextRTF         =   $"frmMain.frx":75517
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -693,25 +580,17 @@ Begin VB.Form frmMain
       TabIndex        =   45
       Top             =   10920
       Width           =   885
-      _ExtentX        =   1561
-      _ExtentY        =   873
-      TX              =   "Reportar Bug"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":76A90
-      PICF            =   "frmMain.frx":76AAC
-      PICH            =   "frmMain.frx":76AC8
-      PICV            =   "frmMain.frx":76AE4
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   1561
+      _extenty        =   873
+      tx              =   "Reportar Bug"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":75594
+      picf            =   "frmMain.frx":755B0
+      pich            =   "frmMain.frx":755CC
+      picv            =   "frmMain.frx":755E8
+      font            =   "frmMain.frx":75604
    End
    Begin AOLibre.uAOButton btnGrabarVideo 
       Height          =   495
@@ -719,25 +598,38 @@ Begin VB.Form frmMain
       TabIndex        =   46
       Top             =   10920
       Width           =   885
-      _ExtentX        =   1561
-      _ExtentY        =   873
-      TX              =   "Grabar Video"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmMain.frx":76B00
-      PICF            =   "frmMain.frx":76B1C
-      PICH            =   "frmMain.frx":76B38
-      PICV            =   "frmMain.frx":76B54
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   1561
+      _extenty        =   873
+      tx              =   "Grabar Video"
+      enab            =   -1
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmMain.frx":7562C
+      picf            =   "frmMain.frx":75648
+      pich            =   "frmMain.frx":75664
+      picv            =   "frmMain.frx":75680
+      font            =   "frmMain.frx":7569C
+   End
+   Begin VB.Image imgInvLock 
+      Height          =   210
+      Index           =   2
+      Left            =   11520
+      Top             =   6570
+      Width           =   210
+   End
+   Begin VB.Image imgInvLock 
+      Height          =   210
+      Index           =   1
+      Left            =   11520
+      Top             =   6045
+      Width           =   210
+   End
+   Begin VB.Image imgInvLock 
+      Height          =   210
+      Index           =   0
+      Left            =   11520
+      Top             =   5535
+      Width           =   210
    End
    Begin VB.Image ImgQuests 
       Height          =   495
@@ -827,7 +719,7 @@ Begin VB.Form frmMain
       Height          =   420
       Left            =   14760
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":76B70
+      Picture         =   "frmMain.frx":756C4
       Top             =   960
       Width           =   465
    End
@@ -873,9 +765,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":77497
+      MouseIcon       =   "frmMain.frx":75FEB
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":775E9
+      Picture         =   "frmMain.frx":7613D
       Top             =   3960
       Visible         =   0   'False
       Width           =   225
@@ -884,9 +776,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":7792D
+      MouseIcon       =   "frmMain.frx":76481
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":77A7F
+      Picture         =   "frmMain.frx":765D3
       Top             =   3705
       Visible         =   0   'False
       Width           =   225
@@ -2481,7 +2373,7 @@ Private Sub TirarItem()
         End With
     Else
 
-        If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_MAININVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
+        If (Inventario.SelectedItem > 0 And Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Or (Inventario.SelectedItem = FLAGORO) Then
             If Inventario.Amount(Inventario.SelectedItem) = 1 Then
                 Call WriteDrop(Inventario.SelectedItem, 1)
             Else
@@ -2512,7 +2404,7 @@ Private Sub UsarItem()
     
     If Comerciando Then Exit Sub
     
-    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_MAININVENTORY_SLOTS + 1) Then
+    If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then
         Call WriteUseItem(Inventario.SelectedItem)
     End If
     
@@ -2530,7 +2422,7 @@ Private Sub EquiparItem()
     
         If Comerciando Then Exit Sub
         
-        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_MAININVENTORY_SLOTS + 1) Then
+        If (Inventario.SelectedItem > 0) And (Inventario.SelectedItem < MAX_INVENTORY_SLOTS + 1) Then
             Call WriteEquipItem(Inventario.SelectedItem)
         End If
         

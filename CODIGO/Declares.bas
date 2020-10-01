@@ -238,15 +238,11 @@ Public Enum E_Heading
 End Enum
 
 'Objetos
-' Cantidad de "slots" en el inventario sin mochila
+' Cantidad de "slots" en el inventario basico
 Public Const MAX_NORMAL_INVENTORY_SLOTS As Byte = 24
 
-' Cantidad de "slots" en el inventario con mochila chica
-Public Const MAX_MOCHILA_CHICA_INVENTORY_SLOTS As Byte = 36
-
-' Cantidad de "slots" en el inventario con alforja
-Public Const MAX_MAININVENTORY_SLOTS As Byte = 42
-Public Const MAX_INVENTORY_SLOTS As Byte = 35
+' Cantidad de "slots" en el inventario con slots desbloqueados
+Public Const MAX_INVENTORY_SLOTS As Byte = 42
 
 Public Const MAX_INVENTORY_OBJS As Integer = 10000
 Public Const MAX_NPC_INVENTORY_SLOTS As Byte = 50
@@ -381,8 +377,6 @@ Public Enum eObjType
     otYacimientoPez = 38
     otCualquiera = 1000
 End Enum
-
-Public MaxInventorySlots As Byte
 
 'Slots de Inventarios Generales
 Public Const GRH_SLOT_INVENTARIO_NEGRO As Long = 26095
