@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.ocx"
 Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
@@ -54,7 +53,7 @@ Begin VB.Form frmMain
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
-      TabIndex        =   20
+      TabIndex        =   19
       Top             =   10920
       Width           =   420
    End
@@ -67,7 +66,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   100
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   100
-      TabIndex        =   36
+      TabIndex        =   35
       TabStop         =   0   'False
       Top             =   600
       Width           =   1500
@@ -103,7 +102,7 @@ Begin VB.Form frmMain
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
-      TabIndex        =   28
+      TabIndex        =   27
       Top             =   10920
       Width           =   420
    End
@@ -119,7 +118,7 @@ Begin VB.Form frmMain
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
-      TabIndex        =   23
+      TabIndex        =   22
       Top             =   10920
       Width           =   420
    End
@@ -136,7 +135,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   30
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   28
-      TabIndex        =   22
+      TabIndex        =   21
       Top             =   10920
       Width           =   420
    End
@@ -162,7 +161,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   254
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   210
-      TabIndex        =   16
+      TabIndex        =   15
       Top             =   3120
       Width           =   3150
    End
@@ -183,7 +182,7 @@ Begin VB.Form frmMain
       Left            =   600
       MaxLength       =   160
       MultiLine       =   -1  'True
-      TabIndex        =   2
+      TabIndex        =   1
       TabStop         =   0   'False
       Text            =   "frmMain.frx":3F80C
       ToolTipText     =   "Chat"
@@ -213,7 +212,7 @@ Begin VB.Form frmMain
       Left            =   360
       MaxLength       =   160
       MultiLine       =   -1  'True
-      TabIndex        =   1
+      TabIndex        =   0
       TabStop         =   0   'False
       Text            =   "frmMain.frx":3F83C
       ToolTipText     =   "Chat"
@@ -237,7 +236,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   3180
       Left            =   12012
-      TabIndex        =   17
+      TabIndex        =   16
       TabStop         =   0   'False
       Top             =   3000
       Visible         =   0   'False
@@ -252,7 +251,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   608
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   736
-      TabIndex        =   29
+      TabIndex        =   28
       Top             =   2280
       Width           =   11040
       Begin InetCtlsObjects.Inet InetDownloadFfmpeg 
@@ -276,7 +275,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnMapa 
       Height          =   255
       Left            =   11160
-      TabIndex        =   27
+      TabIndex        =   26
       TabStop         =   0   'False
       Top             =   9600
       Visible         =   0   'False
@@ -304,7 +303,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnGrupo 
       Height          =   255
       Left            =   12600
-      TabIndex        =   30
+      TabIndex        =   29
       TabStop         =   0   'False
       Top             =   9600
       Visible         =   0   'False
@@ -332,7 +331,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnOpciones 
       Height          =   255
       Left            =   12360
-      TabIndex        =   31
+      TabIndex        =   30
       TabStop         =   0   'False
       Top             =   120
       Visible         =   0   'False
@@ -360,7 +359,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnEstadisticas 
       Height          =   255
       Left            =   12600
-      TabIndex        =   32
+      TabIndex        =   31
       TabStop         =   0   'False
       Top             =   7320
       Visible         =   0   'False
@@ -388,7 +387,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnClanes 
       Height          =   255
       Left            =   14040
-      TabIndex        =   33
+      TabIndex        =   32
       TabStop         =   0   'False
       Top             =   9600
       Visible         =   0   'False
@@ -416,7 +415,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnInventario 
       Height          =   375
       Left            =   11520
-      TabIndex        =   34
+      TabIndex        =   33
       TabStop         =   0   'False
       Top             =   2400
       Width           =   1815
@@ -443,7 +442,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnHechizos 
       Height          =   375
       Left            =   13440
-      TabIndex        =   35
+      TabIndex        =   34
       TabStop         =   0   'False
       Top             =   2400
       Width           =   1695
@@ -470,7 +469,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnLanzar 
       Height          =   615
       Left            =   11760
-      TabIndex        =   21
+      TabIndex        =   20
       TabStop         =   0   'False
       Top             =   6360
       Visible         =   0   'False
@@ -498,7 +497,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnInfo 
       Height          =   615
       Left            =   13800
-      TabIndex        =   37
+      TabIndex        =   36
       TabStop         =   0   'False
       Top             =   6360
       Visible         =   0   'False
@@ -526,7 +525,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnRetos 
       Height          =   255
       Left            =   12720
-      TabIndex        =   42
+      TabIndex        =   41
       TabStop         =   0   'False
       Top             =   10560
       Visible         =   0   'False
@@ -554,7 +553,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnAmigos 
       Height          =   255
       Left            =   11280
-      TabIndex        =   43
+      TabIndex        =   42
       TabStop         =   0   'False
       Top             =   10440
       Visible         =   0   'False
@@ -582,7 +581,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnQuests 
       Height          =   255
       Left            =   14040
-      TabIndex        =   44
+      TabIndex        =   43
       TabStop         =   0   'False
       Top             =   10560
       Visible         =   0   'False
@@ -607,37 +606,10 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
-   Begin RichTextLib.RichTextBox RecTxt 
-      Height          =   1305
-      Left            =   135
-      TabIndex        =   0
-      TabStop         =   0   'False
-      ToolTipText     =   "Mensajes del servidor"
-      Top             =   480
-      Width           =   9300
-      _ExtentX        =   16404
-      _ExtentY        =   2302
-      _Version        =   393217
-      BackColor       =   0
-      Enabled         =   -1  'True
-      ReadOnly        =   -1  'True
-      ScrollBars      =   2
-      DisableNoScroll =   -1  'True
-      TextRTF         =   $"frmMain.frx":754F2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-   End
    Begin AOLibre.uAOButton btnReportarBug 
       Height          =   495
       Left            =   11400
-      TabIndex        =   45
+      TabIndex        =   44
       Top             =   10920
       Width           =   885
       _ExtentX        =   1561
@@ -646,10 +618,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":7556F
-      PICF            =   "frmMain.frx":7558B
-      PICH            =   "frmMain.frx":755A7
-      PICV            =   "frmMain.frx":755C3
+      PICE            =   "frmMain.frx":754F2
+      PICF            =   "frmMain.frx":7550E
+      PICH            =   "frmMain.frx":7552A
+      PICV            =   "frmMain.frx":75546
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -663,7 +635,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnGrabarVideo 
       Height          =   495
       Left            =   14400
-      TabIndex        =   46
+      TabIndex        =   45
       Top             =   10920
       Width           =   885
       _ExtentX        =   1561
@@ -672,10 +644,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":755DF
-      PICF            =   "frmMain.frx":755FB
-      PICH            =   "frmMain.frx":75617
-      PICV            =   "frmMain.frx":75633
+      PICE            =   "frmMain.frx":75562
+      PICF            =   "frmMain.frx":7557E
+      PICH            =   "frmMain.frx":7559A
+      PICV            =   "frmMain.frx":755B6
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -686,10 +658,51 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
    End
+   Begin VB.PictureBox pConsola 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   1305
+      Left            =   135
+      Picture         =   "frmMain.frx":755D2
+      ScaleHeight     =   87
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   620
+      TabIndex        =   49
+      Top             =   480
+      Width           =   9300
+      Begin VB.Image BarraConsolaCentro 
+         Height          =   765
+         Left            =   9030
+         Top             =   270
+         Width           =   270
+      End
+      Begin VB.Image BarritaConsola 
+         Height          =   120
+         Left            =   9030
+         Picture         =   "frmMain.frx":77627
+         Top             =   915
+         Width           =   270
+      End
+      Begin VB.Image BarraConsolaUp 
+         Height          =   270
+         Left            =   9030
+         Top             =   0
+         Width           =   270
+      End
+      Begin VB.Image BarraConsolaDown 
+         Height          =   270
+         Left            =   9030
+         Top             =   1035
+         Width           =   270
+      End
+   End
    Begin AOLibre.uAOProgress uAOProgressDownloadFfmpeg 
       Height          =   255
       Left            =   2160
-      TabIndex        =   47
+      TabIndex        =   46
       ToolTipText     =   "Descarga ffmpeg"
       Top             =   2040
       Width           =   2895
@@ -715,7 +728,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOProgress uAOProgressExperienceLevel 
       Height          =   330
       Left            =   11490
-      TabIndex        =   39
+      TabIndex        =   38
       ToolTipText     =   "Experiencia necesaria para pasar de nivel"
       Top             =   1500
       Width           =   3135
@@ -798,7 +811,7 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Height          =   495
       Left            =   14760
-      TabIndex        =   49
+      TabIndex        =   48
       Top             =   1440
       Width           =   495
    End
@@ -809,7 +822,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000014&
       Height          =   255
       Left            =   6600
-      TabIndex        =   38
+      TabIndex        =   37
       Top             =   2040
       Width           =   4455
    End
@@ -818,7 +831,7 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Height          =   375
       Left            =   11400
-      TabIndex        =   48
+      TabIndex        =   47
       Top             =   0
       Width           =   375
    End
@@ -838,7 +851,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFF00&
       Height          =   345
       Left            =   14040
-      TabIndex        =   41
+      TabIndex        =   40
       Top             =   1560
       Width           =   555
    End
@@ -846,7 +859,7 @@ Begin VB.Form frmMain
       Height          =   420
       Left            =   14760
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":7564F
+      Picture         =   "frmMain.frx":7798E
       Top             =   960
       Visible         =   0   'False
       Width           =   465
@@ -856,7 +869,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   13800
       MousePointer    =   99  'Custom
-      TabIndex        =   26
+      TabIndex        =   25
       Top             =   6960
       Width           =   255
    End
@@ -865,7 +878,7 @@ Begin VB.Form frmMain
       Height          =   375
       Left            =   14640
       MousePointer    =   99  'Custom
-      TabIndex        =   25
+      TabIndex        =   24
       Top             =   0
       Width           =   255
    End
@@ -874,7 +887,7 @@ Begin VB.Form frmMain
       Height          =   375
       Left            =   15000
       MousePointer    =   99  'Custom
-      TabIndex        =   24
+      TabIndex        =   23
       Top             =   0
       Width           =   375
    End
@@ -885,7 +898,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8640
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   120
       Width           =   795
    End
@@ -893,9 +906,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":75F76
+      MouseIcon       =   "frmMain.frx":782B5
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":760C8
+      Picture         =   "frmMain.frx":78407
       Top             =   3960
       Visible         =   0   'False
       Width           =   225
@@ -904,9 +917,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":7640C
+      MouseIcon       =   "frmMain.frx":7874B
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":7655E
+      Picture         =   "frmMain.frx":7889D
       Top             =   3705
       Visible         =   0   'False
       Width           =   225
@@ -941,7 +954,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFC0C0&
       Height          =   495
       Left            =   11400
-      TabIndex        =   40
+      TabIndex        =   39
       Top             =   600
       Width           =   3825
    End
@@ -962,7 +975,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   285
       Left            =   11520
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   1080
       Width           =   3525
    End
@@ -973,7 +986,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H0080FFFF&
       Height          =   210
       Left            =   11880
-      TabIndex        =   15
+      TabIndex        =   14
       Top             =   7350
       Width           =   90
    End
@@ -984,7 +997,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H0000FFFF&
       Height          =   210
       Left            =   15000
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   7350
       Width           =   210
    End
@@ -995,7 +1008,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H0000FFFF&
       Height          =   210
       Left            =   14400
-      TabIndex        =   8
+      TabIndex        =   7
       Top             =   7350
       Width           =   210
    End
@@ -1015,7 +1028,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H0000FFFF&
       Height          =   255
       Left            =   9675
-      TabIndex        =   7
+      TabIndex        =   6
       Top             =   180
       Width           =   1455
    End
@@ -1035,7 +1048,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H000000FF&
       Height          =   255
       Left            =   11550
-      TabIndex        =   6
+      TabIndex        =   5
       Top             =   9030
       Width           =   975
    End
@@ -1055,7 +1068,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFF80&
       Height          =   255
       Left            =   12600
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   9030
       Width           =   975
    End
@@ -1075,7 +1088,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H000080FF&
       Height          =   255
       Left            =   13485
-      TabIndex        =   4
+      TabIndex        =   3
       Top             =   9030
       Width           =   975
    End
@@ -1095,7 +1108,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H008080FF&
       Height          =   255
       Left            =   14475
-      TabIndex        =   3
+      TabIndex        =   2
       Top             =   9030
       Width           =   975
    End
@@ -1121,7 +1134,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   11955
-      TabIndex        =   11
+      TabIndex        =   10
       Top             =   8340
       Width           =   1215
    End
@@ -1133,7 +1146,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   11955
-      TabIndex        =   10
+      TabIndex        =   9
       Top             =   8625
       Width           =   1215
    End
@@ -1145,7 +1158,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   11955
-      TabIndex        =   12
+      TabIndex        =   11
       Top             =   8040
       Width           =   1215
    End
@@ -1157,7 +1170,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   13920
-      TabIndex        =   13
+      TabIndex        =   12
       Top             =   8340
       Width           =   1095
    End
@@ -1169,7 +1182,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   13920
-      TabIndex        =   14
+      TabIndex        =   13
       Top             =   8040
       Width           =   1095
    End
@@ -1345,6 +1358,23 @@ Public MsgTimeado          As String
 Private Const NEWBIE_USER_GOLD_COLOR As Long = vbCyan
 Private Const USER_GOLD_COLOR As Long = vbYellow
 
+Private Type tConsola
+    Texto As String
+    Color As Long
+    bold As Byte
+    italic As Byte
+End Type
+Private OffSetConsola As Integer
+Private LineasConsola As Integer
+
+Private Const CONSOLE_LINE_HEIGHT As Integer = 14
+Private Const MAX_CONSOLE_LINES As Integer = 600
+Private Const CONSOLE_REMOVED_LINES As Integer = 100
+Private Const CONSOLE_ARROWS_DISPLACEMENT As Integer = 3
+Private CONSOLE_VISIBLE_LINES As Integer
+
+Private Consola(MAX_CONSOLE_LINES) As tConsola
+
 Private Declare Function SetWindowLong _
                 Lib "user32" _
                 Alias "SetWindowLongA" (ByVal hwnd As Long, _
@@ -1392,6 +1422,47 @@ Private Sub DownloadFfmpeg()
     End If
 End Sub
 
+Private Sub BarraConsolaCentro_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Dim NewOffset As Integer
+    
+    If LineasConsola <= CONSOLE_VISIBLE_LINES Then
+        NewOffset = 0
+    Else
+        ' El 15 es porque convierto de twip a pixel
+        NewOffset = Round((Y / 15) * (LineasConsola - CONSOLE_VISIBLE_LINES) / BarraConsolaCentro.Height)
+    End If
+    
+    If NewOffset <> OffSetConsola Then
+        OffSetConsola = NewOffset
+        ReDrawConsola
+    End If
+End Sub
+
+Private Sub BarraConsolaUp_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Dim NewOffset As Integer
+    
+    If OffSetConsola > 0 Then
+        NewOffset = OffSetConsola - IIf(CONSOLE_ARROWS_DISPLACEMENT > OffSetConsola, OffSetConsola, CONSOLE_ARROWS_DISPLACEMENT)
+    
+        If NewOffset <> OffSetConsola Then
+            OffSetConsola = NewOffset
+            ReDrawConsola
+        End If
+    End If
+End Sub
+
+Private Sub BarraConsolaDown_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Dim NewOffset As Integer
+    
+    If OffSetConsola < LineasConsola - CONSOLE_VISIBLE_LINES Then
+        NewOffset = OffSetConsola + IIf(CONSOLE_ARROWS_DISPLACEMENT > LineasConsola - CONSOLE_VISIBLE_LINES - OffSetConsola, LineasConsola - CONSOLE_VISIBLE_LINES - OffSetConsola, CONSOLE_ARROWS_DISPLACEMENT)
+    
+        If NewOffset <> OffSetConsola Then
+            OffSetConsola = NewOffset
+            ReDrawConsola
+        End If
+    End If
+End Sub
 
 Private Sub ImgAmigos_Click()
     Call frmAmigos.Show(vbModeless, frmMain)
@@ -1543,15 +1614,14 @@ Private Sub Form_Load()
         
     Call LoadButtons
 
-
     Call LoadTextsForm
     Call LoadAOCustomControlsPictures(Me)
         
     ' Detect links in console
-    Call EnableURLDetect(RecTxt.hwnd, Me.hwnd)
+    Call EnableURLDetect(pConsola.hwnd, Me.hwnd)
     
     ' Hacer las consolas transparentes
-    Call SetWindowLong(RecTxt.hwnd, -20, &H20&)
+    'Call SetWindowLong(RecTxt.hwnd, -20, &H20&)
     
     ' Seteamos el caption
     Me.Caption = "Argentum Online Libre"
@@ -1569,6 +1639,8 @@ Private Sub Form_Load()
     FirstTimeClanChat = True
     bIsRecordingVideo = False
     uAOProgressDownloadFfmpeg.Visible = False
+    
+    CONSOLE_VISIBLE_LINES = pConsola.Height \ CONSOLE_LINE_HEIGHT
     
 End Sub
 
@@ -1685,7 +1757,7 @@ Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
         Case eSMType.sResucitation
             
             If Mostrar Then
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO"), _
+                Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO"), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(1), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(2), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("COLOR").item(3), _
@@ -1693,7 +1765,7 @@ Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
                                         
                 picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_RESU_ON").item("TEXTO")
             Else
-                Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("TEXTO"), _
+                Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("TEXTO"), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(1), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(2), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_RESU_OFF").item("COLOR").item(3), _
@@ -1705,7 +1777,7 @@ Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
         Case eSMType.sSafemode
             
             If Mostrar Then
-                Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(1)), _
+                Call frmMain.AddtoRichPicture(UCase$(JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(1)), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(1), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(2), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("COLOR").item(3), _
@@ -1713,7 +1785,7 @@ Public Sub ControlSM(ByVal Index As Byte, ByVal Mostrar As Boolean)
                                         
                 picSM(Index).ToolTipText = JsonLanguage.item("MENSAJE_SEGURO_ACTIVADO").item("TEXTO").item(2)
             Else
-                Call AddtoRichTextBox(frmMain.RecTxt, UCase$(JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(1)), _
+                Call frmMain.AddtoRichPicture(UCase$(JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("TEXTO").item(1)), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(1), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(2), _
                                                       JsonLanguage.item("MENSAJE_SEGURO_DESACTIVADO").item("COLOR").item(3), _
@@ -2033,7 +2105,7 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub GldLbl_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_GOLD_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_GOLD_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_GOLD_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_GOLD_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_GOLD_LABEL").item("COLOR").item(3), _
@@ -2115,7 +2187,7 @@ Private Sub lblScroll_Click(Index As Integer)
 End Sub
 
 Private Sub lblArmor_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_ARMOR_LABEL").item("COLOR").item(3), _
@@ -2129,7 +2201,7 @@ End Sub
 
 
 Private Sub lblDext_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_DEXT_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_DEXT_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_DEXT_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_DEXT_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_DEXT_LABEL").item("COLOR").item(3), _
@@ -2137,7 +2209,7 @@ Private Sub lblDext_Click()
 End Sub
 
 Private Sub lblEnergia_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_ENERGIA_LABEL").item("COLOR").item(3), _
@@ -2167,7 +2239,7 @@ Private Sub lblEstadisticas_Click()
 End Sub
 
 Private Sub lblHambre_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_HAMBRE_LABEL").item("COLOR").item(3), _
@@ -2175,7 +2247,7 @@ Private Sub lblHambre_Click()
 End Sub
 
 Private Sub lblHelm_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_HELM_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_HELM_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_HELM_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_HELM_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_HELM_LABEL").item("COLOR").item(3), _
@@ -2184,7 +2256,7 @@ End Sub
 
 
 Private Sub lblMana_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_MANA_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_MANA_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_MANA_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_MANA_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_MANA_LABEL").item("COLOR").item(3), _
@@ -2196,7 +2268,7 @@ Private Sub lblOpciones_Click()
 End Sub
 
 Private Sub lblSed_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SED_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_SED_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_SED_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_SED_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_SED_LABEL").item("COLOR").item(3), _
@@ -2204,7 +2276,7 @@ Private Sub lblSed_Click()
 End Sub
 
 Private Sub lblShielder_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_SHIELDER_LABEL").item("COLOR").item(3), _
@@ -2212,7 +2284,7 @@ Private Sub lblShielder_Click()
 End Sub
 
 Private Sub lblStrg_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_STRG_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_STRG_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_STRG_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_STRG_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_STRG_LABEL").item("COLOR").item(3), _
@@ -2220,7 +2292,7 @@ Private Sub lblStrg_Click()
 End Sub
 
 Private Sub lblVida_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_VIDA_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_VIDA_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_VIDA_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_VIDA_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_VIDA_LABEL").item("COLOR").item(3), _
@@ -2233,7 +2305,7 @@ End Sub
 
 
 Private Sub lblWeapon_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_WEAPON_LABEL").item("COLOR").item(3), _
@@ -2265,7 +2337,7 @@ End Sub
 Public Sub ActivarMacroTrabajo()
     macrotrabajo.Interval = INT_MACRO_TRABAJO
     macrotrabajo.Enabled = True
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_MACRO_ACTIVADO").item("TEXTO"), 0, 200, 200, False, True, True)
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_MACRO_ACTIVADO").item("TEXTO"), 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, True)
 End Sub
 
@@ -2274,7 +2346,7 @@ Public Sub DesactivarMacroTrabajo()
     MacroBltIndex = 0
     UsingSkill = 0
     MousePointer = vbDefault
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_MACRO_DESACTIVADO").item("TEXTO"), 0, 200, 200, False, True, True)
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_MACRO_DESACTIVADO").item("TEXTO"), 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mWork, False)
 End Sub
 
@@ -2300,7 +2372,7 @@ Private Sub mnuUsar_Click()
 End Sub
 
 Private Sub PicMH_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_AUTO_CAST_SPELL").item("COLOR").item(3), _
@@ -2308,7 +2380,7 @@ Private Sub PicMH_Click()
 End Sub
 
 Private Sub Coord_Click()
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("TEXTO"), _
                                           JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("COLOR").item(1), _
                                           JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("COLOR").item(2), _
                                           JsonLanguage.item("MENSAJE_INFO_COORDENADAS").item("COLOR").item(3), _
@@ -2359,7 +2431,7 @@ Private Sub picSM_DblClick(Index As Integer)
     End Select
 End Sub
 
-Private Sub RecTxt_MouseMove(Button As Integer, _
+Private Sub pConsola_MouseMove(Button As Integer, _
                              Shift As Integer, _
                              X As Single, _
                              Y As Single)
@@ -2686,7 +2758,7 @@ Private Sub MainViewPic_Click()
                             MENSAJE_ADVERTENCIA = JsonLanguage.item("MENSAJE_MACRO_ADVERTENCIA").item("TEXTO")
                             MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                             
-                            Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
+                            Call frmMain.AddtoRichPicture(MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
                         End With
                         Exit Sub
                     End If
@@ -2702,7 +2774,7 @@ Private Sub MainViewPic_Click()
                                 MENSAJE_ADVERTENCIA = JsonLanguage.item("MENSAJE_MACRO_ADVERTENCIA").item("TEXTO")
                                 MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                 
-                                Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
+                                Call frmMain.AddtoRichPicture(MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
                             End With
                             Exit Sub
                         End If
@@ -2720,7 +2792,7 @@ Private Sub MainViewPic_Click()
                                     MENSAJE_ADVERTENCIA = JsonLanguage.item("MENSAJE_MACRO_ADVERTENCIA").item("TEXTO")
                                     MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                     
-                                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
+                                    Call frmMain.AddtoRichPicture(MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
                                 End With
                                 Exit Sub
                             End If
@@ -2735,7 +2807,7 @@ Private Sub MainViewPic_Click()
                                     MENSAJE_ADVERTENCIA = JsonLanguage.item("MENSAJE_MACRO_ADVERTENCIA").item("TEXTO")
                                     MENSAJE_ADVERTENCIA = Replace$(MENSAJE_ADVERTENCIA, "VAR_LANZADO", VAR_LANZANDO)
                                     
-                                    Call AddtoRichTextBox(frmMain.RecTxt, MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
+                                    Call frmMain.AddtoRichPicture(MENSAJE_ADVERTENCIA, .Red, .Green, .Blue, .bold, .italic)
                                 End With
                                 Exit Sub
                             End If
@@ -2835,7 +2907,7 @@ Private Sub btnInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
@@ -2863,7 +2935,7 @@ Private Sub btnHechizos_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
 
 End Sub
 
@@ -2904,51 +2976,6 @@ End Sub
 
 Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call Audio.PlayWave(SND_CLICK)
-End Sub
-
-Private Sub RecTxt_Change()
-
-    On Error Resume Next  'el .SetFocus causaba errores al salir y volver a entrar
-
-    If Not Application.IsAppActive() Then Exit Sub
-    If (Not frmBuscar.Visible) Then Exit Sub
-            
-    If SendTxt.Visible Then
-        SendTxt.SetFocus
-    
-    ElseIf Me.SendCMSTXT.Visible Then
-        SendCMSTXT.SetFocus
-    
-    ElseIf (Not Comerciando) And _
-           (Not frmBuscar.Visible) And _
-           (Not MirandoAsignarSkills) And _
-           (Not frmMSG.Visible) And _
-           (Not MirandoForo) And _
-           (Not frmEstadisticas.Visible) And _
-           (Not frmCantidad.Visible) And _
-           (Not MirandoParty) Then
-
-        If picInv.Visible Then
-            picInv.SetFocus
-        ElseIf hlst.Visible Then
-            hlst.SetFocus
-        End If
-    End If
-    
-    If RecTxt.Visible Then
-        RecTxt.SelStart = Len(RecTxt.Text)
-    End If
-
-End Sub
-
-Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
-
-    If picInv.Visible Then
-        picInv.SetFocus
-    Else
-        hlst.SetFocus
-    End If
-
 End Sub
 
 Private Sub SendTxt_Change()
@@ -3025,8 +3052,8 @@ Public Sub SendCMSTXT_SendText()
             Typing = False
         End If
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -3312,19 +3339,19 @@ End Sub
 Public Sub ActivarMacroHechizos()
 
     If Not hlst.Visible Then
-        Call AddtoRichTextBox(frmMain.RecTxt, "Debes tener seleccionado el hechizo para activar el auto-lanzar", 0, 200, 200, False, True, True)
+        Call frmMain.AddtoRichPicture("Debes tener seleccionado el hechizo para activar el auto-lanzar", 0, 200, 200, False, True, True)
         Exit Sub
     End If
     
     trainingMacro.Interval = INT_MACRO_HECHIS
     trainingMacro.Enabled = True
-    Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos activado", 0, 200, 200, False, True, True)
+    Call frmMain.AddtoRichPicture("Auto lanzar hechizos activado", 0, 200, 200, False, True, True)
     Call ControlSM(eSMType.mSpells, True)
 End Sub
 
 Public Sub DesactivarMacroHechizos()
     trainingMacro.Enabled = False
-    Call AddtoRichTextBox(frmMain.RecTxt, "Auto lanzar hechizos desactivado", 0, 150, 150, False, True, True)
+    Call frmMain.AddtoRichPicture("Auto lanzar hechizos desactivado", 0, 150, 150, False, True, True)
     Call ControlSM(eSMType.mSpells, False)
 End Sub
 
@@ -3410,4 +3437,88 @@ End Sub
 
 Private Sub btnRetos_Click()
     Call FrmRetos.Show(vbModeless, frmMain)
+End Sub
+
+Private Sub ReDrawConsola()
+    pConsola.Cls
+    Dim i As Long
+    For i = OffSetConsola To OffSetConsola + CONSOLE_VISIBLE_LINES
+        If i >= 0 And i <= LineasConsola Then
+            pConsola.CurrentX = 0
+            pConsola.CurrentY = (i - OffSetConsola - 1) * CONSOLE_LINE_HEIGHT
+            pConsola.ForeColor = Consola(i).Color
+            pConsola.FontBold = CBool(Consola(i).bold)
+            pConsola.FontItalic = CBool(Consola(i).italic)
+            pConsola.Print Consola(i).Texto
+        End If
+    Next i
+    
+    If LineasConsola <= CONSOLE_VISIBLE_LINES Then
+        BarritaConsola.Top = BarraConsolaCentro.Top + BarraConsolaCentro.Height - BarritaConsola.Height
+    Else
+        BarritaConsola.Top = BarraConsolaCentro.Top + OffSetConsola * (BarraConsolaCentro.Height - BarritaConsola.Height) \ (LineasConsola - CONSOLE_VISIBLE_LINES)
+    End If
+End Sub
+
+Public Sub AddtoRichPicture(ByVal Text As String, Optional ByVal Red As Integer = -1, Optional ByVal Green As Integer, Optional ByVal Blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = False)
+    Dim AText As String
+    Dim Lineas() As String
+    Dim i As Integer
+    Dim l As Integer
+    Dim LastEsp As Integer
+
+    Lineas = Split(Text, vbCrLf)
+
+    For l = 0 To UBound(Lineas)
+        If LineasConsola = MAX_CONSOLE_LINES Then
+            For i = 0 To (MAX_CONSOLE_LINES - CONSOLE_REMOVED_LINES)
+                Consola(i) = Consola(i + CONSOLE_REMOVED_LINES)
+            Next i
+            
+            LineasConsola = MAX_CONSOLE_LINES - CONSOLE_REMOVED_LINES
+            
+            If OffSetConsola >= CONSOLE_REMOVED_LINES Then
+                OffSetConsola = OffSetConsola - CONSOLE_REMOVED_LINES
+            End If
+        End If
+
+        LineasConsola = LineasConsola + 1
+
+        Text = Lineas(l)
+
+        Consola(LineasConsola).Texto = Text
+        Consola(LineasConsola).Color = RGB(Red, Green, Blue)
+        Consola(LineasConsola).bold = bold
+        Consola(LineasConsola).italic = italic
+
+        If LineasConsola > CONSOLE_VISIBLE_LINES And OffSetConsola = LineasConsola - CONSOLE_VISIBLE_LINES - 1 Then
+            OffSetConsola = LineasConsola - CONSOLE_VISIBLE_LINES
+        End If
+        Debug.Print pConsola.TextWidth(Text)
+        If pConsola.TextWidth(Text) > (pConsola.Width - BarraConsolaCentro.Width) Then
+            LastEsp = 0
+            
+            For i = 1 To Len(Text)
+                If mid(Text, i, 1) = " " Then LastEsp = i
+                If pConsola.TextWidth(Left$(Text, i)) > (pConsola.Width - BarraConsolaCentro.Width) Then Exit For
+            Next i
+            
+            If LastEsp = 0 Then LastEsp = i
+            
+            AText = Right$(Text, Len(Text) - LastEsp)
+            Text = Left$(Text, LastEsp)
+            Consola(LineasConsola).Texto = Text
+            
+            Call frmMain.AddtoRichPicture(AText, Red, Green, Blue, bold, italic)
+        Else
+            ReDrawConsola
+        End If
+    Next l
+End Sub
+
+Public Sub ClearConsole()
+    LineasConsola = 0
+    OffSetConsola = 0
+    
+    ReDrawConsola
 End Sub

@@ -43,9 +43,9 @@ Option Explicit
 Private Const SEPARATOR As String * 1 = vbNullChar
 
 Private Type tFont
-    Red As Byte
-    Green As Byte
-    Blue As Byte
+    red As Byte
+    green As Byte
+    blue As Byte
     bold As Boolean
     italic As Boolean
 End Type
@@ -399,151 +399,151 @@ Public Sub InitFonts()
 '
 '***************************************************
     With FontTypes(FontTypeNames.FONTTYPE_TALK)
-        .Red = 204
-        .Green = 255
-        .Blue = 255
+        .red = 204
+        .green = 255
+        .blue = 255
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_FIGHT)
-        .Red = 255
-        .Green = 102
-        .Blue = 102
+        .red = 255
+        .green = 102
+        .blue = 102
         .bold = 1
         .italic = 0
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-        .Red = 255
-        .Green = 255
-        .Blue = 102
+        .red = 255
+        .green = 255
+        .blue = 102
         .bold = 1
         .italic = 0
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        .Red = 255
-        .Green = 204
-        .Blue = 153
+        .red = 255
+        .green = 204
+        .blue = 153
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_INFOBOLD)
-        .Red = 255
-        .Green = 204
-        .Blue = 153
+        .red = 255
+        .green = 204
+        .blue = 153
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_EJECUCION)
-        .Red = 255
-        .Green = 0
-        .Blue = 127
+        .red = 255
+        .green = 0
+        .blue = 127
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_PARTY)
-        .Red = 252
-        .Green = 203
-        .Blue = 130
+        .red = 252
+        .green = 203
+        .blue = 130
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_VENENO)
-        .Red = 128
-        .Green = 255
-        .Blue = 0
+        .red = 128
+        .green = 255
+        .blue = 0
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_GUILD)
-        .Red = 205
-        .Green = 101
-        .Blue = 236
+        .red = 205
+        .green = 101
+        .blue = 236
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_SERVER)
-        .Red = 250
-        .Green = 150
-        .Blue = 237
+        .red = 250
+        .green = 150
+        .blue = 237
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
-        .Red = 228
-        .Green = 199
-        .Blue = 27
+        .red = 228
+        .green = 199
+        .blue = 27
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJO)
-        .Red = 130
-        .Green = 130
-        .Blue = 255
+        .red = 130
+        .green = 130
+        .blue = 255
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOCAOS)
-        .Red = 255
-        .Green = 60
+        .red = 255
+        .green = 60
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOVesA)
-        .Green = 200
-        .Blue = 255
+        .green = 200
+        .blue = 255
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOCAOSVesA)
-        .Red = 255
-        .Green = 50
+        .red = 255
+        .green = 50
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CENTINELA)
-        .Red = 240
-        .Green = 230
-        .Blue = 140
+        .red = 240
+        .green = 230
+        .blue = 140
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_GMMSG)
-        .Red = 255
-        .Green = 255
-        .Blue = 255
+        .red = 255
+        .green = 255
+        .blue = 255
         .italic = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_GM)
-        .Red = 30
-        .Green = 255
-        .Blue = 30
+        .red = 30
+        .green = 255
+        .blue = 30
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CITIZEN)
-        .Red = 78
-        .Green = 78
-        .Blue = 252
+        .red = 78
+        .green = 78
+        .blue = 252
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSE)
-        .Red = 30
-        .Green = 150
-        .Blue = 30
+        .red = 30
+        .green = 150
+        .blue = 30
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_DIOS)
-        .Red = 250
-        .Green = 250
-        .Blue = 150
+        .red = 250
+        .green = 250
+        .blue = 150
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_CRIMINAL)
-        .Red = 224
-        .Green = 52
-        .Blue = 17
+        .red = 224
+        .green = 52
+        .blue = 17
         .bold = 1
     End With
 End Sub
@@ -975,7 +975,7 @@ Public Sub HandleMultiMessage()
         Select Case .ReadByte
 
             Case eMessages.NPCSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("TEXTO"), _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(1), _
                         JsonLanguage.item("MENSAJE_CRIATURA_FALLA_GOLPE").item("COLOR").item(2), _
@@ -983,7 +983,7 @@ Public Sub HandleMultiMessage()
                         True, False, True)
         
             Case eMessages.NPCKillUser
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_CRIATURA_MATADO").item("COLOR").item(2), _
@@ -991,7 +991,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.BlockedWithShieldUser
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(2), _
@@ -999,7 +999,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.BlockedWithShieldOther
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO").item("COLOR").item(2), _
@@ -1007,7 +1007,7 @@ Public Sub HandleMultiMessage()
                     True, False, True)
         
             Case eMessages.UserSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("TEXTO"), _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_FALLADO_GOLPE").item("COLOR").item(2), _
@@ -1027,7 +1027,7 @@ Public Sub HandleMultiMessage()
                 Call frmMain.ControlSM(eSMType.sResucitation, True)
         
             Case eMessages.NobilityLost
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                         JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("TEXTO"), _
                                         JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(1), _
                                         JsonLanguage.item("MENSAJE_PIERDE_NOBLEZA").item("COLOR").item(2), _
@@ -1035,7 +1035,7 @@ Public Sub HandleMultiMessage()
                                         False, False, True)
         
             Case eMessages.CantUseWhileMeditating
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                         JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("TEXTO"), _
                                         JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(1), _
                                         JsonLanguage.item("MENSAJE_USAR_MEDITANDO").item("COLOR").item(2), _
@@ -1047,7 +1047,7 @@ Public Sub HandleMultiMessage()
                 Select Case incomingData.ReadByte()
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_CABEZA").item("COLOR").item(2), _
@@ -1055,7 +1055,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1063,7 +1063,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_BRAZO_DER").item("COLOR").item(2), _
@@ -1071,7 +1071,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1079,7 +1079,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("TEXTO") & CStr(incomingData.ReadInteger()) & "!!", _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_PIERNA_DER").item("COLOR").item(2), _
@@ -1087,7 +1087,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("TEXTO") & CStr(incomingData.ReadInteger() & "!!"), _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_GOLPE_TORSO").item("COLOR").item(2), _
@@ -1101,7 +1101,7 @@ Public Sub HandleMultiMessage()
                     MsgHitNpc = JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("TEXTO")
                     MsgHitNpc = Replace$(MsgHitNpc, "VAR_DANO", CStr(incomingData.ReadLong()))
                     
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                         MsgHitNpc, _
                                         JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(1), _
                                         JsonLanguage.item("MENSAJE_DAMAGE_NPC").item("COLOR").item(2), _
@@ -1109,7 +1109,7 @@ Public Sub HandleMultiMessage()
                                         True, False, True)
         
             Case eMessages.UserAttackedSwing
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                         charlist(incomingData.ReadInteger()).Nombre & JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("TEXTO"), _
                                         JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(1), _
                                         JsonLanguage.item("MENSAJE_ATAQUE_FALLO").item("COLOR").item(2), _
@@ -1127,7 +1127,7 @@ Public Sub HandleMultiMessage()
                 Select Case BodyPart
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_CABEZA").item("COLOR").item(2), _
@@ -1135,7 +1135,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                         AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                         JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(1), _
                         JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1143,7 +1143,7 @@ Public Sub HandleMultiMessage()
                         True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_BRAZO_DER").item("COLOR").item(2), _
@@ -1151,7 +1151,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1159,7 +1159,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_PIERNA_DER").item("COLOR").item(2), _
@@ -1167,7 +1167,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             AttackerName & JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_RECIVE_IMPACTO_TORSO").item("COLOR").item(2), _
@@ -1187,7 +1187,7 @@ Public Sub HandleMultiMessage()
                 Select Case BodyPart
 
                     Case ePartesCuerpo.bCabeza
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_CABEZA").item("COLOR").item(2), _
@@ -1195,7 +1195,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoIzquierdo
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ").item("COLOR").item(2), _
@@ -1203,7 +1203,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bBrazoDerecho
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_BRAZO_DER").item("COLOR").item(2), _
@@ -1211,7 +1211,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaIzquierda
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ").item("COLOR").item(2), _
@@ -1219,7 +1219,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bPiernaDerecha
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_PIERNA_DER").item("COLOR").item(2), _
@@ -1227,7 +1227,7 @@ Public Sub HandleMultiMessage()
                             True, False, True)
                 
                     Case ePartesCuerpo.bTorso
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_1").item("TEXTO") & VictimName & JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("TEXTO") & Dano & MENSAJE_2, _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PRODUCE_IMPACTO_TORSO").item("COLOR").item(2), _
@@ -1245,49 +1245,49 @@ Public Sub HandleMultiMessage()
                 Select Case UsingSkill
 
                     Case Magia
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MAGIA").item("COLOR").item(3))
                 
                     Case Pesca
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PESCA").item("COLOR").item(3))
                 
                     Case Robar
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_ROBAR").item("COLOR").item(3))
                 
                     Case Talar
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_TALAR").item("COLOR").item(3))
                 
                     Case Mineria
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_MINERIA").item("COLOR").item(3))
                 
                     Case FundirMetal
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_TRABAJO_FUNDIRMETAL").item("COLOR").item(3))
                 
                     Case Proyectiles
-                        Call AddtoRichTextBox(frmMain.RecTxt, _
+                        Call frmMain.AddtoRichPicture( _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_TRABAJO_PROYECTILES").item("COLOR").item(2), _
@@ -1304,7 +1304,7 @@ Public Sub HandleMultiMessage()
                 KilledUser = .ReadInteger
                 Exp = .ReadLong
             
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("TEXTO") & charlist(KilledUser).Nombre & MENSAJE_22, _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(1), _
                     JsonLanguage.item("MENSAJE_HAS_MATADO_A").item("COLOR").item(2), _
@@ -1315,7 +1315,7 @@ Public Sub HandleMultiMessage()
                 MensajeExp = JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("TEXTO") 'String original
                 MensajeExp = Replace$(MensajeExp, "VAR_EXP_GANADA", Exp) 'Parte a reemplazar
                 
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                     MensajeExp, _
                                     JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(1), _
                                     JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(2), _
@@ -1338,7 +1338,7 @@ Public Sub HandleMultiMessage()
                 Dim KillerUser As Integer
                     KillerUser = .ReadInteger
             
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                     charlist(KillerUser).Nombre & JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("TEXTO"), _
                                     JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(1), _
                                     JsonLanguage.item("MENSAJE_TE_HA_MATADO").item("COLOR").item(2), _
@@ -1355,7 +1355,7 @@ Public Sub HandleMultiMessage()
                 End If
             
             Case eMessages.NPCKill
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                         JsonLanguage.item("NPC_KILL").item("TEXTO"), _
                                         JsonLanguage.item("NPC_KILL").item("COLOR").item(1), _
                                         JsonLanguage.item("NPC_KILL").item("COLOR").item(2), _
@@ -1370,7 +1370,7 @@ Public Sub HandleMultiMessage()
                     MENSAJE_HAS_GANADO_EXP = JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("TEXTO")
                     MENSAJE_HAS_GANADO_EXP = Replace$(MENSAJE_HAS_GANADO_EXP, "VAR_EXP_GANADA", ExpObtenida)
                                     
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                         MENSAJE_HAS_GANADO_EXP, _
                                         JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(1), _
                                         JsonLanguage.item("MENSAJE_HAS_GANADO_EXP").item("COLOR").item(2), _
@@ -1435,7 +1435,7 @@ Public Sub HandleMultiMessage()
                                     JsonLanguage.item("MENSAJE_USER_MUERTO").item("COLOR").item(3))
         
             Case eMessages.NpcInmune
-                Call AddtoRichTextBox(frmMain.RecTxt, _
+                Call frmMain.AddtoRichPicture( _
                                     JsonLanguage.item("NPC_INMUNE").item("TEXTO"), _
                                     JsonLanguage.item("NPC_INMUNE").item("COLOR").item(1), _
                                     JsonLanguage.item("NPC_INMUNE").item("COLOR").item(2), _
@@ -1724,7 +1724,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, MAX_INVENTORY_SLOTS)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
@@ -2184,7 +2184,7 @@ Private Sub HandlePosUpdate()
     Call Char_UserPos
 End Sub
 
-Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatText As String, ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)
+Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatText As String, ByVal red As Byte, ByVal green As Byte, ByVal blue As Byte)
     Dim NameRed As Byte
     Dim NameGreen As Byte
     Dim NameBlue As Byte
@@ -2225,8 +2225,8 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
         'Si el npc tiene nombre lo escribimos en la consola
         ChatText = Trim$(ChatText)
         If LenB(.Nombre) <> 0 And LenB(ChatText) > 0 Then
-            Call AddtoRichTextBox(frmMain.RecTxt, name & "> ", NameRed, NameGreen, NameBlue, True, False, True, rtfLeft)
-            Call AddtoRichTextBox(frmMain.RecTxt, ChatText, Red, Green, Blue, True, False, False, rtfLeft)
+            Call frmMain.AddtoRichPicture(name & "> ", NameRed, NameGreen, NameBlue, True, False, True)
+            Call frmMain.AddtoRichPicture(ChatText, red, green, blue, True, False, False)
         End If
 
     End With
@@ -2257,23 +2257,23 @@ On Error GoTo errhandler
     
     Dim chat As String
     Dim CharIndex As Integer
-    Dim Red As Byte
-    Dim Green As Byte
-    Dim Blue As Byte
+    Dim red As Byte
+    Dim green As Byte
+    Dim blue As Byte
     
     chat = Buffer.ReadASCIIString()
     CharIndex = Buffer.ReadInteger()
     
-    Red = Buffer.ReadByte()
-    Green = Buffer.ReadByte()
-    Blue = Buffer.ReadByte()
+    red = Buffer.ReadByte()
+    green = Buffer.ReadByte()
+    blue = Buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
     If Char_Check(CharIndex) Then
-        Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(Red, Green, Blue))
+        Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(red, green, blue))
 
         'Aqui escribimos el texto que aparece sobre la cabeza en la consola.
-        Call WriteChatOverHeadInConsole(CharIndex, chat, Red, Green, Blue)
+        Call WriteChatOverHeadInConsole(CharIndex, chat, red, green, blue)
     End If
     
     'If we got here then packet is complete, copy data back to original queue
@@ -2316,9 +2316,9 @@ On Error GoTo errhandler
     Dim chat As String
     Dim FontIndex As Integer
     Dim str As String
-    Dim Red As Byte
-    Dim Green As Byte
-    Dim Blue As Byte
+    Dim red As Byte
+    Dim green As Byte
+    Dim blue As Byte
     
     chat = Buffer.ReadASCIIString()
     FontIndex = Buffer.ReadByte()
@@ -2326,29 +2326,29 @@ On Error GoTo errhandler
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                Red = 255
+                red = 255
             Else
-                Red = Val(str)
+                red = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                Green = 255
+                green = 255
             Else
-                Green = Val(str)
+                green = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                Blue = 255
+                blue = 255
             Else
-                Blue = Val(str)
+                blue = Val(str)
             End If
             
-        Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), Red, Green, Blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+        Call frmMain.AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), red, green, blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         With FontTypes(FontIndex)
-            Call AddtoRichTextBox(frmMain.RecTxt, chat, .Red, .Green, .Blue, .bold, .italic)
+            Call frmMain.AddtoRichPicture(chat, .red, .green, .blue, .bold, .italic)
         End With
         
         ' Para no perder el foco cuando chatea por party
@@ -2396,9 +2396,9 @@ On Error GoTo errhandler
     
     Dim chat As String
     Dim str As String
-    Dim Red As Byte
-    Dim Green As Byte
-    Dim Blue As Byte
+    Dim red As Byte
+    Dim green As Byte
+    Dim blue As Byte
     
     chat = Buffer.ReadASCIIString()
     
@@ -2406,29 +2406,29 @@ On Error GoTo errhandler
         If InStr(1, chat, "~") Then
             str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                Red = 255
+                red = 255
             Else
-                Red = Val(str)
+                red = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                Green = 255
+                green = 255
             Else
-                Green = Val(str)
+                green = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                Blue = 255
+                blue = 255
             Else
-                Blue = Val(str)
+                blue = Val(str)
             End If
             
-            Call AddtoRichTextBox(frmMain.RecTxt, Left$(chat, InStr(1, chat, "~") - 1), Red, Green, Blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+            Call frmMain.AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), red, green, blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
         Else
             With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
-                Call AddtoRichTextBox(frmMain.RecTxt, chat, .Red, .Green, .Blue, .bold, .italic)
+                Call frmMain.AddtoRichPicture(chat, .red, .green, .blue, .bold, .italic)
             End With
         End If
     Else
@@ -2475,9 +2475,9 @@ On Error GoTo errhandler
     Dim chat As String
     Dim FontIndex As Integer
     Dim str As String
-    Dim Red As Byte
-    Dim Green As Byte
-    Dim Blue As Byte
+    Dim red As Byte
+    Dim green As Byte
+    Dim blue As Byte
     
     chat = Buffer.ReadASCIIString()
     FontIndex = Buffer.ReadByte()
@@ -2485,29 +2485,29 @@ On Error GoTo errhandler
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                Red = 255
+                red = 255
             Else
-                Red = Val(str)
+                red = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                Green = 255
+                green = 255
             Else
-                Green = Val(str)
+                green = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                Blue = 255
+                blue = 255
             Else
-                Blue = Val(str)
+                blue = Val(str)
             End If
             
-        Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, Left$(chat, InStr(1, chat, "~") - 1), Red, Green, Blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+        Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, Left$(chat, InStr(1, chat, "~") - 1), red, green, blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         With FontTypes(FontIndex)
-            Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, chat, .Red, .Green, .Blue, .bold, .italic)
+            Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, chat, .red, .green, .blue, .bold, .italic)
         End With
     End If
     
@@ -3442,7 +3442,7 @@ Private Sub HandleStopWorking()
     Call incomingData.ReadByte
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_WORK_FINISHED"), .Red, .Green, .Blue, .bold, .italic)
+        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_WORK_FINISHED"), .red, .green, .blue, .bold, .italic)
     End With
     If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
@@ -5391,7 +5391,7 @@ On Error GoTo errhandler
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
         For DenounceIndex = 0 To Upper_denounceList
-            Call AddtoRichTextBox(frmMain.RecTxt, DenounceList(DenounceIndex), .Red, .Green, .Blue, .bold, .italic)
+            Call frmMain.AddtoRichPicture(DenounceList(DenounceIndex), .red, .green, .blue, .bold, .italic)
         Next DenounceIndex
     End With
     
@@ -5599,7 +5599,7 @@ Private Sub HandlePong()
         MENSAJE_PING = JsonLanguage.item("MENSAJE_PING").item("TEXTO")
         MENSAJE_PING = Replace$(MENSAJE_PING, "VAR_PING", (timeGetTime - pingTime))
         
-    Call AddtoRichTextBox(frmMain.RecTxt, _
+    Call frmMain.AddtoRichPicture( _
                             MENSAJE_PING, _
                             JsonLanguage.item("MENSAJE_PING").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_PING").item("COLOR").item(2), _
@@ -10547,7 +10547,7 @@ End Sub
 ' @param    Blue The blue component of the new chat color.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChatColor(ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)
+Public Sub WriteChatColor(ByVal red As Byte, ByVal green As Byte, ByVal blue As Byte)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -10557,9 +10557,9 @@ Public Sub WriteChatColor(ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As 
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ChatColor)
         
-        Call .WriteByte(Red)
-        Call .WriteByte(Green)
-        Call .WriteByte(Blue)
+        Call .WriteByte(red)
+        Call .WriteByte(green)
+        Call .WriteByte(blue)
     End With
 End Sub
 
@@ -11640,37 +11640,6 @@ On Error GoTo errhandler
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
-    
-    Dim MsPingResult As Long
-        MsPingResult = (GetTickCount - pingTime)
-        
-    pingTime = 0
-
-    Dim CountryCode As String
-    
-    If IpApiEnabled Then
-        
-        'If is not numeric do a url transformation
-        If CheckIfIpIsNumeric(IpPublicaServidor) = False Then
-            IpPublicaServidor = GetIPFromHostName(IpPublicaServidor)
-        End If
-
-        CountryCode = GetCountryCode(IpPublicaServidor) & " - "
-    End If
-
-    Dim Descripcion As String
-    Descripcion = CountryCode & _
-                    NombreServidor & vbNewLine & _
-                    DescripcionServidor & vbNewLine & _
-                    "Mundo: " & MundoServidor & vbNewLine & _
-                    "Online: " & CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & vbNewLine & _
-                    "Ping: " & MsPingResult & vbNewLine & _
-                    "Nivel Maximo Permitido : " & NivelMaximoServidor
-
-
-    frmConnect.lblDescripcionServidor = Descripcion
-
-    STAT_MAXELV = NivelMaximoServidor
 
 errhandler:
 

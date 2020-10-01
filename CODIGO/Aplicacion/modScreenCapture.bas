@@ -157,8 +157,8 @@ Private Type JPEG_CORE_PROPERTIES_VB ' Sadly, due to a limitation in VB (UDT var
 
 End Type
 
-Private Declare Function GetDC Lib "user32" (ByVal hWnd As Long) As Long
-Private Declare Function ReleaseDC Lib "user32" (ByVal hWnd As Long, ByVal hdc As Long) As Long
+Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long
+Private Declare Function ReleaseDC Lib "user32" (ByVal hwnd As Long, ByVal hdc As Long) As Long
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef source As Any, ByVal byteCount As Long)
 
 Private Declare Function ijlInit Lib "ijl11.dll" (jcprops As Any) As Long
@@ -567,7 +567,7 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
     Dim hdcc    As Long
     Dim dirFile As String
     
-    hdcc = GetDC(frmMain.hWnd)
+    hdcc = GetDC(frmMain.hwnd)
 
     Dim FileName As String
         FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
@@ -579,7 +579,7 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
         .Height = frmMain.Height
 
         Call BitBlt(.hdc, 0, 0, frmMain.Width, frmMain.Height, hdcc, 0, 0, SRCCOPY)
-        Call ReleaseDC(frmMain.hWnd, hdcc)
+        Call ReleaseDC(frmMain.hwnd, hdcc)
     
         hdcc = INVALID_HANDLE
     
@@ -618,20 +618,20 @@ Public Sub ScreenCapture(Optional ByVal Autofragshooter As Boolean = False)
     
         Call SaveJPG(c, File)
     
-        Call AddtoRichTextBox(frmMain.RecTxt, "Screen Capturada!", 200, 200, 200, False, False, True)
+        Call frmMain.AddtoRichPicture("Screen Capturada!", 200, 200, 200, False, False, True)
         
         Exit Sub
     
     End With
     
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MOD_SCREENCAPTURE").item("TEXTO") & File, 100, 30, 20, False, False, True)
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MOD_SCREENCAPTURE").item("TEXTO") & File, 100, 30, 20, False, False, True)
     
     Exit Sub
 
 Err:
-    Call AddtoRichTextBox(frmMain.RecTxt, Err.number & "-" & Err.Description, 200, 200, 200, False, False, True)
+    Call frmMain.AddtoRichPicture(Err.number & "-" & Err.Description, 200, 200, 200, False, False, True)
     
-    If hdcc <> INVALID_HANDLE Then Call ReleaseDC(frmMain.hWnd, hdcc)
+    If hdcc <> INVALID_HANDLE Then Call ReleaseDC(frmMain.hwnd, hdcc)
 
 End Sub
 

@@ -155,7 +155,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
             Case "/SALIR"
                 If UserParalizado Then 'Inmo
                     With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_NO_SALIR").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_NO_SALIR").item("TEXTO"), .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
                 End If
@@ -279,7 +279,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                 
                 ElseIf Comerciando Then 'Comerciando
                     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_COMERCIANDO").item("TEXTO"), .Red, .Green, .Blue, .bold, .italic)
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_COMERCIANDO").item("TEXTO"), .red, .green, .blue, .bold, .italic)
                     End With
                     Exit Sub
                 End If
@@ -1764,7 +1764,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
             Case "/VERPROCESOS"
                 If notNullArguments Then
-                    Call writeLookProcess(ArgumentosRaw)
+                    Call WriteLookProcess(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_FALTAN_PARAMETROS").item("TEXTO") & " /VERPROCESOS NICKNAME.")
@@ -1817,13 +1817,13 @@ End Sub
 ' @param    bold Sets the font bold style.
 ' @param    italic Sets the font italic style.
 
-Public Sub ShowConsoleMsg(ByVal Message As String, Optional ByVal Red As Integer = 255, Optional ByVal Green As Integer = 255, Optional ByVal Blue As Integer = 255, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False)
+Public Sub ShowConsoleMsg(ByVal Message As String, Optional ByVal red As Integer = 255, Optional ByVal green As Integer = 255, Optional ByVal blue As Integer = 255, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False)
 '***************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modification: 01/03/07
 '
 '***************************************************
-    Call AddtoRichTextBox(frmMain.RecTxt, Message, Red, Green, Blue, bold, italic)
+    Call frmMain.AddtoRichPicture(Message, red, green, blue, bold, italic)
 End Sub
 
 ''

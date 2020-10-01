@@ -128,8 +128,8 @@ Public Sub LogError(ByVal Numero As Long, ByVal Descripcion As String, ByVal Com
 'Author: Jopi
 'Guarda una descripcion detallada del error en Errores.log
 '**********************************************************
-    Dim file As Integer
-    file = FreeFile
+    Dim File As Integer
+    File = FreeFile
 
     'Hacemos un Left para poder solo obtener la letra del HD
     'Por que por culpa del UAC no guarda los logs en la carpeta del juego...
@@ -143,20 +143,20 @@ Public Sub LogError(ByVal Numero As Long, ByVal Descripcion As String, ByVal Com
     'Matamos Notepad para evitar abrir decenas de block de notas.
     Shell ("taskkill /PID " & sNotepadTaskId)
         
-    Open ErroresPath & "\Errores.log" For Append As #file
+    Open ErroresPath & "\Errores.log" For Append As #File
     
-        Print #file, "Error: " & Numero
-        Print #file, "Descripcion: " & Descripcion
+        Print #File, "Error: " & Numero
+        Print #File, "Descripcion: " & Descripcion
         
         If LenB(Linea) <> 0 Then
-            Print #file, "Linea: " & Linea
+            Print #File, "Linea: " & Linea
         End If
         
-        Print #file, "Componente: " & Componente
-        Print #file, "Fecha y Hora: " & Date$ & "-" & Time$
-        Print #file, vbNullString
+        Print #File, "Componente: " & Componente
+        Print #File, "Fecha y Hora: " & Date$ & "-" & Time$
+        Print #File, vbNullString
         
-    Close #file
+    Close #File
     
     Debug.Print "Error: " & Numero & vbNewLine & _
                 "Descripcion: " & Descripcion & vbNewLine & _
@@ -165,7 +165,7 @@ Public Sub LogError(ByVal Numero As Long, ByVal Descripcion As String, ByVal Com
 
     sNotepadTaskId = Shell("Notepad " & ErroresPath & "\Errores.log")
 
-    Call AddtoRichTextBox(frmMain.RecTxt, JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("TEXTO"), _
+    Call frmMain.AddtoRichPicture(JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("TEXTO"), _
                             JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("COLOR").item(1), _
                             JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("COLOR").item(2), _
                             JsonLanguage.item("MENSAJE_ERRORES_LOG_CARPETA").item("COLOR").item(3), _
