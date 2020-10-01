@@ -70,6 +70,8 @@ Private Inventory() As Inventory    'User's inventory
 Private WithEvents InventoryWindow As PictureBox    'Placeholder where to render the inventory
 Attribute InventoryWindow.VB_VarHelpID = -1
 
+Private Const MAININVENTORY_MIDSPACE As Integer = 9 'Separador de inventario básico y extra slots en el inventario principal del usuario
+
 #If ConMenuesConextuales = 1 Then
     Dim ItemMenu As Menu    'Menu to be shown as pop up
 #End If
@@ -394,13 +396,8 @@ Private Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
     'Selects the item clicked if it's valid and return's it's index
     '***************************************************
     Dim TempItem As Long
-    Dim temp_x   As Long
-    Dim temp_y   As Long
-    
-    temp_x = X \ (SlotWidth + SlotSpaceX)
-    temp_y = Y \ (SlotHeight + SlotSpaceY)
-    
-    TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ (SlotWidth + SlotSpaceX)) + 1
+
+    TempItem = GetPos(X, Y)
     TempSlot = TempItem
 
     'Make sure it's within limits
@@ -453,8 +450,8 @@ Public Sub DrawInventory()
             
             'Inventario Principal
             If (LoopC > MAX_NORMAL_INVENTORY_SLOTS) Then
-                startdY = startdY + 9
-                If (LoopC - MAX_NORMAL_INVENTORY_SLOTS) <= (UserInvUnlocked * (InventoryWindow.ScaleWidth / (SlotHeight + SlotSpaceY))) Then
+                startdY = startdY + MAININVENTORY_MIDSPACE
+                If (LoopC - MAX_NORMAL_INVENTORY_SLOTS) <= (UserInvUnlocked * (InventoryWindow.ScaleWidth / (SlotWidth + SlotSpaceX))) Then
                     'Slot Desbloqueado
                     Call Draw_GrhIndex(GRH_INVENTORYSLOT_EXTRA, startdX, startdY, 0, Normal_RGBList(), 0, False)
                 Else
@@ -553,8 +550,6 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     'Displays a ToolTip of the item under the mouse
     'Now we show more information about certain items (Recox)
     '***************************************************
-    Dim temp_x   As Integer
-    Dim temp_y   As Integer
     Dim TempItem As Integer
     
     'Exit if it got outside the control's areanv
@@ -562,11 +557,8 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, X As 
     If Y < 16 Then Y = 16
     If X > InventoryWindow.Width - 16 Then X = InventoryWindow.Width - 16
     If Y > InventoryWindow.Height - 16 Then Y = InventoryWindow.Height - 16
-        
-    temp_x = X \ (SlotWidth + SlotSpaceX)
-    temp_y = Y \ (SlotHeight + SlotSpaceY)
     
-    TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+    TempItem = GetPos(X, Y)
     TempSlot = TempItem
         
     'Incorporado por ReyarB, arreglado por Recox
@@ -591,18 +583,12 @@ End Sub
 Private Sub InventoryWindow_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = vbRightButton And isInventory Then
+    
         If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
+        
+        DragItem = GetPos(X, Y)
 
-        Dim temp_x As Integer
-        Dim temp_y As Integer
-
-        temp_x = X \ 32
-        temp_y = Y \ 32
-
-        'Get the currently clickced item
-        DragItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
-
-        If Not (DragItem <= 25 And DragItem >= 1) Then
+        If Not (DragItem <= MAX_INVENTORY_SLOTS And DragItem >= 1) Then
             DragItem = 0
             Exit Sub
         Else
@@ -698,15 +684,21 @@ Private Sub InventoryWindow_MouseUp(Button As Integer, Shift As Integer, X As Si
 
 End Sub
 
-Public Function GetPos(ByVal X As Integer, ByVal Y As Integer) As Byte
+Private Function GetPos(ByVal X As Integer, ByVal Y As Integer) As Byte
     
     Dim temp_x As Integer
     Dim temp_y As Integer
     
-    temp_x = X \ 32
-    temp_y = Y \ 32
+    If isInventory Then
+        If (Y \ (SlotHeight + SlotSpaceY)) > (MAX_NORMAL_INVENTORY_SLOTS \ (InventoryWindow.ScaleWidth \ (SlotWidth + SlotSpaceX))) Then
+            Y = Y - MAININVENTORY_MIDSPACE
+        End If
+    End If
     
-    GetPos = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ 32) + 1
+    temp_x = X \ (SlotWidth + SlotSpaceX)
+    temp_y = Y \ (SlotHeight + SlotSpaceY)
+    
+    GetPos = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ (SlotWidth + SlotSpaceX)) + 1
 
 End Function
 

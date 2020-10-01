@@ -154,7 +154,7 @@ Private Enum ServerPacketID
     UpdateStrenghtAndDexterity = 98
     UpdateStrenght = 99
     UpdateDexterity = 100
-    AddSlots = 101
+    InventoryUnlockSlots = 101
     MultiMessage = 102
     StopWorking = 103
     CancelOfferItem = 104
@@ -896,8 +896,8 @@ On Error Resume Next
         Case ServerPacketID.UpdateDexterity
             Call HandleUpdateDexterity
             
-        Case ServerPacketID.AddSlots
-            Call HandleAddSlots
+        Case ServerPacketID.InventoryUnlockSlots
+            Call HandleInventoryUnlockSlots
 
         Case ServerPacketID.MultiMessage
             Call HandleMultiMessage
@@ -1670,14 +1670,14 @@ Private Sub HandleCommerceInit()
     Set InvComNpc = New clsGraphicalInventory
     
     ' Initialize commerce inventories
-    Call InvComUsu.Initialize(DirectD3D8, frmComerciar.picInvUser, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvComUsu.Initialize(DirectD3D8, frmComerciar.picInvUser, MAX_INVENTORY_SLOTS)
     Call InvComNpc.Initialize(DirectD3D8, frmComerciar.picInvNpc, MAX_NPC_INVENTORY_SLOTS)
 
     'Fill user inventory
     For i = 1 To MAX_INVENTORY_SLOTS
-        If Inventario.ObjIndex(i) <> 0 Then
+        If Inventario.OBJIndex(i) <> 0 Then
             With Inventario
-                Call InvComUsu.SetItem(i, .ObjIndex(i), _
+                Call InvComUsu.SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
                 .Valor(i), .ItemName(i), .Incompatible(i))
@@ -1687,9 +1687,9 @@ Private Sub HandleCommerceInit()
     
     ' Fill Npc inventory
     For i = 1 To MAX_NPC_INVENTORY_SLOTS
-        If NPCInventory(i).ObjIndex <> 0 Then
+        If NPCInventory(i).OBJIndex <> 0 Then
             With NPCInventory(i)
-                Call InvComNpc.SetItem(i, .ObjIndex, _
+                Call InvComNpc.SetItem(i, .OBJIndex, _
                 .Amount, 0, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
                 .Valor, .name, .Incompatible)
@@ -1724,11 +1724,11 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
-            Call InvBanco(1).SetItem(i, .ObjIndex(i), _
+            Call InvBanco(1).SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
                 .Valor(i), .ItemName(i), .Incompatible(i))
@@ -1737,7 +1737,7 @@ Private Sub HandleBankInit()
     
     For i = 1 To MAX_BANCOINVENTORY_SLOTS
         With UserBancoInventory(i)
-            Call InvBanco(0).SetItem(i, .ObjIndex, _
+            Call InvBanco(0).SetItem(i, .OBJIndex, _
                 .Amount, .Equipped, .GrhIndex, _
                 .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, _
                 .Valor, .name, .Incompatible)
@@ -1788,9 +1788,9 @@ Private Sub HandleUserCommerceInit()
 
     'Fill user inventory
     For i = 1 To MAX_INVENTORY_SLOTS
-        If Inventario.ObjIndex(i) <> 0 Then
+        If Inventario.OBJIndex(i) <> 0 Then
             With Inventario
-                Call InvComUsu.SetItem(i, .ObjIndex(i), _
+                Call InvComUsu.SetItem(i, .OBJIndex(i), _
                 .Amount(i), .Equipped(i), .GrhIndex(i), _
                 .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), _
                 .Valor(i), .ItemName(i), .Incompatible(i))
@@ -1882,6 +1882,7 @@ Private Sub HandleUpdateSta()
     
     frmMain.shpEnergia.Width = 89 - bWidth
     frmMain.shpEnergia.Left = 794 + (89 - frmMain.shpEnergia.Width)
+    
     frmMain.shpEnergia.Visible = (bWidth <> 89)
     
 End Sub
@@ -3282,7 +3283,7 @@ Private Sub HandleUpdateUserStats()
     
     bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 89)
     
-    frmMain.shpEnergia.Width = 89 - bWidth
+    frmMain.shpEnergia.Width = 83 - bWidth
     frmMain.shpEnergia.Left = 794 + (89 - frmMain.shpEnergia.Width)
     
     frmMain.shpEnergia.Visible = (bWidth <> 89)
@@ -3321,7 +3322,7 @@ On Error GoTo errhandler
     Call Buffer.ReadByte
     
     Dim slot As Byte
-    Dim ObjIndex As Integer
+    Dim OBJIndex As Integer
     Dim name As String
     Dim Amount As Integer
     Dim Equipped As Boolean
@@ -3335,7 +3336,7 @@ On Error GoTo errhandler
     Dim Incompatible As Boolean
     
     slot = Buffer.ReadByte()
-    ObjIndex = Buffer.ReadInteger()
+    OBJIndex = Buffer.ReadInteger()
     name = Buffer.ReadASCIIString()
     Amount = Buffer.ReadInteger()
     Equipped = Buffer.ReadBoolean()
@@ -3380,14 +3381,14 @@ On Error GoTo errhandler
         End Select
     End If
     
-    Call Inventario.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
 
     If frmComerciar.Visible Then
-        Call InvComUsu.SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
+        Call InvComUsu.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
     End If
 
     If frmBancoObj.Visible Then
-        Call InvBanco(1).SetItem(slot, ObjIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
+        Call InvBanco(1).SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, Value, name, Incompatible)
         frmBancoObj.NoPuedeMover = False
     End If
     
@@ -3406,18 +3407,28 @@ On Error GoTo 0
         Err.Raise Error
 End Sub
 
-' Handles the AddSlots message.
-Private Sub HandleAddSlots()
+' Handles the InventoryUnlockSlots message.
+Private Sub HandleInventoryUnlockSlots()
 '***************************************************
-'Author: Budi
-'Last Modification: 12/01/09
+'Author: Ruthnar
+'Last Modification: 30/09/20
 '
 '***************************************************
+    
+    Dim i As Integer
 
     Call incomingData.ReadByte
     
-    MaxInventorySlots = incomingData.ReadByte
+    UserInvUnlocked = incomingData.ReadByte
+    
+    For i = 1 To UserInvUnlocked
+    
+        frmMain.imgInvLock(i - 1).Picture = LoadPicture(Game.path(Interfaces) & "InventoryUnlocked.jpg")
+    
+    Next i
+    
     Call Inventario.DrawInventory
+    
 End Sub
 
 ' Handles the StopWorking message.
@@ -3458,7 +3469,7 @@ Private Sub HandleCancelOfferItem()
         ' No tiene sentido que se quiten 0 unidades
         If Amount <> 0 Then
             ' Actualizo el inventario general
-            Call frmComerciarUsu.UpdateInvCom(.ObjIndex(slot), Amount)
+            Call frmComerciarUsu.UpdateInvCom(.OBJIndex(slot), Amount)
             
             ' Borro el item
             Call .SetItem(slot, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "")
@@ -3501,7 +3512,7 @@ On Error GoTo errhandler
     slot = Buffer.ReadByte()
     
     With UserBancoInventory(slot)
-        .ObjIndex = Buffer.ReadInteger()
+        .OBJIndex = Buffer.ReadInteger()
         .name = Buffer.ReadASCIIString()
         .Amount = Buffer.ReadInteger()
         .GrhIndex = Buffer.ReadLong()
@@ -3514,7 +3525,7 @@ On Error GoTo errhandler
         .Incompatible = Buffer.ReadBoolean()
         
         If frmBancoObj.Visible Then
-            Call InvBanco(0).SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .Incompatible)
+            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .Incompatible)
         End If
     End With
     
@@ -3671,7 +3682,7 @@ On Error GoTo errhandler
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
             .LinO = Buffer.ReadInteger()        'The gold needed
-            .ObjIndex = Buffer.ReadInteger()
+            .OBJIndex = Buffer.ReadInteger()
             .Upgrade = Buffer.ReadInteger()
         End With
     Next i
@@ -3707,14 +3718,14 @@ On Error GoTo errhandler
         With ArmasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
-                    If .Upgrade = ArmasHerrero(k).ObjIndex Then
+                    If .Upgrade = ArmasHerrero(k).OBJIndex Then
                         J = J + 1
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
                         HerreroMejorar(J).name = .name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).ObjIndex = .ObjIndex
+                        HerreroMejorar(J).OBJIndex = .OBJIndex
                         HerreroMejorar(J).UpgradeName = ArmasHerrero(k).name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
@@ -3778,7 +3789,7 @@ On Error GoTo errhandler
             .LinH = Buffer.ReadInteger()        'The iron needed
             .LinP = Buffer.ReadInteger()        'The silver needed
             .LinO = Buffer.ReadInteger()        'The gold needed
-            .ObjIndex = Buffer.ReadInteger()
+            .OBJIndex = Buffer.ReadInteger()
             .Upgrade = Buffer.ReadInteger()
         End With
     Next i
@@ -3801,14 +3812,14 @@ On Error GoTo errhandler
         With ArmadurasHerrero(i)
             If .Upgrade Then
                 For k = 1 To Count
-                    If .Upgrade = ArmadurasHerrero(k).ObjIndex Then
+                    If .Upgrade = ArmadurasHerrero(k).OBJIndex Then
                         J = J + 1
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
                         HerreroMejorar(J).name = .name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).ObjIndex = .ObjIndex
+                        HerreroMejorar(J).OBJIndex = .OBJIndex
                         HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
@@ -3873,7 +3884,7 @@ On Error GoTo errhandler
             .GrhIndex = Buffer.ReadLong()
             .Madera = Buffer.ReadInteger()          'The wood needed
             .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
-            .ObjIndex = Buffer.ReadInteger()
+            .OBJIndex = Buffer.ReadInteger()
             .Upgrade = Buffer.ReadInteger()
         End With
     Next i
@@ -3909,14 +3920,14 @@ On Error GoTo errhandler
         With ObjCarpintero(i)
             If .Upgrade Then
                 For k = 1 To Count
-                    If .Upgrade = ObjCarpintero(k).ObjIndex Then
+                    If .Upgrade = ObjCarpintero(k).OBJIndex Then
                         J = J + 1
                 
                         ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
                         
                         CarpinteroMejorar(J).name = .name
                         CarpinteroMejorar(J).GrhIndex = .GrhIndex
-                        CarpinteroMejorar(J).ObjIndex = .ObjIndex
+                        CarpinteroMejorar(J).OBJIndex = .OBJIndex
                         CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).name
                         CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
                         CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
@@ -3977,7 +3988,7 @@ On Error GoTo errhandler
         With ObjArtesano(i)
             .name = Buffer.ReadASCIIString()
             .GrhIndex = Buffer.ReadLong()
-            .ObjIndex = Buffer.ReadInteger()
+            .OBJIndex = Buffer.ReadInteger()
             
             CountCrafteo = Buffer.ReadByte()
             ReDim .ItemsCrafteo(CountCrafteo) As tItemCrafteo
@@ -3985,7 +3996,7 @@ On Error GoTo errhandler
             For J = 1 To CountCrafteo
                 .ItemsCrafteo(J).name = Buffer.ReadASCIIString()
                 .ItemsCrafteo(J).GrhIndex = Buffer.ReadLong()
-                .ItemsCrafteo(J).ObjIndex = Buffer.ReadInteger()
+                .ItemsCrafteo(J).OBJIndex = Buffer.ReadInteger()
                 .ItemsCrafteo(J).Amount = Buffer.ReadInteger()
             Next J
         End With
@@ -4183,7 +4194,7 @@ On Error GoTo errhandler
         .Amount = Buffer.ReadInteger()
         .Valor = Buffer.ReadSingle()
         .GrhIndex = Buffer.ReadLong()
-        .ObjIndex = Buffer.ReadInteger()
+        .OBJIndex = Buffer.ReadInteger()
         .OBJType = Buffer.ReadByte()
         .MaxHit = Buffer.ReadInteger()
         .MinHit = Buffer.ReadInteger()
@@ -4192,7 +4203,7 @@ On Error GoTo errhandler
         .Incompatible = Buffer.ReadBoolean()
     
         If frmComerciar.Visible Then
-            Call InvComNpc.SetItem(slot, .ObjIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .Incompatible)
+            Call InvComNpc.SetItem(slot, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .Incompatible)
         End If
     End With
         
@@ -4642,9 +4653,9 @@ On Error GoTo errhandler
     
     'Get Allied guilds list
     guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
-    
+
     Upper_guildList = UBound(guildList)
-    
+
     For i = 0 To Upper_guildList
         sTemp = frmGuildNews.txtClanesAliados.Text
         frmGuildNews.txtClanesAliados.Text = sTemp & guildList(i) & vbCrLf
@@ -5192,7 +5203,7 @@ Private Sub HandleChangeUserTradeSlot()
         Call Buffer.ReadByte
 
         Dim OfferSlot As Byte: OfferSlot = .ReadByte()
-        Dim ObjIndex  As Integer: ObjIndex = .ReadInteger()
+        Dim OBJIndex  As Integer: OBJIndex = .ReadInteger()
         Dim Amount    As Long: Amount = .ReadLong()
         Dim GrhIndex  As Long: GrhIndex = .ReadLong()
         Dim OBJType   As Byte: OBJType = .ReadByte()
@@ -5210,9 +5221,9 @@ Private Sub HandleChangeUserTradeSlot()
     Call incomingData.CopyBuffer(Buffer)
 
     If OfferSlot = GOLD_OFFER_SLOT Then
-        Call InvOroComUsu(2).SetItem(1, ObjIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name, Incompatible)
+        Call InvOroComUsu(2).SetItem(1, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name, Incompatible)
     Else
-        Call InvOfferComUsu(1).SetItem(OfferSlot, ObjIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name, Incompatible)
+        Call InvOfferComUsu(1).SetItem(OfferSlot, OBJIndex, Amount, 0, GrhIndex, OBJType, MaxHit, MinHit, MaxDef, MinDef, SalePrice, name, Incompatible)
     End If
     
     Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & JsonLanguage.item("MENSAJE_COMM_OFERTA_CAMBIA").item("TEXTO"), FontTypeNames.FONTTYPE_VENENO)
@@ -11626,9 +11637,40 @@ On Error GoTo errhandler
     ExpMultiplierServidor = Buffer.ReadInteger()
     OroMultiplierServidor = Buffer.ReadInteger()
     OficioMultiplierServidor = Buffer.ReadInteger()
-
+    
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
+    
+    Dim MsPingResult As Long
+        MsPingResult = (GetTickCount - pingTime)
+        
+    pingTime = 0
+
+    Dim CountryCode As String
+    
+    If IpApiEnabled Then
+        
+        'If is not numeric do a url transformation
+        If CheckIfIpIsNumeric(IpPublicaServidor) = False Then
+            IpPublicaServidor = GetIPFromHostName(IpPublicaServidor)
+        End If
+
+        CountryCode = GetCountryCode(IpPublicaServidor) & " - "
+    End If
+
+    Dim Descripcion As String
+    Descripcion = CountryCode & _
+                    NombreServidor & vbNewLine & _
+                    DescripcionServidor & vbNewLine & _
+                    "Mundo: " & MundoServidor & vbNewLine & _
+                    "Online: " & CantidadUsuariosOnline & " / " & MaxUsersSimultaneosServidor & vbNewLine & _
+                    "Ping: " & MsPingResult & vbNewLine & _
+                    "Nivel Maximo Permitido : " & NivelMaximoServidor
+
+
+    frmConnect.lblDescripcionServidor = Descripcion
+
+    STAT_MAXELV = NivelMaximoServidor
 
 errhandler:
 
