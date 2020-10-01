@@ -177,17 +177,6 @@ Public ColoresPJ(0 To 50) As Long
 
 Public ColoresDano(51 To 56) As Long
 
-Public Type tServerInfo
-    Ip As String
-    Puerto As Integer
-    Desc As String
-    Mundo As String
-End Type
-
-Public ServersLst() As tServerInfo
-
-Public CurServer As Integer
-
 Public CreandoClan As Boolean
 Public ClanName As String
 Public Site As String
@@ -604,7 +593,7 @@ End Enum
 
 'Inventario
 Type Inventory
-    OBJIndex As Integer
+    ObjIndex As Integer
     name As String
     GrhIndex As Long
     Amount As Long
@@ -619,7 +608,7 @@ Type Inventory
 End Type
 
 Type NpCinV
-    OBJIndex As Integer
+    ObjIndex As Integer
     name As String
     GrhIndex As Long
     Amount As Integer
@@ -661,7 +650,7 @@ End Type
 
 Type tItemsConstruibles
     name As String
-    OBJIndex As Integer
+    ObjIndex As Integer
     GrhIndex As Long
     LinH As Integer
     LinP As Integer
@@ -675,14 +664,14 @@ End Type
 
 Type tItemCrafteo
     name As String
-    OBJIndex As Integer
+    ObjIndex As Integer
     GrhIndex As Long
     Amount As Integer
 End Type
 
 Type tItemArtesano
     name As String
-    OBJIndex As Integer
+    ObjIndex As Integer
     GrhIndex As Long
     
     ItemsCrafteo() As tItemCrafteo
@@ -1058,7 +1047,6 @@ Public IntervaloParalizado As Integer
 Public UserParalizadoSegundosRestantes As Integer
 Public UserEquitandoSegundosRestantes As Long
 
-Public QuantityServers As Integer
 Public IpApiEnabled As Boolean
 
 #If AntiExternos Then

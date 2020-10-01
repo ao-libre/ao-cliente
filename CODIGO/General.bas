@@ -139,7 +139,7 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     Len_cad = Len(cad)
     
     For i = 1 To Len_cad
-        car = Asc(Mid$(cad, i, 1))
+        car = Asc(mid$(cad, i, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
             Exit Function
@@ -158,31 +158,31 @@ Function CheckUserData() As Boolean
     Dim Len_accountName As Long, Len_accountPassword As Long
 
     If LenB(AccountPassword) = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_PASSWORD").Item("TEXTO")
+        MsgBox JsonLanguage.item("VALIDACION_PASSWORD").item("TEXTO")
         Exit Function
     End If
     
     Len_accountPassword = Len(AccountPassword)
     
     For LoopC = 1 To Len_accountPassword
-        CharAscii = Asc(Mid$(AccountPassword, LoopC, 1))
+        CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
+            MsgBox Replace$(JsonLanguage.item("VALIDACION_BAD_PASSWORD").item("TEXTO").item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
     Next LoopC
 
     If Len(AccountName) > 30 Then
-        MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(2)
+        MsgBox JsonLanguage.item("VALIDACION_BAD_EMAIL").item("TEXTO").item(2)
         Exit Function
     End If
         
     Len_accountName = Len(AccountName)
     
     For LoopC = 1 To Len_accountName
-        CharAscii = Asc(Mid$(AccountName, LoopC, 1))
+        CharAscii = Asc(mid$(AccountName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
+            MsgBox Replace$(JsonLanguage.item("VALIDACION_BAD_PASSWORD").item("TEXTO").item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
     Next LoopC
@@ -319,7 +319,7 @@ Private Sub CheckKeys()
 
     'Si esta activada la opcion de sacar cartel, no nos movemos con chat abierto, sino si nos movemos.
     'Esto es mas que nada por la configuracion de teclas alternativa con WASD (RecoX)
-    If EsGm(UserCharIndex) Then
+    If EsGM(UserCharIndex) Then
 
         'Si esta chateando, no mover el pj, tanto para chat de clanes y normal
         If frmMain.SendTxt.Visible Then Exit Sub
@@ -411,7 +411,7 @@ Private Sub CheckKeys()
 CantMove:
     If bCantMove And intentemoverme Then
         If (Abs(GetTickCount - lastmsg)) > 1000 Then
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USUARIO_VIAJANDO_HOGAR").Item("TEXTO"), 110, 220, 0)
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USUARIO_VIAJANDO_HOGAR").item("TEXTO"), 110, 220, 0)
             lastmsg = Abs(GetTickCount)
         End If
     End If
@@ -447,12 +447,12 @@ Sub SwitchMap(ByVal Map As Integer)
     'Erase particle effects
     Call Particle_Group_Remove_All
     
-    dLen = FileLen(Game.Path(Mapas) & "Mapa" & Map & ".map")
+    dLen = FileLen(Game.path(Mapas) & "Mapa" & Map & ".map")
     ReDim dData(dLen - 1)
     
     handle = FreeFile()
     
-    Open Game.Path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
+    Open Game.path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
         Get handle, , dData
     Close handle
      
@@ -548,8 +548,8 @@ Sub SwitchMap(ByVal Map As Integer)
     End With
     
     'Dibujamos el Mini-Mapa
-    If FileExist(Game.Path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
-        frmMain.MiniMapa.Picture = LoadPicture(Game.Path(Graficos) & "MiniMapa\" & Map & ".bmp")
+    If FileExist(Game.path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
+        frmMain.MiniMapa.Picture = LoadPicture(Game.path(Graficos) & "MiniMapa\" & Map & ".bmp")
     Else
         frmMain.MiniMapa.Visible = False
         frmMain.RecTxt.Width = frmMain.RecTxt.Width + 100
@@ -591,9 +591,9 @@ Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As
     Next i
     
     If CurrentPos = 0 Then
-        ReadField = Mid$(Text, lastPos + 1, Len(Text) - lastPos)
+        ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
     Else
-        ReadField = Mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
+        ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
     End If
 End Function
 
@@ -639,7 +639,7 @@ On Error Resume Next
     
     Set Inet = New clsInet
     
-    URL = GetVar(Game.Path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
+    URL = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
     Endpoint = URL & Ip & "/json/"
     
     Response = Inet.OpenRequest(Endpoint, "GET")
@@ -648,7 +648,7 @@ On Error Resume Next
     
     Set JsonObject = JSON.parse(Response)
     
-    GetCountryFromIp = JsonObject.Item("country")
+    GetCountryFromIp = JsonObject.item("country")
     
     Set Inet = Nothing
 End Function
@@ -683,10 +683,10 @@ Sub Main()
     Call LeerLineaComandos
     
     'usaremos esto para ayudar en los parches
-    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.Path & "\")
+    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.path & "\")
     
-    ChDrive App.Path
-    ChDir App.Path
+    ChDrive App.path
+    ChDir App.path
 
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution(1024, 768)
@@ -694,7 +694,7 @@ Sub Main()
     ' Load constants, classes, flags, graphics..
     Call LoadInitialConfig
     
-    If GetVar(Game.Path(INIT) & "Config.ini", "Parameters", "TestMode") <> 1 Then
+    If GetVar(Game.path(INIT) & "Config.ini", "Parameters", "TestMode") <> 1 Then
         frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
     End If
 
@@ -752,7 +752,7 @@ Sub Main()
 End Sub
 
 Public Function GetVersionOfTheGame() As String
-    GetVersionOfTheGame = GetVar(Game.Path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
+    GetVersionOfTheGame = GetVar(Game.path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
 End Function
 
 Private Sub LoadInitialConfig()
@@ -772,30 +772,28 @@ Private Sub LoadInitialConfig()
     End If
 
     ' Mouse Pointer and Mouse Icon (Loaded before opening any form with buttons in it)
-    Set picMouseIcon = LoadPicture(Game.Path(Graficos) & "MouseIcons\Baston.ico")
+    Set picMouseIcon = LoadPicture(Game.path(Graficos) & "MouseIcons\Baston.ico")
 
     ' Mouse Icon to use in the rest of the game this one is animated
     ' We load it in frmMain but for some reason is loaded in the rest of the game
     ' Better for us :)
     Dim CursorAniDir As String
     Dim Cursor As Long
-    CursorAniDir = Game.Path(Graficos) & "MouseIcons\General.ani"
-    hSwapCursor = SetClassLong(frmMain.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
-    hSwapCursor = SetClassLong(frmMain.MainViewPic.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
-    hSwapCursor = SetClassLong(frmMain.hlst.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    CursorAniDir = Game.path(Graficos) & "MouseIcons\General.ani"
+    hSwapCursor = SetClassLong(frmMain.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.MainViewPic.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.hlst.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
    
     frmCargando.Show
     frmCargando.Refresh
-
-    frmConnect.version = GetVersionOfTheGame()
     
     '#######
     ' CLASES
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_CLASES").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_CLASES").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_CLASES").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_CLASES").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_CLASES").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
                             
     Set Dialogos = New clsDialogs
@@ -813,24 +811,24 @@ Private Sub LoadInitialConfig()
     Set keysMovementPressedQueue = New clsArrayList
     Call keysMovementPressedQueue.Initialize(1, 4)
 
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
     '#############
     ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_SONIDO").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_SONIDO").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_SONIDO").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_SONIDO").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_SONIDO").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
                             
     'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hWnd, Game.Path(Sounds), Game.Path(Musica), Game.Path(MusicaMp3))
+    Call Audio.Initialize(DirectX, frmMain.hwnd, Game.path(Sounds), Game.path(Musica), Game.path(MusicaMp3))
 
     'Enable / Disable audio
     Audio.MusicActivated = ClientSetup.bMusic
@@ -842,20 +840,20 @@ Private Sub LoadInitialConfig()
     'Iniciamos cancion principal del juego turururuuuuuu
     Call Audio.PlayBackgroundMusic("6", MusicTypes.Mp3)
     
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
     '###########
     ' CONSTANTES
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_CONSTANTES").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_CONSTANTES").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_CONSTANTES").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_CONSTANTES").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_CONSTANTES").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
                             
     Call InicializarNombres
@@ -865,21 +863,21 @@ Private Sub LoadInitialConfig()
  
     UserMap = 1
     
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
 
     '##############
     ' MOTOR GRAFICO
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
     'Iniciamos el Engine de DirectX 8
     Call mDx8_Engine.Engine_DirectX8_Init
@@ -926,11 +924,6 @@ Private Sub LoadInitialConfig()
                             JsonLanguage.item("BIENVENIDO").item("COLOR").item(2), _
                             JsonLanguage.item("BIENVENIDO").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
-                            
-    '###################
-    ' PETICIONES API
-    Call GetPostsFromReddit '>>>>
-    'Que lento que es ese sub XD
 
     Unload frmCargando
     
@@ -1471,72 +1464,6 @@ Public Function ArrayInitialized(ByVal TheArray As Long) As Boolean
     ArrayInitialized = Not (TheArray = -1&)
 
 End Function
-
-Public Sub GetPostsFromReddit()
-    
-    On Error GoTo ErrorHandler
-    
-    With frmConnect.lstRedditPosts
-        
-        'Si Posts() NO esta inicializado...
-        If Not ArrayInitialized(Not Posts) Then
-    
-            Set Inet = New clsInet
-        
-            Dim ResponseReddit As String
-            Dim JsonObject     As Object
-            Dim Endpoint       As String
-        
-            Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
-    
-            ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
-            ResponseReddit = Inet.Execute
-            ResponseReddit = Inet.GetResponseAsString
-        
-            Set JsonObject = JSON.parse(ResponseReddit)
-        
-            Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.item("data").item("children").Count
-        
-            ReDim Preserve Posts(qtyPostsOnReddit)
-        
-            'Clear lstRedditPosts before populate it again to prevent repeated values.
-            Call .Clear
-        
-            'Long funciona mas rapido en los loops que Integer
-            Dim i As Long: i = 1
-
-            Do While i <= qtyPostsOnReddit
-
-                With Posts(i)
-                    .Title = JsonObject.item("data").item("children").item(i).item("data").item("title")
-                    .URL = JsonObject.item("data").item("children").item(i).item("data").item("url")
-                End With
-            
-                Call .AddItem(JsonObject.item("data").item("children").item(i).item("data").item("title"))
-            
-                i = i + 1
-            Loop
-        
-            Set Inet = Nothing
-        
-        Else 'Si lo esta, agregamos los valores existentes.
-    
-            Dim ia As Long
-            For ia = 1 To UBound(Posts)
-                Call .AddItem(Posts(ia).Title)
-            Next ia
-
-        End If
-    
-    End With
-
-ErrorHandler:
-
-    If Err.number Then
-        Call LogError(Err.number, Err.Description, "Mod_General.GetPostsFromReddit")
-    End If
-    
-End Sub
 
 Function ImgRequest(ByVal sFile As String) As String
     '***************************************************
