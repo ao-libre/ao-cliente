@@ -141,7 +141,8 @@ Private Enum ServerPacketID
     
     'GM =  messages
     SpawnList = 88               ' SPL
-    ShowSOSForm = 89             ' MSOS
+    ShowSOSForm = 
+' MSOS
     ShowMOTDEditionForm = 90     ' ZMOTD
     ShowGMPanelForm = 91         ' ABPANEL
     UserNameList = 92            ' LISTUSU
@@ -3283,7 +3284,7 @@ Private Sub HandleUpdateUserStats()
     
     bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 89)
     
-    frmMain.shpEnergia.Width = 83 - bWidth
+    frmMain.shpEnergia.Width = 89 - bWidth
     frmMain.shpEnergia.Left = 794 + (89 - frmMain.shpEnergia.Width)
     
     frmMain.shpEnergia.Visible = (bWidth <> 89)
