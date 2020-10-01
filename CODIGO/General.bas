@@ -917,7 +917,7 @@ Private Sub LoadInitialConfig()
                             True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_MAININVENTORY_SLOTS, , 34, 34, , , , , True, 1, 1, GRH_INVENTORYSLOT_SELECTED)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , 34, 34, , , , , True, 1, 1, GRH_INVENTORYSLOT_SELECTED)
     
     'Set cKeys = New Collection
     Call AddtoRichTextBox(frmCargando.status, _
@@ -1345,6 +1345,8 @@ End Function
 
 Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
 
+    Dim i As Long
+
     ' Disable timers
     frmMain.Second.Enabled = False
     frmMain.macrotrabajo.Enabled = False
@@ -1402,7 +1404,6 @@ Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
     Call CleanDialogs
 
     'Reset some char variables...
-    Dim i As Long
     For i = 1 To LastChar
         charlist(i).invisible = False
     Next i
@@ -1416,6 +1417,13 @@ Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
     SkillPoints = 0
     Alocados = 0
     UserEquitando = 0
+    
+    For i = 1 To UserInvUnlocked
+    
+        frmMain.imgInvLock(i - 1).Picture = Nothing
+    
+    Next i
+    
     UserInvUnlocked = 0
 
     Call SetSpeedUsuario

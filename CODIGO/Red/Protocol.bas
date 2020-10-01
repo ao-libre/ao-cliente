@@ -154,7 +154,7 @@ Private Enum ServerPacketID
     UpdateStrenghtAndDexterity = 98
     UpdateStrenght = 99
     UpdateDexterity = 100
-    AddSlots = 101
+    InventoryUnlockSlots = 101
     MultiMessage = 102
     StopWorking = 103
     CancelOfferItem = 104
@@ -896,8 +896,8 @@ On Error Resume Next
         Case ServerPacketID.UpdateDexterity
             Call HandleUpdateDexterity
             
-        Case ServerPacketID.AddSlots
-            Call HandleAddSlots
+        Case ServerPacketID.InventoryUnlockSlots
+            Call HandleInventoryUnlockSlots
 
         Case ServerPacketID.MultiMessage
             Call HandleMultiMessage
@@ -1670,7 +1670,7 @@ Private Sub HandleCommerceInit()
     Set InvComNpc = New clsGraphicalInventory
     
     ' Initialize commerce inventories
-    Call InvComUsu.Initialize(DirectD3D8, frmComerciar.picInvUser, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvComUsu.Initialize(DirectD3D8, frmComerciar.picInvUser, MAX_INVENTORY_SLOTS)
     Call InvComNpc.Initialize(DirectD3D8, frmComerciar.picInvNpc, MAX_NPC_INVENTORY_SLOTS)
 
     'Fill user inventory
@@ -1724,7 +1724,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
@@ -3407,18 +3407,28 @@ On Error GoTo 0
         Err.Raise Error
 End Sub
 
-' Handles the AddSlots message.
-Private Sub HandleAddSlots()
+' Handles the InventoryUnlockSlots message.
+Private Sub HandleInventoryUnlockSlots()
 '***************************************************
-'Author: Budi
-'Last Modification: 12/01/09
+'Author: Ruthnar
+'Last Modification: 30/09/20
 '
 '***************************************************
+    
+    Dim i As Integer
 
     Call incomingData.ReadByte
     
-    MaxInventorySlots = incomingData.ReadByte
+    UserInvUnlocked = incomingData.ReadByte
+    
+    For i = 1 To UserInvUnlocked
+    
+        frmMain.imgInvLock(i - 1).Picture = LoadPicture(Game.path(Interfaces) & "InventoryUnlocked.jpg")
+    
+    Next i
+    
     Call Inventario.DrawInventory
+    
 End Sub
 
 ' Handles the StopWorking message.
