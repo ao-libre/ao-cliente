@@ -8,6 +8,7 @@ Begin VB.UserControl uAOProgress
    ScaleHeight     =   945
    ScaleWidth      =   2295
    ToolboxBitmap   =   "uAOProgress.ctx":0000
+   Windowless      =   -1  'True
    Begin VB.Timer tTimer 
       Interval        =   10
       Left            =   1680
@@ -697,7 +698,7 @@ On Error Resume Next
     
 End Property
 
-Public Property Let Max(ByVal NewValue As Long)
+Public Property Let max(ByVal NewValue As Long)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 25/08/2012
@@ -716,7 +717,7 @@ On Error Resume Next
     
 End Property
 
-Public Property Get Max() As Long
+Public Property Get max() As Long
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 25/08/2012
@@ -724,11 +725,11 @@ Public Property Get Max() As Long
 
 On Error Resume Next
     
-    Max = iMax
+    max = iMax
     
 End Property
 
-Public Property Let Min(ByVal NewValue As Long)
+Public Property Let min(ByVal NewValue As Long)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 25/08/2012
@@ -736,7 +737,7 @@ Public Property Let Min(ByVal NewValue As Long)
 
 On Error Resume Next
     
-    If NewValue >= iMax Then NewValue = Max - 1
+    If NewValue >= iMax Then NewValue = max - 1
     If NewValue < 0 Then NewValue = 0
     iMin = NewValue
     If Value < iMin Then Value = iMin
@@ -747,7 +748,7 @@ On Error Resume Next
     
 End Property
 
-Public Property Get Min() As Long
+Public Property Get min() As Long
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 25/08/2012
@@ -755,6 +756,6 @@ Public Property Get Min() As Long
 
 On Error Resume Next
     
-    Min = iMin
+    min = iMin
     
 End Property
