@@ -34,13 +34,6 @@ Attribute VB_Name = "Mod_General"
 Option Explicit
 Public bFogata As Boolean
 
-Public Type tRedditPost
-    Title As String
-    URL As String
-End Type
-
-Public Posts() As tRedditPost
-
 Public bLluvia() As Byte ' Array para determinar si
 'debemos mostrar la animacion de la lluvia
 
@@ -78,9 +71,9 @@ End Function
 
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
                     ByVal Text As String, _
-                    Optional ByVal Red As Integer = -1, _
-                    Optional ByVal Green As Integer, _
-                    Optional ByVal Blue As Integer, _
+                    Optional ByVal red As Integer = -1, _
+                    Optional ByVal green As Integer, _
+                    Optional ByVal blue As Integer, _
                     Optional ByVal bold As Boolean = False, _
                     Optional ByVal italic As Boolean = False, _
                     Optional ByVal bCrLf As Boolean = True, _
@@ -115,16 +108,13 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
         ' 2 = Right
         .SelAlignment = Alignment
 
-        If Not Red = -1 Then .SelColor = RGB(Red, Green, Blue)
+        If Not red = -1 Then .SelColor = RGB(red, green, blue)
         
         If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
         
         .SelText = Text
 
-        ' Esto arregla el bug de las letras superponiendose la consola del frmMain
-        If Not (RichTextBox = frmMain.RecTxt) Then
-            RichTextBox.Refresh
-        End If
+        RichTextBox.Refresh
 
     End With
     
@@ -552,7 +542,11 @@ Sub SwitchMap(ByVal Map As Integer)
         frmMain.MiniMapa.Picture = LoadPicture(Game.path(Graficos) & "MiniMapa\" & Map & ".bmp")
     Else
         frmMain.MiniMapa.Visible = False
-        frmMain.RecTxt.Width = frmMain.RecTxt.Width + 100
+        frmMain.pConsola.Width = frmMain.pConsola.Width + 100
+        frmMain.BarraConsolaUp.Left = frmMain.BarraConsolaUp.Left + 100
+        frmMain.BarraConsolaCentro.Left = frmMain.BarraConsolaCentro.Left + 100
+        frmMain.BarraConsolaDown.Left = frmMain.BarraConsolaDown.Left + 100
+        frmMain.BarritaConsola.Left = frmMain.BarritaConsola.Left + 100
     End If
     
     CurMap = Map
@@ -915,7 +909,7 @@ Private Sub LoadInitialConfig()
                             True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , 34, 34, , , , , True, 1, 1, GRH_INVENTORYSLOT_SELECTED)
+    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS, , 34, 34, , , , , True, 1, 1, GRH_INVENTORYSLOT_SELECTED)
     
     'Set cKeys = New Collection
     Call AddtoRichTextBox(frmCargando.status, _
@@ -1140,7 +1134,7 @@ Public Sub CleanDialogs()
 'Removes all text from the console and dialogs
 '**************************************************************
     'Clean console and dialogs
-    frmMain.RecTxt.Text = vbNullString
+    frmMain.ClearConsole
     
     Call DialogosClanes.RemoveDialogs
     
