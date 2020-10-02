@@ -232,6 +232,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H0000FF00&
       Height          =   195
       Left            =   4890
+      MaxLength       =   5
       TabIndex        =   3
       Text            =   "7667"
       Top             =   2760
@@ -332,6 +333,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Lector As clsIniManager
+Private OldPort As String
 
 Private Const AES_PASSWD As String = "tumamaentanga"
 
@@ -414,7 +416,13 @@ Private Sub IPTxt_Change()
 End Sub
 
 Private Sub PortTxt_Change()
+On Error GoTo Handler
     CurServerPort = Val(PortTxt.Text)
+    OldPort = PortTxt.Text
+    Exit Sub
+
+Handler:
+    PortTxt.Text = OldPort
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)
