@@ -141,8 +141,7 @@ Private Enum ServerPacketID
     
     'GM =  messages
     SpawnList = 88               ' SPL
-    ShowSOSForm = 
-' MSOS
+    ShowSOSForm = 89' MSOS
     ShowMOTDEditionForm = 90     ' ZMOTD
     ShowGMPanelForm = 91         ' ABPANEL
     UserNameList = 92            ' LISTUSU
