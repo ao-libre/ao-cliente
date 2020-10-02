@@ -129,6 +129,7 @@ Form=CODIGO\Formularios\frmShowProcess.frm
 Module=modRemoveTitleBar; CODIGO\modRemoveTitleBar.bas
 Class=clsSecurity; CODIGO\clsSecurity.cls
 Object={48E59290-9880-11CF-9754-00AA00C00908}#1.0#0; MSINET.ocx
+Class=clsGraphicalList; CODIGO\Aplicacion\clsGraphicalList.cls
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
