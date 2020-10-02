@@ -50,7 +50,7 @@ Option Explicit
 
 ''
 'Number of Customizable Keys
-Private Const NUM_CUSTOM_KEYS As Byte = 27
+Private Const NUM_CUSTOM_KEYS As Byte = 28
 
 ''
 'Number of Key Configurations
@@ -107,6 +107,7 @@ Private ActiveConfig As Byte
 '@param mKeyCastSpellMacro Key for start/stop the Cast Spell Macro
 '@param mKeyWorkMacro Key for start/stop the Work Macro
 '@param mKeyExitGame Key for close the game
+'@param mKeyShowMap Key for open the map
 Public Enum eKeyType
     mKeyUp = 1
     mKeyDown
@@ -135,6 +136,7 @@ Public Enum eKeyType
     mKeyCastSpellMacro
     mKeyWorkMacro
     mKeyExitGame
+    mKeyShowMap
 End Enum
 
 ''
@@ -288,6 +290,10 @@ Public Sub LoadCustomKeys()
         For i = 0 To NUM_CUSTOM_CONFIGS
             For J = 1 To NUM_CUSTOM_KEYS
                 Get FileNum, , mappedKeys(i, J)
+                
+                If Not mappedKeys(i, J) Then
+                    mappedKeys(i, J) = GetDefaultKey(J)
+                End If
             Next J
         Next i
         
@@ -313,7 +319,7 @@ Dim FileNum As Integer
 
     FileNum = FreeFile()
     
-    Open Game.path(INIT) & KeyboardConfigurationInUse  For Binary Access Write As FileNum
+    Open Game.path(INIT) & KeyboardConfigurationInUse For Binary Access Write As FileNum
     
     'Guardo la configuracion activa:
     Put FileNum, , ActiveConfig
@@ -381,34 +387,71 @@ Public Sub LoadDefaults(ByVal KeyConfig As Byte)
 'Last Modification: 16/11/2010
 '16/11/2010: Amraphen - Adapte el procedimiento para que cargue los bindings por default en una sola configuracion.
 '***************************************************
-    mappedKeys(KeyConfig, eKeyType.mKeyUp) = KeyCodeConstants.vbKeyUp
-    mappedKeys(KeyConfig, eKeyType.mKeyDown) = KeyCodeConstants.vbKeyDown
-    mappedKeys(KeyConfig, eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyLeft
-    mappedKeys(KeyConfig, eKeyType.mKeyRight) = KeyCodeConstants.vbKeyRight
-    mappedKeys(KeyConfig, eKeyType.mKeyToggleMusic) = KeyCodeConstants.vbKeyM
-    mappedKeys(KeyConfig, eKeyType.mKeyToggleSound) = KeyCodeConstants.vbKeyS
-    mappedKeys(KeyConfig, eKeyType.mKeyToggleFxs) = KeyCodeConstants.vbKeyF
-    mappedKeys(KeyConfig, eKeyType.mKeyRequestRefresh) = KeyCodeConstants.vbKeyL
-    mappedKeys(KeyConfig, eKeyType.mKeyToggleNames) = KeyCodeConstants.vbKeyN
-    mappedKeys(KeyConfig, eKeyType.mKeyGetObject) = KeyCodeConstants.vbKeyA
-    mappedKeys(KeyConfig, eKeyType.mKeyEquipObject) = KeyCodeConstants.vbKeyE
-    mappedKeys(KeyConfig, eKeyType.mKeyTamAnimal) = KeyCodeConstants.vbKeyD
-    mappedKeys(KeyConfig, eKeyType.mKeySteal) = KeyCodeConstants.vbKeyR
-    mappedKeys(KeyConfig, eKeyType.mKeyToggleSafeMode) = KeyCodeConstants.vbKeyC
-    mappedKeys(KeyConfig, eKeyType.mKeyToggleResuscitationSafe) = KeyCodeConstants.vbKeyV
-    mappedKeys(KeyConfig, eKeyType.mKeyHide) = KeyCodeConstants.vbKeyO
-    mappedKeys(KeyConfig, eKeyType.mKeyDropObject) = KeyCodeConstants.vbKeyT
-    mappedKeys(KeyConfig, eKeyType.mKeyUseObject) = KeyCodeConstants.vbKeyU
-    mappedKeys(KeyConfig, eKeyType.mKeyAttack) = KeyCodeConstants.vbKeyControl
-    mappedKeys(KeyConfig, eKeyType.mKeyTalk) = KeyCodeConstants.vbKeyReturn
-    mappedKeys(KeyConfig, eKeyType.mKeyTalkWithGuild) = KeyCodeConstants.vbKeyDelete
-    mappedKeys(KeyConfig, eKeyType.mKeyTakeScreenShot) = KeyCodeConstants.vbKeyF2
-    mappedKeys(KeyConfig, eKeyType.mKeyShowOptions) = KeyCodeConstants.vbKeyF5
-    mappedKeys(KeyConfig, eKeyType.mKeyMeditate) = KeyCodeConstants.vbKeyF6
-    mappedKeys(KeyConfig, eKeyType.mKeyCastSpellMacro) = KeyCodeConstants.vbKeyF7
-    mappedKeys(KeyConfig, eKeyType.mKeyWorkMacro) = KeyCodeConstants.vbKeyF8
-    mappedKeys(KeyConfig, eKeyType.mKeyExitGame) = KeyCodeConstants.vbKeyF12
+    mappedKeys(KeyConfig, eKeyType.mKeyUp) = GetDefaultKey(eKeyType.mKeyUp)
+    mappedKeys(KeyConfig, eKeyType.mKeyDown) = GetDefaultKey(eKeyType.mKeyDown)
+    mappedKeys(KeyConfig, eKeyType.mKeyLeft) = GetDefaultKey(eKeyType.mKeyLeft)
+    mappedKeys(KeyConfig, eKeyType.mKeyRight) = GetDefaultKey(eKeyType.mKeyRight)
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleMusic) = GetDefaultKey(eKeyType.mKeyToggleMusic)
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleSound) = GetDefaultKey(eKeyType.mKeyToggleSound)
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleFxs) = GetDefaultKey(eKeyType.mKeyToggleFxs)
+    mappedKeys(KeyConfig, eKeyType.mKeyRequestRefresh) = GetDefaultKey(eKeyType.mKeyRequestRefresh)
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleNames) = GetDefaultKey(eKeyType.mKeyToggleNames)
+    mappedKeys(KeyConfig, eKeyType.mKeyGetObject) = GetDefaultKey(eKeyType.mKeyGetObject)
+    mappedKeys(KeyConfig, eKeyType.mKeyEquipObject) = GetDefaultKey(eKeyType.mKeyEquipObject)
+    mappedKeys(KeyConfig, eKeyType.mKeyTamAnimal) = GetDefaultKey(eKeyType.mKeyTamAnimal)
+    mappedKeys(KeyConfig, eKeyType.mKeySteal) = GetDefaultKey(eKeyType.mKeySteal)
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleSafeMode) = GetDefaultKey(eKeyType.mKeyToggleSafeMode)
+    mappedKeys(KeyConfig, eKeyType.mKeyToggleResuscitationSafe) = GetDefaultKey(eKeyType.mKeyToggleResuscitationSafe)
+    mappedKeys(KeyConfig, eKeyType.mKeyHide) = GetDefaultKey(eKeyType.mKeyHide)
+    mappedKeys(KeyConfig, eKeyType.mKeyDropObject) = GetDefaultKey(eKeyType.mKeyDropObject)
+    mappedKeys(KeyConfig, eKeyType.mKeyUseObject) = GetDefaultKey(eKeyType.mKeyUseObject)
+    mappedKeys(KeyConfig, eKeyType.mKeyAttack) = GetDefaultKey(eKeyType.mKeyAttack)
+    mappedKeys(KeyConfig, eKeyType.mKeyTalk) = GetDefaultKey(eKeyType.mKeyTalk)
+    mappedKeys(KeyConfig, eKeyType.mKeyTalkWithGuild) = GetDefaultKey(eKeyType.mKeyTalkWithGuild)
+    mappedKeys(KeyConfig, eKeyType.mKeyTakeScreenShot) = GetDefaultKey(eKeyType.mKeyTakeScreenShot)
+    mappedKeys(KeyConfig, eKeyType.mKeyShowOptions) = GetDefaultKey(eKeyType.mKeyShowOptions)
+    mappedKeys(KeyConfig, eKeyType.mKeyMeditate) = GetDefaultKey(eKeyType.mKeyMeditate)
+    mappedKeys(KeyConfig, eKeyType.mKeyCastSpellMacro) = GetDefaultKey(eKeyType.mKeyCastSpellMacro)
+    mappedKeys(KeyConfig, eKeyType.mKeyWorkMacro) = GetDefaultKey(eKeyType.mKeyWorkMacro)
+    mappedKeys(KeyConfig, eKeyType.mKeyExitGame) = GetDefaultKey(eKeyType.mKeyExitGame)
+    mappedKeys(KeyConfig, eKeyType.mKeyShowMap) = GetDefaultKey(eKeyType.mKeyShowMap)
 End Sub
+
+' Get default key
+Private Function GetDefaultKey(ByVal Key As eKeyType) As Integer
+
+Select Case Key
+    Case eKeyType.mKeyUp: GetDefaultKey = KeyCodeConstants.vbKeyUp
+    Case eKeyType.mKeyDown: GetDefaultKey = KeyCodeConstants.vbKeyDown
+    Case eKeyType.mKeyLeft: GetDefaultKey = KeyCodeConstants.vbKeyLeft
+    Case eKeyType.mKeyRight: GetDefaultKey = KeyCodeConstants.vbKeyRight
+    Case eKeyType.mKeyToggleMusic: GetDefaultKey = KeyCodeConstants.vbKeyM
+    Case eKeyType.mKeyToggleSound: GetDefaultKey = KeyCodeConstants.vbKeyS
+    Case eKeyType.mKeyToggleFxs: GetDefaultKey = KeyCodeConstants.vbKeyF
+    Case eKeyType.mKeyRequestRefresh: GetDefaultKey = KeyCodeConstants.vbKeyL
+    Case eKeyType.mKeyToggleNames: GetDefaultKey = KeyCodeConstants.vbKeyN
+    Case eKeyType.mKeyGetObject: GetDefaultKey = KeyCodeConstants.vbKeyA
+    Case eKeyType.mKeyEquipObject: GetDefaultKey = KeyCodeConstants.vbKeyE
+    Case eKeyType.mKeyTamAnimal: GetDefaultKey = KeyCodeConstants.vbKeyD
+    Case eKeyType.mKeySteal: GetDefaultKey = KeyCodeConstants.vbKeyR
+    Case eKeyType.mKeyToggleSafeMode: GetDefaultKey = KeyCodeConstants.vbKeyC
+    Case eKeyType.mKeyToggleResuscitationSafe: GetDefaultKey = KeyCodeConstants.vbKeyV
+    Case eKeyType.mKeyHide: GetDefaultKey = KeyCodeConstants.vbKeyO
+    Case eKeyType.mKeyDropObject: GetDefaultKey = KeyCodeConstants.vbKeyT
+    Case eKeyType.mKeyUseObject: GetDefaultKey = KeyCodeConstants.vbKeyU
+    Case eKeyType.mKeyAttack: GetDefaultKey = KeyCodeConstants.vbKeyControl
+    Case eKeyType.mKeyTalk: GetDefaultKey = KeyCodeConstants.vbKeyReturn
+    Case eKeyType.mKeyTalkWithGuild: GetDefaultKey = KeyCodeConstants.vbKeyDelete
+    Case eKeyType.mKeyTakeScreenShot: GetDefaultKey = KeyCodeConstants.vbKeyF2
+    Case eKeyType.mKeyShowOptions: GetDefaultKey = KeyCodeConstants.vbKeyF5
+    Case eKeyType.mKeyMeditate: GetDefaultKey = KeyCodeConstants.vbKeyF6
+    Case eKeyType.mKeyCastSpellMacro: GetDefaultKey = KeyCodeConstants.vbKeyF7
+    Case eKeyType.mKeyWorkMacro: GetDefaultKey = KeyCodeConstants.vbKeyF8
+    Case eKeyType.mKeyExitGame: GetDefaultKey = KeyCodeConstants.vbKeyF12
+    Case eKeyType.mKeyShowMap: GetDefaultKey = KeyCodeConstants.vbKeyQ
+End Select
+
+End Function
 
 ''
 'Returns whether a key is binded to an action
@@ -502,7 +545,7 @@ Private Sub Class_Initialize()
 '06/11/2019: Recox - Ahora podemos manejar una configuracion default y una alternativa.
 '***************************************************
 
-    If ClientSetup.KeyboardBindKeysConfig  = "Alternative" Then
+    If ClientSetup.KeyboardBindKeysConfig = "Alternative" Then
         KeyboardConfigurationInUse = KEY_CONFIG_FILE_ALTERNATIVE
     Else
         KeyboardConfigurationInUse = KEY_CONFIG_FILE

@@ -32,6 +32,9 @@ Attribute VB_Name = "Mod_Declaraciones"
 
 Option Explicit
 
+Public CurServerIp As String
+Public CurServerPort As Integer
+
 Public IntervaloDopas As Long
 Public IntervaloInvi As Long
 Public TiempoInvi As Long

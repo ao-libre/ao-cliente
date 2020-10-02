@@ -2038,6 +2038,11 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeyToggleResuscitationSafe)
                     Call WriteResuscitationToggle
                     
+                Case CustomKeys.BindedKey(eKeyType.mKeyShowMap)
+                    If Not frmMapa.Visible Then
+                        Call frmMapa.Show(vbModeless, frmMain)
+                    End If
+                    
             End Select
         Else
             

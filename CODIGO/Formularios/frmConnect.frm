@@ -370,6 +370,9 @@ Private Sub btnTeclas_Click()
 End Sub
 
 Private Sub Form_Activate()
+    If Len(CurServerIp) Then IPTxt.Text = CurServerIp
+    If CurServerPort Then PortTxt.Text = CurServerPort
+
     If CBool(GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "Remember")) = True Then
         Me.txtNombre = GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "UserName")
         Me.txtPasswd = Cripto.AesDecryptString(GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "Password"), AES_PASSWD)
@@ -404,6 +407,14 @@ Private Sub LoadTextsForm()
     lblRecordarme.Caption = JsonLanguage.item("LBL_RECORDARME").item("TEXTO")
     btnSalir.Caption = JsonLanguage.item("BTN_SALIR").item("TEXTO")
     btnTeclas.Caption = JsonLanguage.item("LBL_TECLAS").item("TEXTO")
+End Sub
+
+Private Sub IPTxt_Change()
+    CurServerIp = IPTxt.Text
+End Sub
+
+Private Sub PortTxt_Change()
+    CurServerPort = Val(PortTxt.Text)
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)

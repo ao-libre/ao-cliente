@@ -103,11 +103,11 @@ Private CurrentMap As eMaps
 ' @date 20080724
 
 ''
-' Checks what Key is down. If the key is const vbKeyDown or const vbKeyUp, it toggles the maps, else the form unloads.
+' Checks what Key is released. If the key is const vbKeyDown or const vbKeyUp, it toggles the maps, else the form unloads.
 '
 ' @param KeyCode Specifies the key pressed
 ' @param Shift Specifies if Shift Button is pressed
-Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 '*************************************************
 'Author: Marco Vanotti (MarKoxX)
 'Last modified: 24/07/08
@@ -179,7 +179,7 @@ On Error GoTo Error
     
     Exit Sub
 Error:
-    MsgBox Err.Description, vbInformation, JsonLanguage.Item("ERROR").Item("TEXTO") & ": " & Err.number
+    MsgBox Err.Description, vbInformation, JsonLanguage.item("ERROR").item("TEXTO") & ": " & Err.number
     Unload Me
 End Sub
 
