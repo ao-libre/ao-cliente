@@ -71,9 +71,9 @@ End Function
 
 Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
                     ByVal Text As String, _
-                    Optional ByVal red As Integer = -1, _
-                    Optional ByVal green As Integer, _
-                    Optional ByVal blue As Integer, _
+                    Optional ByVal Red As Integer = -1, _
+                    Optional ByVal Green As Integer, _
+                    Optional ByVal Blue As Integer, _
                     Optional ByVal bold As Boolean = False, _
                     Optional ByVal italic As Boolean = False, _
                     Optional ByVal bCrLf As Boolean = True, _
@@ -108,7 +108,7 @@ Sub AddtoRichTextBox(ByRef RichTextBox As RichTextBox, _
         ' 2 = Right
         .SelAlignment = Alignment
 
-        If Not red = -1 Then .SelColor = RGB(red, green, blue)
+        If Not Red = -1 Then .SelColor = RGB(Red, Green, Blue)
         
         If bCrLf And Len(.Text) > 0 Then Text = vbCrLf & Text
         
@@ -776,7 +776,7 @@ Private Sub LoadInitialConfig()
     CursorAniDir = Game.path(Graficos) & "MouseIcons\General.ani"
     hSwapCursor = SetClassLong(frmMain.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
     hSwapCursor = SetClassLong(frmMain.MainViewPic.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
-    hSwapCursor = SetClassLong(frmMain.hlst.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.pHechizos.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
    
     frmCargando.Show
     frmCargando.Refresh
