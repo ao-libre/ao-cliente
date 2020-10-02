@@ -36,6 +36,48 @@ Begin VB.Form frmMain
    ScaleWidth      =   1022
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.PictureBox pHechizos 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H00FFFFFF&
+      Height          =   3180
+      Left            =   12000
+      Picture         =   "frmMain.frx":3F80C
+      ScaleHeight     =   212
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   180
+      TabIndex        =   49
+      Top             =   3000
+      Visible         =   0   'False
+      Width           =   2700
+      Begin VB.Image BarraHechizosCentro 
+         Height          =   2640
+         Left            =   2430
+         Top             =   270
+         Width           =   270
+      End
+      Begin VB.Image BarritaHechizos 
+         Height          =   120
+         Left            =   2430
+         Picture         =   "frmMain.frx":41D1C
+         Top             =   285
+         Width           =   270
+      End
+      Begin VB.Image BarraHechizosDown 
+         Height          =   270
+         Left            =   2430
+         Top             =   2910
+         Width           =   270
+      End
+      Begin VB.Image BarraHechizosUp 
+         Height          =   270
+         Left            =   2430
+         Top             =   0
+         Width           =   270
+      End
+   End
    Begin VB.Timer timerPasarSegundo 
       Interval        =   1000
       Left            =   4560
@@ -53,7 +95,7 @@ Begin VB.Form frmMain
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   10920
       Width           =   420
    End
@@ -66,7 +108,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   100
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   100
-      TabIndex        =   35
+      TabIndex        =   34
       TabStop         =   0   'False
       Top             =   600
       Width           =   1500
@@ -102,7 +144,7 @@ Begin VB.Form frmMain
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
-      TabIndex        =   27
+      TabIndex        =   26
       Top             =   10920
       Width           =   420
    End
@@ -118,7 +160,7 @@ Begin VB.Form frmMain
       MousePointer    =   99  'Custom
       ScaleHeight     =   450
       ScaleWidth      =   420
-      TabIndex        =   22
+      TabIndex        =   21
       Top             =   10920
       Width           =   420
    End
@@ -135,7 +177,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   30
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   28
-      TabIndex        =   21
+      TabIndex        =   20
       Top             =   10920
       Width           =   420
    End
@@ -184,7 +226,7 @@ Begin VB.Form frmMain
       MultiLine       =   -1  'True
       TabIndex        =   1
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":3F80C
+      Text            =   "frmMain.frx":42083
       ToolTipText     =   "Chat"
       Top             =   1830
       Visible         =   0   'False
@@ -214,7 +256,7 @@ Begin VB.Form frmMain
       MultiLine       =   -1  'True
       TabIndex        =   0
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":3F83C
+      Text            =   "frmMain.frx":420B3
       ToolTipText     =   "Chat"
       Top             =   10800
       Visible         =   0   'False
@@ -231,17 +273,6 @@ Begin VB.Form frmMain
       Left            =   8280
       Top             =   2880
    End
-   Begin VB.ListBox hlst 
-      BackColor       =   &H00000000&
-      ForeColor       =   &H00FFFFFF&
-      Height          =   3180
-      Left            =   12012
-      TabIndex        =   16
-      TabStop         =   0   'False
-      Top             =   3000
-      Visible         =   0   'False
-      Width           =   2685
-   End
    Begin VB.PictureBox MainViewPic 
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
@@ -251,7 +282,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   608
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   736
-      TabIndex        =   28
+      TabIndex        =   27
       Top             =   2280
       Width           =   11040
       Begin InetCtlsObjects.Inet InetDownloadFfmpeg 
@@ -275,7 +306,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnMapa 
       Height          =   255
       Left            =   11160
-      TabIndex        =   26
+      TabIndex        =   25
       TabStop         =   0   'False
       Top             =   9600
       Visible         =   0   'False
@@ -286,10 +317,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":3F872
-      PICF            =   "frmMain.frx":4029C
-      PICH            =   "frmMain.frx":40F5E
-      PICV            =   "frmMain.frx":41EF0
+      PICE            =   "frmMain.frx":420E9
+      PICF            =   "frmMain.frx":42B13
+      PICH            =   "frmMain.frx":437D5
+      PICV            =   "frmMain.frx":44767
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -303,7 +334,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnGrupo 
       Height          =   255
       Left            =   12600
-      TabIndex        =   29
+      TabIndex        =   28
       TabStop         =   0   'False
       Top             =   9600
       Visible         =   0   'False
@@ -314,10 +345,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":42DF2
-      PICF            =   "frmMain.frx":4381C
-      PICH            =   "frmMain.frx":444DE
-      PICV            =   "frmMain.frx":45470
+      PICE            =   "frmMain.frx":45669
+      PICF            =   "frmMain.frx":46093
+      PICH            =   "frmMain.frx":46D55
+      PICV            =   "frmMain.frx":47CE7
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -331,7 +362,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnOpciones 
       Height          =   255
       Left            =   12360
-      TabIndex        =   30
+      TabIndex        =   29
       TabStop         =   0   'False
       Top             =   120
       Visible         =   0   'False
@@ -342,10 +373,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":46372
-      PICF            =   "frmMain.frx":46D9C
-      PICH            =   "frmMain.frx":47A5E
-      PICV            =   "frmMain.frx":489F0
+      PICE            =   "frmMain.frx":48BE9
+      PICF            =   "frmMain.frx":49613
+      PICH            =   "frmMain.frx":4A2D5
+      PICV            =   "frmMain.frx":4B267
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -359,7 +390,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnEstadisticas 
       Height          =   255
       Left            =   12600
-      TabIndex        =   31
+      TabIndex        =   30
       TabStop         =   0   'False
       Top             =   7320
       Visible         =   0   'False
@@ -370,10 +401,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":498F2
-      PICF            =   "frmMain.frx":4A31C
-      PICH            =   "frmMain.frx":4AFDE
-      PICV            =   "frmMain.frx":4BF70
+      PICE            =   "frmMain.frx":4C169
+      PICF            =   "frmMain.frx":4CB93
+      PICH            =   "frmMain.frx":4D855
+      PICV            =   "frmMain.frx":4E7E7
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -387,7 +418,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnClanes 
       Height          =   255
       Left            =   14040
-      TabIndex        =   32
+      TabIndex        =   31
       TabStop         =   0   'False
       Top             =   9600
       Visible         =   0   'False
@@ -398,10 +429,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":4CE72
-      PICF            =   "frmMain.frx":4D89C
-      PICH            =   "frmMain.frx":4E55E
-      PICV            =   "frmMain.frx":4F4F0
+      PICE            =   "frmMain.frx":4F6E9
+      PICF            =   "frmMain.frx":50113
+      PICH            =   "frmMain.frx":50DD5
+      PICV            =   "frmMain.frx":51D67
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -415,7 +446,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnInventario 
       Height          =   375
       Left            =   11520
-      TabIndex        =   33
+      TabIndex        =   32
       TabStop         =   0   'False
       Top             =   2400
       Width           =   1815
@@ -425,10 +456,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   8421504
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":503F2
-      PICF            =   "frmMain.frx":51576
-      PICH            =   "frmMain.frx":52F1A
-      PICV            =   "frmMain.frx":54FAE
+      PICE            =   "frmMain.frx":52C69
+      PICF            =   "frmMain.frx":53DED
+      PICH            =   "frmMain.frx":55791
+      PICV            =   "frmMain.frx":57825
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -442,7 +473,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnHechizos 
       Height          =   375
       Left            =   13440
-      TabIndex        =   34
+      TabIndex        =   33
       TabStop         =   0   'False
       Top             =   2400
       Width           =   1695
@@ -452,10 +483,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   8421504
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":57012
-      PICF            =   "frmMain.frx":58196
-      PICH            =   "frmMain.frx":59B3A
-      PICV            =   "frmMain.frx":5BBCE
+      PICE            =   "frmMain.frx":59889
+      PICF            =   "frmMain.frx":5AA0D
+      PICH            =   "frmMain.frx":5C3B1
+      PICV            =   "frmMain.frx":5E445
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -469,7 +500,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnLanzar 
       Height          =   615
       Left            =   11760
-      TabIndex        =   20
+      TabIndex        =   19
       TabStop         =   0   'False
       Top             =   6360
       Visible         =   0   'False
@@ -480,10 +511,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   8421504
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":5DC32
-      PICF            =   "frmMain.frx":5EDB6
-      PICH            =   "frmMain.frx":6075A
-      PICV            =   "frmMain.frx":627EE
+      PICE            =   "frmMain.frx":604A9
+      PICF            =   "frmMain.frx":6162D
+      PICH            =   "frmMain.frx":62FD1
+      PICV            =   "frmMain.frx":65065
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -497,7 +528,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnInfo 
       Height          =   615
       Left            =   13800
-      TabIndex        =   36
+      TabIndex        =   35
       TabStop         =   0   'False
       Top             =   6360
       Visible         =   0   'False
@@ -508,10 +539,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   8421504
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":64852
-      PICF            =   "frmMain.frx":659D6
-      PICH            =   "frmMain.frx":6737A
-      PICV            =   "frmMain.frx":6940E
+      PICE            =   "frmMain.frx":670C9
+      PICF            =   "frmMain.frx":6824D
+      PICH            =   "frmMain.frx":69BF1
+      PICV            =   "frmMain.frx":6BC85
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   15.75
@@ -525,7 +556,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnRetos 
       Height          =   255
       Left            =   12720
-      TabIndex        =   41
+      TabIndex        =   40
       TabStop         =   0   'False
       Top             =   10560
       Visible         =   0   'False
@@ -536,10 +567,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6B472
-      PICF            =   "frmMain.frx":6BE9C
-      PICH            =   "frmMain.frx":6CB5E
-      PICV            =   "frmMain.frx":6DAF0
+      PICE            =   "frmMain.frx":6DCE9
+      PICF            =   "frmMain.frx":6E713
+      PICH            =   "frmMain.frx":6F3D5
+      PICV            =   "frmMain.frx":70367
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -553,7 +584,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnAmigos 
       Height          =   255
       Left            =   11280
-      TabIndex        =   42
+      TabIndex        =   41
       TabStop         =   0   'False
       Top             =   10440
       Visible         =   0   'False
@@ -564,10 +595,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":6E9F2
-      PICF            =   "frmMain.frx":6F41C
-      PICH            =   "frmMain.frx":700DE
-      PICV            =   "frmMain.frx":71070
+      PICE            =   "frmMain.frx":71269
+      PICF            =   "frmMain.frx":71C93
+      PICH            =   "frmMain.frx":72955
+      PICV            =   "frmMain.frx":738E7
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -581,7 +612,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnQuests 
       Height          =   255
       Left            =   14040
-      TabIndex        =   43
+      TabIndex        =   42
       TabStop         =   0   'False
       Top             =   10560
       Visible         =   0   'False
@@ -592,10 +623,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":71F72
-      PICF            =   "frmMain.frx":7299C
-      PICH            =   "frmMain.frx":7365E
-      PICV            =   "frmMain.frx":745F0
+      PICE            =   "frmMain.frx":747E9
+      PICF            =   "frmMain.frx":75213
+      PICH            =   "frmMain.frx":75ED5
+      PICV            =   "frmMain.frx":76E67
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   12
@@ -609,7 +640,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnReportarBug 
       Height          =   495
       Left            =   11400
-      TabIndex        =   44
+      TabIndex        =   43
       Top             =   10920
       Width           =   885
       _ExtentX        =   1561
@@ -618,10 +649,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":754F2
-      PICF            =   "frmMain.frx":7550E
-      PICH            =   "frmMain.frx":7552A
-      PICV            =   "frmMain.frx":75546
+      PICE            =   "frmMain.frx":77D69
+      PICF            =   "frmMain.frx":77D85
+      PICH            =   "frmMain.frx":77DA1
+      PICV            =   "frmMain.frx":77DBD
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -635,7 +666,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOButton btnGrabarVideo 
       Height          =   495
       Left            =   14400
-      TabIndex        =   45
+      TabIndex        =   44
       Top             =   10920
       Width           =   885
       _ExtentX        =   1561
@@ -644,10 +675,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":75562
-      PICF            =   "frmMain.frx":7557E
-      PICH            =   "frmMain.frx":7559A
-      PICV            =   "frmMain.frx":755B6
+      PICE            =   "frmMain.frx":77DD9
+      PICF            =   "frmMain.frx":77DF5
+      PICH            =   "frmMain.frx":77E11
+      PICV            =   "frmMain.frx":77E2D
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -666,11 +697,11 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   1305
       Left            =   135
-      Picture         =   "frmMain.frx":755D2
+      Picture         =   "frmMain.frx":77E49
       ScaleHeight     =   87
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   620
-      TabIndex        =   49
+      TabIndex        =   48
       Top             =   480
       Width           =   9300
       Begin VB.Image BarraConsolaCentro 
@@ -682,7 +713,7 @@ Begin VB.Form frmMain
       Begin VB.Image BarritaConsola 
          Height          =   120
          Left            =   9030
-         Picture         =   "frmMain.frx":77627
+         Picture         =   "frmMain.frx":79E9E
          Top             =   915
          Width           =   270
       End
@@ -699,10 +730,32 @@ Begin VB.Form frmMain
          Width           =   270
       End
    End
+   Begin VB.Image cmdMoverHechi 
+      Height          =   240
+      Index           =   0
+      Left            =   14790
+      MouseIcon       =   "frmMain.frx":7A205
+      MousePointer    =   99  'Custom
+      Picture         =   "frmMain.frx":7A357
+      Top             =   3960
+      Visible         =   0   'False
+      Width           =   225
+   End
+   Begin VB.Image cmdMoverHechi 
+      Height          =   240
+      Index           =   1
+      Left            =   14790
+      MouseIcon       =   "frmMain.frx":7A69B
+      MousePointer    =   99  'Custom
+      Picture         =   "frmMain.frx":7A7ED
+      Top             =   3705
+      Visible         =   0   'False
+      Width           =   225
+   End
    Begin AOLibre.uAOProgress uAOProgressDownloadFfmpeg 
       Height          =   255
       Left            =   2160
-      TabIndex        =   46
+      TabIndex        =   45
       ToolTipText     =   "Descarga ffmpeg"
       Top             =   2040
       Width           =   2895
@@ -728,7 +781,7 @@ Begin VB.Form frmMain
    Begin AOLibre.uAOProgress uAOProgressExperienceLevel 
       Height          =   330
       Left            =   11490
-      TabIndex        =   38
+      TabIndex        =   37
       ToolTipText     =   "Experiencia necesaria para pasar de nivel"
       Top             =   1500
       Width           =   3135
@@ -811,7 +864,7 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Height          =   495
       Left            =   14760
-      TabIndex        =   48
+      TabIndex        =   47
       Top             =   1440
       Width           =   495
    End
@@ -822,7 +875,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000014&
       Height          =   255
       Left            =   6600
-      TabIndex        =   37
+      TabIndex        =   36
       Top             =   2040
       Width           =   4455
    End
@@ -831,7 +884,7 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Height          =   375
       Left            =   11400
-      TabIndex        =   47
+      TabIndex        =   46
       Top             =   0
       Width           =   375
    End
@@ -851,7 +904,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFF00&
       Height          =   345
       Left            =   14040
-      TabIndex        =   40
+      TabIndex        =   39
       Top             =   1560
       Width           =   555
    End
@@ -859,7 +912,7 @@ Begin VB.Form frmMain
       Height          =   420
       Left            =   14760
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":7798E
+      Picture         =   "frmMain.frx":7AB31
       Top             =   960
       Visible         =   0   'False
       Width           =   465
@@ -869,7 +922,7 @@ Begin VB.Form frmMain
       Height          =   255
       Left            =   13800
       MousePointer    =   99  'Custom
-      TabIndex        =   25
+      TabIndex        =   24
       Top             =   6960
       Width           =   255
    End
@@ -878,7 +931,7 @@ Begin VB.Form frmMain
       Height          =   375
       Left            =   14640
       MousePointer    =   99  'Custom
-      TabIndex        =   24
+      TabIndex        =   23
       Top             =   0
       Width           =   255
    End
@@ -887,7 +940,7 @@ Begin VB.Form frmMain
       Height          =   375
       Left            =   15000
       MousePointer    =   99  'Custom
-      TabIndex        =   23
+      TabIndex        =   22
       Top             =   0
       Width           =   375
    End
@@ -898,31 +951,9 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000018&
       Height          =   180
       Left            =   8640
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   120
       Width           =   795
-   End
-   Begin VB.Image cmdMoverHechi 
-      Height          =   240
-      Index           =   0
-      Left            =   14790
-      MouseIcon       =   "frmMain.frx":782B5
-      MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":78407
-      Top             =   3960
-      Visible         =   0   'False
-      Width           =   225
-   End
-   Begin VB.Image cmdMoverHechi 
-      Height          =   240
-      Index           =   1
-      Left            =   14790
-      MouseIcon       =   "frmMain.frx":7874B
-      MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":7889D
-      Top             =   3705
-      Visible         =   0   'False
-      Width           =   225
    End
    Begin VB.Image xz 
       Height          =   255
@@ -954,7 +985,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFC0C0&
       Height          =   495
       Left            =   11400
-      TabIndex        =   39
+      TabIndex        =   38
       Top             =   600
       Width           =   3825
    End
@@ -975,7 +1006,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   285
       Left            =   11520
-      TabIndex        =   17
+      TabIndex        =   16
       Top             =   1080
       Width           =   3525
    End
@@ -1370,10 +1401,16 @@ Private LineasConsola As Integer
 Private Const CONSOLE_LINE_HEIGHT As Integer = 14
 Private Const MAX_CONSOLE_LINES As Integer = 600
 Private Const CONSOLE_REMOVED_LINES As Integer = 100
-Private Const CONSOLE_ARROWS_DISPLACEMENT As Integer = 3
+Private Const CONSOLE_ARROWS_DISPLACEMENT As Integer = 1
+Private Const CONSOLE_PADDING As Integer = 4
 Private CONSOLE_VISIBLE_LINES As Integer
 
 Private Consola(MAX_CONSOLE_LINES) As tConsola
+
+Public hlst As clsGraphicalList
+Private Const SPELLS_ARROWS_DISPLACEMENT As Integer = 1
+Private Const SPELLS_PADDING As Integer = 4
+Private SPELLS_VISIBLE_LINES As Integer
 
 Private Declare Function SetWindowLong _
                 Lib "user32" _
@@ -1429,7 +1466,7 @@ Private Sub BarraConsolaCentro_MouseDown(Button As Integer, Shift As Integer, X 
         NewOffset = 0
     Else
         ' El 15 es porque convierto de twip a pixel
-        NewOffset = Round((Y / 15) * (LineasConsola - CONSOLE_VISIBLE_LINES) / BarraConsolaCentro.Height)
+        NewOffset = Round((Y \ 15) * (LineasConsola - CONSOLE_VISIBLE_LINES) / BarraConsolaCentro.Height)
     End If
     
     If NewOffset <> OffSetConsola Then
@@ -1438,11 +1475,19 @@ Private Sub BarraConsolaCentro_MouseDown(Button As Integer, Shift As Integer, X 
     End If
 End Sub
 
+Private Sub BarraConsolaCentro_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Button <> 0 Then
+        If Y < 0 Then Y = 0
+        If (Y \ 15) > BarraConsolaCentro.Height Then Y = BarraConsolaCentro.Height * 15
+        Call BarraConsolaCentro_MouseDown(Button, Shift, X, Y)
+    End If
+End Sub
+
 Private Sub BarraConsolaUp_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim NewOffset As Integer
     
     If OffSetConsola > 0 Then
-        NewOffset = OffSetConsola - IIf(CONSOLE_ARROWS_DISPLACEMENT > OffSetConsola, OffSetConsola, CONSOLE_ARROWS_DISPLACEMENT)
+        NewOffset = IIf(OffSetConsola > CONSOLE_ARROWS_DISPLACEMENT, OffSetConsola - CONSOLE_ARROWS_DISPLACEMENT, 0)
     
         If NewOffset <> OffSetConsola Then
             OffSetConsola = NewOffset
@@ -1455,11 +1500,59 @@ Private Sub BarraConsolaDown_MouseUp(Button As Integer, Shift As Integer, X As S
     Dim NewOffset As Integer
     
     If OffSetConsola < LineasConsola - CONSOLE_VISIBLE_LINES Then
-        NewOffset = OffSetConsola + IIf(CONSOLE_ARROWS_DISPLACEMENT > LineasConsola - CONSOLE_VISIBLE_LINES - OffSetConsola, LineasConsola - CONSOLE_VISIBLE_LINES - OffSetConsola, CONSOLE_ARROWS_DISPLACEMENT)
+        NewOffset = IIf(LineasConsola - CONSOLE_VISIBLE_LINES - OffSetConsola > CONSOLE_ARROWS_DISPLACEMENT, OffSetConsola + CONSOLE_ARROWS_DISPLACEMENT, LineasConsola - CONSOLE_VISIBLE_LINES)
     
         If NewOffset <> OffSetConsola Then
             OffSetConsola = NewOffset
             ReDrawConsola
+        End If
+    End If
+End Sub
+
+
+Private Sub BarraHechizosCentro_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If hlst.ListCount <= SPELLS_VISIBLE_LINES Then
+        hlst.Scroll = 0
+    Else
+        ' El 15 es porque convierto de twip a pixel
+        hlst.Scroll = Round((Y \ 15) * (hlst.ListCount - SPELLS_VISIBLE_LINES) / BarraHechizosCentro.Height)
+    End If
+    
+    If hlst.ListCount <= SPELLS_VISIBLE_LINES Then
+        BarritaHechizos.Top = BarraHechizosCentro.Top
+    Else
+        BarritaHechizos.Top = BarraHechizosCentro.Top + hlst.Scroll * (BarraHechizosCentro.Height - BarritaHechizos.Height) \ (hlst.ListCount - SPELLS_VISIBLE_LINES)
+    End If
+End Sub
+
+Private Sub BarraHechizosCentro_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Button <> 0 Then
+        If Y < 0 Then Y = 0
+        If (Y \ 15) > BarraHechizosCentro.Height Then Y = BarraHechizosCentro.Height * 15
+        Call BarraHechizosCentro_MouseDown(Button, Shift, X, Y)
+    End If
+End Sub
+
+Private Sub BarraHechizosUp_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If hlst.Scroll > 0 Then
+        hlst.Scroll = IIf(hlst.Scroll > SPELLS_ARROWS_DISPLACEMENT, hlst.Scroll - SPELLS_ARROWS_DISPLACEMENT, 0)
+        
+        If hlst.ListCount <= SPELLS_VISIBLE_LINES Then
+            BarritaHechizos.Top = BarraHechizosCentro.Top
+        Else
+            BarritaHechizos.Top = BarraHechizosCentro.Top + hlst.Scroll * (BarraHechizosCentro.Height - BarritaHechizos.Height) \ (hlst.ListCount - SPELLS_VISIBLE_LINES)
+        End If
+    End If
+End Sub
+
+Private Sub BarraHechizosDown_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If hlst.Scroll < hlst.ListCount - SPELLS_VISIBLE_LINES Then
+        hlst.Scroll = IIf(hlst.ListCount - SPELLS_VISIBLE_LINES - hlst.Scroll > SPELLS_ARROWS_DISPLACEMENT, hlst.Scroll + SPELLS_ARROWS_DISPLACEMENT, hlst.ListCount - SPELLS_VISIBLE_LINES)
+        
+        If hlst.ListCount <= SPELLS_VISIBLE_LINES Then
+            BarritaHechizos.Top = BarraHechizosCentro.Top
+        Else
+            BarritaHechizos.Top = BarraHechizosCentro.Top + hlst.Scroll * (BarraHechizosCentro.Height - BarritaHechizos.Height) \ (hlst.ListCount - SPELLS_VISIBLE_LINES)
         End If
     End If
 End Sub
@@ -1640,7 +1733,12 @@ Private Sub Form_Load()
     bIsRecordingVideo = False
     uAOProgressDownloadFfmpeg.Visible = False
     
-    CONSOLE_VISIBLE_LINES = pConsola.Height \ CONSOLE_LINE_HEIGHT
+    CONSOLE_VISIBLE_LINES = (pConsola.Height + CONSOLE_PADDING * 2) \ CONSOLE_LINE_HEIGHT
+    
+    Set hlst = New clsGraphicalList
+    Call hlst.Initialize(pHechizos, pHechizos.ForeColor, SPELLS_PADDING, BarraHechizosCentro.Width)
+    
+    SPELLS_VISIBLE_LINES = (pHechizos.Height + SPELLS_PADDING * 2) \ hlst.Pixel_Alto
     
 End Sub
 
@@ -1698,8 +1796,7 @@ Public Sub LightSkillStar(ByVal bTurnOn As Boolean)
     End If
 End Sub
 
-Private Sub cmdMoverHechi_Click(Index As Integer)
-
+Private Sub cmdMoverHechi_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     If hlst.Visible = True Then
         If hlst.ListIndex = -1 Then Exit Sub
         Dim sTemp As String
@@ -1724,12 +1821,24 @@ Private Sub cmdMoverHechi_Click(Index As Integer)
                 hlst.List(hlst.ListIndex - 1) = hlst.List(hlst.ListIndex)
                 hlst.List(hlst.ListIndex) = sTemp
                 hlst.ListIndex = hlst.ListIndex - 1
+                
+                If hlst.ListCount <= SPELLS_VISIBLE_LINES Then
+                    BarritaHechizos.Top = BarraHechizosCentro.Top
+                Else
+                    BarritaHechizos.Top = BarraHechizosCentro.Top + hlst.Scroll * (BarraHechizosCentro.Height - BarritaHechizos.Height) \ (hlst.ListCount - SPELLS_VISIBLE_LINES)
+                End If
 
             Case 0 'bajar
                 sTemp = hlst.List(hlst.ListIndex + 1)
                 hlst.List(hlst.ListIndex + 1) = hlst.List(hlst.ListIndex)
                 hlst.List(hlst.ListIndex) = sTemp
                 hlst.ListIndex = hlst.ListIndex + 1
+                
+                If hlst.ListCount <= SPELLS_VISIBLE_LINES Then
+                    BarritaHechizos.Top = BarraHechizosCentro.Top
+                Else
+                    BarritaHechizos.Top = BarraHechizosCentro.Top + hlst.Scroll * (BarraHechizosCentro.Height - BarritaHechizos.Height) \ (hlst.ListCount - SPELLS_VISIBLE_LINES)
+                End If
         End Select
     End If
 End Sub
@@ -2387,6 +2496,65 @@ Private Sub Coord_Click()
                           False, False, True)
 End Sub
 
+Private Sub pHechizos_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    hlst.ListIndex = (Y - SPELLS_PADDING) \ hlst.Pixel_Alto + hlst.Scroll
+    
+    ' Mover hechizos con shift + clic
+    With hlst
+
+        If ChangeHechi Then
+    
+            Dim NewLugar As Integer: NewLugar = .ListIndex
+            Dim AntLugar As String: AntLugar = .List(NewLugar)
+            
+            Call WriteDragAndDropHechizos(ChangeHechiNum + 1, NewLugar + 1)
+        
+            .ForeColor = vbWhite
+            .List(NewLugar) = .List(ChangeHechiNum)
+            .List(ChangeHechiNum) = AntLugar
+        
+            ChangeHechi = False
+            ChangeHechiNum = 0
+            
+        ElseIf Shift <> 0 Then
+        
+            ChangeHechi = True
+            ChangeHechiNum = .ListIndex
+            .ForeColor = vbRed
+
+        End If
+
+    End With
+End Sub
+
+Private Sub pHechizos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Button <> 0 Then
+        If Y < SPELLS_PADDING Then
+            If hlst.ListIndex > 0 Then
+                hlst.ListIndex = hlst.ListIndex - 1
+                
+                If hlst.ListCount <= SPELLS_VISIBLE_LINES Then
+                    BarritaHechizos.Top = BarraHechizosCentro.Top
+                Else
+                    BarritaHechizos.Top = BarraHechizosCentro.Top + hlst.Scroll * (BarraHechizosCentro.Height - BarritaHechizos.Height) \ (hlst.ListCount - SPELLS_VISIBLE_LINES)
+                End If
+            End If
+        ElseIf Y > pHechizos.Height - SPELLS_PADDING Then
+            If hlst.ListIndex < hlst.ListCount Then
+                hlst.ListIndex = hlst.ListIndex + 1
+                
+                If hlst.ListCount <= SPELLS_VISIBLE_LINES Then
+                    BarritaHechizos.Top = BarraHechizosCentro.Top
+                Else
+                    BarritaHechizos.Top = BarraHechizosCentro.Top + hlst.Scroll * (BarraHechizosCentro.Height - BarritaHechizos.Height) \ (hlst.ListCount - SPELLS_VISIBLE_LINES)
+                End If
+            End If
+        Else
+            hlst.ListIndex = (Y - SPELLS_PADDING) \ hlst.Pixel_Alto + hlst.Scroll
+        End If
+    End If
+End Sub
+
 Private Sub picSM_DblClick(Index As Integer)
 
     Select Case Index
@@ -2881,18 +3049,6 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y A
     
 End Sub
 
-Private Sub hlst_KeyDown(KeyCode As Integer, Shift As Integer)
-    KeyCode = 0
-End Sub
-
-Private Sub hlst_KeyPress(KeyAscii As Integer)
-    KeyAscii = 0
-End Sub
-
-Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
-    KeyCode = 0
-End Sub
-
 Private Sub lblDropGold_Click()
 
     Inventario.SelectGold
@@ -3054,8 +3210,6 @@ Public Sub SendCMSTXT_SendText()
         
         If PicInv.Visible Then
             PicInv.SetFocus
-        Else
-            hlst.SetFocus
         End If
 End Sub
 
@@ -3266,40 +3420,6 @@ Private Function InGameArea() As Boolean
     InGameArea = True
 End Function
 
-Private Sub hlst_Click()
-    
-    With hlst
-    
-        If ChangeHechi Then
-    
-            Dim NewLugar As Integer: NewLugar = .ListIndex
-            Dim AntLugar As String: AntLugar = .List(NewLugar)
-            
-            Call WriteDragAndDropHechizos(ChangeHechiNum + 1, NewLugar + 1)
-        
-            .BackColor = vbBlack
-            .List(NewLugar) = .List(ChangeHechiNum)
-            .List(ChangeHechiNum) = AntLugar
-        
-            ChangeHechi = False
-            ChangeHechiNum = 0
-
-        End If
-
-        .BackColor = vbBlack
-
-    End With
-
-End Sub
-
-Private Sub hlst_DblClick()
-    'Comento el mover hechizos con doble click por que a la gente no le gusta (Recox)
-    'ChangeHechi = True
-    'ChangeHechiNum = hlst.ListIndex
-    'hlst.BackColor = vbRed
-
-End Sub
-
 '***************************************************
 'Incorporado por ReyarB
 'Last Modify Date: 21/05/2020 (ReyarB)
@@ -3441,16 +3561,18 @@ End Sub
 
 Private Sub ReDrawConsola()
     pConsola.Cls
-    Dim i As Long
-    For i = OffSetConsola To OffSetConsola + CONSOLE_VISIBLE_LINES
-        If i >= 0 And i <= LineasConsola Then
-            pConsola.CurrentX = 0
-            pConsola.CurrentY = (i - OffSetConsola - 1) * CONSOLE_LINE_HEIGHT
-            pConsola.ForeColor = Consola(i).Color
-            pConsola.FontBold = CBool(Consola(i).bold)
-            pConsola.FontItalic = CBool(Consola(i).italic)
-            pConsola.Print Consola(i).Texto
-        End If
+    Dim i As Integer
+    Dim Lines As Integer
+    
+    Lines = IIf(LineasConsola > CONSOLE_VISIBLE_LINES, OffSetConsola + CONSOLE_VISIBLE_LINES - 1, LineasConsola - 1)
+    
+    For i = OffSetConsola To Lines
+        pConsola.CurrentX = CONSOLE_PADDING
+        pConsola.CurrentY = (i - OffSetConsola) * CONSOLE_LINE_HEIGHT + CONSOLE_PADDING
+        pConsola.ForeColor = Consola(i).Color
+        pConsola.FontBold = CBool(Consola(i).bold)
+        pConsola.FontItalic = CBool(Consola(i).italic)
+        pConsola.Print Consola(i).Texto
     Next i
     
     If LineasConsola <= CONSOLE_VISIBLE_LINES Then
@@ -3462,10 +3584,14 @@ End Sub
 
 Public Sub AddtoRichPicture(ByVal Text As String, Optional ByVal Red As Integer = -1, Optional ByVal Green As Integer, Optional ByVal Blue As Integer, Optional ByVal bold As Boolean = False, Optional ByVal italic As Boolean = False, Optional ByVal bCrLf As Boolean = False)
     Dim AText As String
+    Dim curLine As Integer
     Dim Lineas() As String
     Dim i As Integer
     Dim l As Integer
     Dim LastEsp As Integer
+    
+    curLine = LineasConsola
+    LineasConsola = LineasConsola + 1
 
     Lineas = Split(Text, vbCrLf)
 
@@ -3482,32 +3608,33 @@ Public Sub AddtoRichPicture(ByVal Text As String, Optional ByVal Red As Integer 
             End If
         End If
 
-        LineasConsola = LineasConsola + 1
-
         Text = Lineas(l)
 
-        Consola(LineasConsola).Texto = Text
-        Consola(LineasConsola).Color = RGB(Red, Green, Blue)
-        Consola(LineasConsola).bold = bold
-        Consola(LineasConsola).italic = italic
+        Consola(curLine).Texto = Text
+        Consola(curLine).Color = RGB(Red, Green, Blue)
+        Consola(curLine).bold = bold
+        Consola(curLine).italic = italic
 
-        If LineasConsola > CONSOLE_VISIBLE_LINES And OffSetConsola = LineasConsola - CONSOLE_VISIBLE_LINES - 1 Then
+        If LineasConsola > CONSOLE_VISIBLE_LINES And OffSetConsola = curLine - CONSOLE_VISIBLE_LINES Then
             OffSetConsola = LineasConsola - CONSOLE_VISIBLE_LINES
         End If
-        Debug.Print pConsola.TextWidth(Text)
-        If pConsola.TextWidth(Text) > (pConsola.Width - BarraConsolaCentro.Width) Then
+        
+        Dim MaxWidth As Integer
+        MaxWidth = pConsola.Width - BarraConsolaCentro.Width - CONSOLE_PADDING * 2
+
+        If pConsola.TextWidth(Text) > MaxWidth Then
             LastEsp = 0
             
             For i = 1 To Len(Text)
                 If mid(Text, i, 1) = " " Then LastEsp = i
-                If pConsola.TextWidth(Left$(Text, i)) > (pConsola.Width - BarraConsolaCentro.Width) Then Exit For
+                If pConsola.TextWidth(Left$(Text, i)) > MaxWidth Then Exit For
             Next i
-            
-            If LastEsp = 0 Then LastEsp = i
+
+            If LastEsp = 0 Then LastEsp = i - 1
             
             AText = Right$(Text, Len(Text) - LastEsp)
             Text = Left$(Text, LastEsp)
-            Consola(LineasConsola).Texto = Text
+            Consola(curLine).Texto = Text
             
             Call frmMain.AddtoRichPicture(AText, Red, Green, Blue, bold, italic)
         Else
