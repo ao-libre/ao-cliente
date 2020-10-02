@@ -1696,6 +1696,8 @@ Private Sub HandleCommerceInit()
             End With
         End If
     Next i
+
+    Comerciando = True
     
     'Set state and show form
     frmComerciar.Show , frmMain
