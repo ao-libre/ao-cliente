@@ -26,19 +26,21 @@ Private p_Scroll As Integer
 Private p_OldY As Integer
 Private p_Padding As Integer
 Private p_ScrollWidth As Integer
+Private p_VisibleLines As Integer
 
 Private Sub Class_Initialize()
     p_Visible = False
     Clear
 End Sub
 
-Public Sub Initialize(ByRef LPic As PictureBox, ByVal ForeColor As Long, ByVal Padding As Integer, ByVal ScrollBarWidth As Integer)
+Public Sub Initialize(ByRef LPic As PictureBox, ByVal ForeColor As Long, ByVal Padding As Integer, ByVal ScrollBarWidth As Integer, ByVal PixelAlto As Integer, ByVal VisibleLines As Integer)
     Set ListPic = LPic
     
     p_ForeColor = ForeColor
-    p_Pixel_Alto = 13
+    p_Pixel_Alto = PixelAlto
     p_Padding = Padding
     p_ScrollWidth = ScrollBarWidth
+    p_VisibleLines = VisibleLines
     
     ListPic.ForeColor = p_ForeColor
     ListPic.Cls
@@ -74,9 +76,9 @@ Public Property Let ListIndex(ByVal Valor As Integer)
             ' Scroll para arriba
             p_Scroll = p_ListIndex
         
-        ElseIf p_ListIndex >= p_Scroll + ListPic.Height \ p_Pixel_Alto Then
+        ElseIf p_ListIndex >= p_Scroll + p_VisibleLines Then
             ' Scroll para abajo
-            p_Scroll = p_ListIndex - ListPic.Height \ p_Pixel_Alto + 1
+            p_Scroll = p_ListIndex - p_VisibleLines + 1
         End If
     End If
     
@@ -140,18 +142,18 @@ Private Sub Dibujar()
     
     ListPic.Cls
     
-    For i = p_Scroll To p_Scroll + ListPic.Height \ p_Pixel_Alto - 1
+    For i = p_Scroll To p_Scroll + p_VisibleLines - 1
         If i < p_ListCount Then
             PosY = (i - p_Scroll) * p_Pixel_Alto + p_Padding
     
             If i = p_ListIndex Then
                 ListPic.ForeColor = RGB(0, 120, 255)
-                ListPic.Line (1, PosY)-(ListPic.Width - p_ScrollWidth - p_Padding, PosY + p_Pixel_Alto - 1), , B
+                ListPic.Line (p_Padding, PosY - 1)-(ListPic.Width - p_ScrollWidth - p_Padding, PosY + p_Pixel_Alto - 1), , B
                 ListPic.ForeColor = RGB(180, 180, 180)
             Else
                 ListPic.ForeColor = p_ForeColor
             End If
-            ListPic.CurrentX = p_Padding
+            ListPic.CurrentX = p_Padding * 2
             ListPic.CurrentY = PosY
            
             ListPic.Print lista(i)
