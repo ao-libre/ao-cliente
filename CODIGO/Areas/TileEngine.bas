@@ -202,7 +202,7 @@ End Type
 
 'Info de un objeto
 Public Type obj
-    OBJIndex As Integer
+    ObjIndex As Integer
     Amount As Integer
 End Type
 
@@ -225,12 +225,14 @@ Public Type MapBlock
     
     fX As Grh
     FxIndex As Integer
+    
+    ArbolAlphaTimer As Long ' 4 bytes por tile... pero es para dar un buen efecto, lo prometo :) - WyroX
 End Type
 
 'Info de cada mapa
 Public Type mapInfo
     Music As String
-    Name As String
+    name As String
     Zona As String
     StartPos As WorldPos
     MapVersion As Integer
@@ -285,8 +287,8 @@ Public NumWeaponAnims As Integer
 Private MouseTileX As Byte
 Private MouseTileY As Byte
 
-
-
+Private Const ARBOL_ALPHA_TIME As Long = 300
+Private Const ARBOL_MIN_ALPHA As Byte = 140
 
 '?????????Graficos???????????
 Public GrhData() As GrhData 'Guarda todos los grh
@@ -314,6 +316,7 @@ Public Color_Montura As Long
 Public bRain As Boolean
 Public bTecho       As Boolean 'hay techo?
 Public bFogata       As Boolean
+Public LastMove     As Long
 
 Public charlist(1 To 10000) As Char
 
@@ -667,8 +670,11 @@ Sub RenderScreen(ByVal tilex As Integer, _
     Dim PixelOffsetYTemp As Integer 'For centering grhs
     
     Dim ElapsedTime      As Single
+    Dim CurrentTime      As Long
+    Dim DeltaTime        As Long
     
     ElapsedTime = Engine_ElapsedTime()
+    CurrentTime = GetTickCount
     
     'Figure out Ends and Starts of screen
     screenminY = tiley - HalfWindowTileHeight
@@ -779,11 +785,36 @@ Sub RenderScreen(ByVal tilex As Integer, _
                     
                         If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
                             
-                            ' Transparencia de Arboles
-                                If Abs(UserPos.X - X) < 2  And (Abs(UserPos.Y - Y)) < 5 And (Abs(UserPos.Y) < Y) Then
+                            ' Debajo del arbol
+                            If Abs(UserPos.X - X) <= 2 And UserPos.Y <= Y And UserPos.Y >= Y - 7 Then
+                                If .ArbolAlphaTimer <= 0 Then
+                                    .ArbolAlphaTimer = LastMove
+                                End If
+                                
+                                DeltaTime = CurrentTime - .ArbolAlphaTimer
+
+                                Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(IIf(DeltaTime > ARBOL_ALPHA_TIME, ARBOL_MIN_ALPHA, 255 - DeltaTime * (255 - ARBOL_MIN_ALPHA) / ARBOL_ALPHA_TIME), 255, 255, 255))
                                 Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1)
-                            Else 'NORMAL
-                                Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+
+                            Else ' Lejos del arbol
+                                If .ArbolAlphaTimer = 0 Then
+                                    Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+                                
+                                Else
+                                    If .ArbolAlphaTimer > 0 Then
+                                        .ArbolAlphaTimer = -LastMove
+                                    End If
+                                    
+                                    DeltaTime = CurrentTime + .ArbolAlphaTimer
+                                    
+                                    If DeltaTime > ARBOL_ALPHA_TIME Then
+                                        .ArbolAlphaTimer = 0
+                                        Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
+                                    Else
+                                        Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(ARBOL_MIN_ALPHA + DeltaTime * (255 - ARBOL_MIN_ALPHA) / ARBOL_ALPHA_TIME, 255, 255, 255))
+                                        Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1)
+                                    End If
+                                End If
                             End If
                             
                         Else 'NORMAL
