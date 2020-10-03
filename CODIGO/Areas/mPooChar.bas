@@ -185,6 +185,8 @@ Public Sub Char_UserPos()
         frmMain.Coord.Caption = "Map:" & UserMap & " X:" & X & " Y:" & Y
 
         Call frmMain.ActualizarMiniMapa
+        
+        LastMove = GetTickCount
  
         Exit Sub
  
