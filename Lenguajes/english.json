@@ -1790,10 +1790,16 @@
         "TEXTO": "Obtaining data from the server please wait ... if I do not get it in a few seconds and throw error means that the server is offline ..."
     },
     "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ": {
-        "TEXTO": "Are you sure you want to delete the character from your account? This action cannot be reversed"
+        "TEXTO": "Are you sure you want to delete the character CHAR_NAME from your account? This action cannot be reversed."
     },
     "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO": {
         "TEXTO": "ALERT - DELETE CHARACTER"
+    },
+    "FRMPANELACCOUNT_PJ_BORRADO": {
+        "TEXTO": "The character CHAR_NAME has been deleted."
+    },
+    "FRMPANELACCOUNT_PJ_BORRADO_TITULO": {
+        "TEXTO": "Character deleted"
     },
     "FRMPANELACCOUNT_BTN_BORRAR_PERSONAJE": {
         "TEXTO": "Delete Character"
