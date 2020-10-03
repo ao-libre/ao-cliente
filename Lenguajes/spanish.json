@@ -1217,13 +1217,13 @@
         "TEXTO": "Teclas"
     },
     "LBL_LANZAR": {
-        "TEXTO": "Lanzar"
+        "TEXTO": "LANZAR"
     },
     "LBL_INVENTARIO": {
-        "TEXTO": "Inventario"
+        "TEXTO": "INVENTARIO"
     },
     "LBL_HECHIZOS": {
-        "TEXTO": "Hechizos"
+        "TEXTO": "HECHIZOS"
     },
     "LBL_MAPA": {
         "TEXTO": "Mapa"
