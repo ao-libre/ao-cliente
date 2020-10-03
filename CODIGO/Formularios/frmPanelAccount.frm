@@ -675,7 +675,10 @@ Private Sub uAOBorrarPersonaje_Click()
         Exit Sub
     End If
 
-   If MsgBox(JsonLanguage.item("FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ").item("TEXTO"), vbYesNo, JsonLanguage.item("FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO").item("TEXTO")) = vbYes Then
+    Dim Message As String
+    Message = JsonLanguage.item("FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ").item("TEXTO") 'String original
+    Message = Replace$(Message, "CHAR_NAME", lblAccData(Seleccionado).Caption) 'Parte a reemplazar
+    If MsgBox(Message, vbYesNo, JsonLanguage.item("FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO").item("TEXTO")) = vbYes Then
     
       If Not frmMain.Client.State = sckConnected Then
          MsgBox JsonLanguage.item("ERROR_CONN_LOST").item("TEXTO")

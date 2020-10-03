@@ -1784,10 +1784,16 @@
         "TEXTO": "Obteniendo datos del server por favor espere... si no los obtengo en pocos segundos y tira error significa que el servidor esta offline..."
     },
     "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ": {
-        "TEXTO": "Estas seguro que quieres borrar el personaje de tu cuenta? Esta accion no puede revertise"
+        "TEXTO": "Estas seguro que quieres borrar el personaje CHAR_NAME de tu cuenta? Esta accion no puede revertirse."
     },
     "FRMPANELACCOUNT_CONFIRMAR_BORRAR_PJ_TITULO": {
         "TEXTO": "ALERTA - BORRAR PERSONAJE"
+    },
+    "FRMPANELACCOUNT_PJ_BORRADO": {
+        "TEXTO": "El personaje CHAR_NAME se ha borrado correctamente."
+    },
+    "FRMPANELACCOUNT_PJ_BORRADO_TITULO": {
+        "TEXTO": "Personaje borrado"
     },
     "FRMPANELACCOUNT_BTN_BORRAR_PERSONAJE": {
         "TEXTO": "Borrar Personaje"

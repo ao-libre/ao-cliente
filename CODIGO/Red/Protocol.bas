@@ -43,9 +43,9 @@ Option Explicit
 Private Const SEPARATOR As String * 1 = vbNullChar
 
 Private Type tFont
-    red As Byte
-    green As Byte
-    blue As Byte
+    Red As Byte
+    Green As Byte
+    Blue As Byte
     bold As Boolean
     italic As Boolean
 End Type
@@ -141,7 +141,7 @@ Private Enum ServerPacketID
     
     'GM =  messages
     SpawnList = 88               ' SPL
-    ShowSOSForm = 89' MSOS
+    ShowSOSForm = 89 ' MSOS
     ShowMOTDEditionForm = 90     ' ZMOTD
     ShowGMPanelForm = 91         ' ABPANEL
     UserNameList = 92            ' LISTUSU
@@ -399,151 +399,151 @@ Public Sub InitFonts()
 '
 '***************************************************
     With FontTypes(FontTypeNames.FONTTYPE_TALK)
-        .red = 204
-        .green = 255
-        .blue = 255
+        .Red = 204
+        .Green = 255
+        .Blue = 255
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_FIGHT)
-        .red = 255
-        .green = 102
-        .blue = 102
+        .Red = 255
+        .Green = 102
+        .Blue = 102
         .bold = 1
         .italic = 0
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_WARNING)
-        .red = 255
-        .green = 255
-        .blue = 102
+        .Red = 255
+        .Green = 255
+        .Blue = 102
         .bold = 1
         .italic = 0
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        .red = 255
-        .green = 204
-        .blue = 153
+        .Red = 255
+        .Green = 204
+        .Blue = 153
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_INFOBOLD)
-        .red = 255
-        .green = 204
-        .blue = 153
+        .Red = 255
+        .Green = 204
+        .Blue = 153
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_EJECUCION)
-        .red = 255
-        .green = 0
-        .blue = 127
+        .Red = 255
+        .Green = 0
+        .Blue = 127
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_PARTY)
-        .red = 252
-        .green = 203
-        .blue = 130
+        .Red = 252
+        .Green = 203
+        .Blue = 130
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_VENENO)
-        .red = 128
-        .green = 255
-        .blue = 0
+        .Red = 128
+        .Green = 255
+        .Blue = 0
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_GUILD)
-        .red = 205
-        .green = 101
-        .blue = 236
+        .Red = 205
+        .Green = 101
+        .Blue = 236
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_SERVER)
-        .red = 250
-        .green = 150
-        .blue = 237
+        .Red = 250
+        .Green = 150
+        .Blue = 237
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
-        .red = 228
-        .green = 199
-        .blue = 27
+        .Red = 228
+        .Green = 199
+        .Blue = 27
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJO)
-        .red = 130
-        .green = 130
-        .blue = 255
+        .Red = 130
+        .Green = 130
+        .Blue = 255
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOCAOS)
-        .red = 255
-        .green = 60
+        .Red = 255
+        .Green = 60
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOVesA)
-        .green = 200
-        .blue = 255
+        .Green = 200
+        .Blue = 255
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSEJOCAOSVesA)
-        .red = 255
-        .green = 50
+        .Red = 255
+        .Green = 50
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CENTINELA)
-        .red = 240
-        .green = 230
-        .blue = 140
+        .Red = 240
+        .Green = 230
+        .Blue = 140
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_GMMSG)
-        .red = 255
-        .green = 255
-        .blue = 255
+        .Red = 255
+        .Green = 255
+        .Blue = 255
         .italic = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_GM)
-        .red = 30
-        .green = 255
-        .blue = 30
+        .Red = 30
+        .Green = 255
+        .Blue = 30
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CITIZEN)
-        .red = 78
-        .green = 78
-        .blue = 252
+        .Red = 78
+        .Green = 78
+        .Blue = 252
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_CONSE)
-        .red = 30
-        .green = 150
-        .blue = 30
+        .Red = 30
+        .Green = 150
+        .Blue = 30
         .bold = 1
     End With
     
     With FontTypes(FontTypeNames.FONTTYPE_DIOS)
-        .red = 250
-        .green = 250
-        .blue = 150
+        .Red = 250
+        .Green = 250
+        .Blue = 150
         .bold = 1
     End With
 
     With FontTypes(FontTypeNames.FONTTYPE_CRIMINAL)
-        .red = 224
-        .green = 52
-        .blue = 17
+        .Red = 224
+        .Green = 52
+        .Blue = 17
         .bold = 1
     End With
 End Sub
@@ -1477,16 +1477,56 @@ End Sub
 Private Sub HandleDeletedChar()
 '***************************************************
 'Author: Lucas Recoaro (Recox)
-'Last Modification: 05/17/06
-'
+'Last Modification: 03/10/2020 WyroX - Recibo el nombre del pj borrado y actualizo la lista
 '***************************************************
+    If incomingData.Length < 3 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+    
+On Error GoTo errhandler
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+    
     'Remove packet ID
-    Call incomingData.ReadByte
+    Call Buffer.ReadByte
+    
+    Dim CharName As String
+    Dim Message As String
+    
+    CharName = Buffer.ReadASCIIString()
+    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
+    
+    Dim i As Integer
+    For i = 1 To 10
+        If frmPanelAccount.lblAccData(i).Caption = CharName Then
+            frmPanelAccount.lblAccData(i).Caption = vbNullString
+            cPJ(i).Nombre = vbNullString
+            Set frmPanelAccount.picChar(i - 1).Picture = Nothing
+            Exit For
+        End If
+    Next i
+    
+    ' No existe el pj
+    If i > 10 Then Exit Sub
+    
+    Message = JsonLanguage.item("FRMPANELACCOUNT_PJ_BORRADO").item("TEXTO") 'String original
+    Message = Replace$(Message, "CHAR_NAME", CharName) 'Parte a reemplazar
+    Call MsgBox(Message, vbOKOnly, JsonLanguage.item("FRMPANELACCOUNT_PJ_BORRADO_TITULO").item("TEXTO"))
 
-    MsgBox ("El personaje se ha borrado correctamente. Por favor vuelve a iniciar sesion para ver el cambio")
-
-    'Close connection
-    Call CloseConnectionAndResetAllInfo
+errhandler:
+    Dim Error As Long
+    Error = Err.number
+On Error GoTo 0
+    
+    'Destroy auxiliar buffer
+    Set Buffer = Nothing
+    
+    If Error <> 0 Then _
+        Err.Raise Error
 End Sub
 
 
@@ -1726,7 +1766,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, MAX_INVENTORY_SLOTS)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
@@ -2186,7 +2226,7 @@ Private Sub HandlePosUpdate()
     Call Char_UserPos
 End Sub
 
-Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatText As String, ByVal red As Byte, ByVal green As Byte, ByVal blue As Byte)
+Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatText As String, ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)
     Dim NameRed As Byte
     Dim NameGreen As Byte
     Dim NameBlue As Byte
@@ -2228,7 +2268,7 @@ Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatTex
         ChatText = Trim$(ChatText)
         If LenB(.Nombre) <> 0 And LenB(ChatText) > 0 Then
             Call frmMain.AddtoRichPicture(name & "> ", NameRed, NameGreen, NameBlue, True, False, True)
-            Call frmMain.AddtoRichPicture(ChatText, red, green, blue, True, False, False)
+            Call frmMain.AddtoRichPicture(ChatText, Red, Green, Blue, True, False, False)
         End If
 
     End With
@@ -2259,23 +2299,23 @@ On Error GoTo errhandler
     
     Dim chat As String
     Dim CharIndex As Integer
-    Dim red As Byte
-    Dim green As Byte
-    Dim blue As Byte
+    Dim Red As Byte
+    Dim Green As Byte
+    Dim Blue As Byte
     
     chat = Buffer.ReadASCIIString()
     CharIndex = Buffer.ReadInteger()
     
-    red = Buffer.ReadByte()
-    green = Buffer.ReadByte()
-    blue = Buffer.ReadByte()
+    Red = Buffer.ReadByte()
+    Green = Buffer.ReadByte()
+    Blue = Buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
     If Char_Check(CharIndex) Then
-        Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(red, green, blue))
+        Call Dialogos.CreateDialog(Trim$(chat), CharIndex, RGB(Red, Green, Blue))
 
         'Aqui escribimos el texto que aparece sobre la cabeza en la consola.
-        Call WriteChatOverHeadInConsole(CharIndex, chat, red, green, blue)
+        Call WriteChatOverHeadInConsole(CharIndex, chat, Red, Green, Blue)
     End If
     
     'If we got here then packet is complete, copy data back to original queue
@@ -2318,9 +2358,9 @@ On Error GoTo errhandler
     Dim chat As String
     Dim FontIndex As Integer
     Dim str As String
-    Dim red As Byte
-    Dim green As Byte
-    Dim blue As Byte
+    Dim Red As Byte
+    Dim Green As Byte
+    Dim Blue As Byte
     
     chat = Buffer.ReadASCIIString()
     FontIndex = Buffer.ReadByte()
@@ -2328,29 +2368,29 @@ On Error GoTo errhandler
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                red = 255
+                Red = 255
             Else
-                red = Val(str)
+                Red = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                green = 255
+                Green = 255
             Else
-                green = Val(str)
+                Green = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                blue = 255
+                Blue = 255
             Else
-                blue = Val(str)
+                Blue = Val(str)
             End If
             
-        Call frmMain.AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), red, green, blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+        Call frmMain.AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), Red, Green, Blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         With FontTypes(FontIndex)
-            Call frmMain.AddtoRichPicture(chat, .red, .green, .blue, .bold, .italic)
+            Call frmMain.AddtoRichPicture(chat, .Red, .Green, .Blue, .bold, .italic)
         End With
         
         ' Para no perder el foco cuando chatea por party
@@ -2398,9 +2438,9 @@ On Error GoTo errhandler
     
     Dim chat As String
     Dim str As String
-    Dim red As Byte
-    Dim green As Byte
-    Dim blue As Byte
+    Dim Red As Byte
+    Dim Green As Byte
+    Dim Blue As Byte
     
     chat = Buffer.ReadASCIIString()
     
@@ -2408,29 +2448,29 @@ On Error GoTo errhandler
         If InStr(1, chat, "~") Then
             str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                red = 255
+                Red = 255
             Else
-                red = Val(str)
+                Red = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                green = 255
+                Green = 255
             Else
-                green = Val(str)
+                Green = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                blue = 255
+                Blue = 255
             Else
-                blue = Val(str)
+                Blue = Val(str)
             End If
             
-            Call frmMain.AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), red, green, blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+            Call frmMain.AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), Red, Green, Blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
         Else
             With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
-                Call frmMain.AddtoRichPicture(chat, .red, .green, .blue, .bold, .italic)
+                Call frmMain.AddtoRichPicture(chat, .Red, .Green, .Blue, .bold, .italic)
             End With
         End If
     Else
@@ -2477,9 +2517,9 @@ On Error GoTo errhandler
     Dim chat As String
     Dim FontIndex As Integer
     Dim str As String
-    Dim red As Byte
-    Dim green As Byte
-    Dim blue As Byte
+    Dim Red As Byte
+    Dim Green As Byte
+    Dim Blue As Byte
     
     chat = Buffer.ReadASCIIString()
     FontIndex = Buffer.ReadByte()
@@ -2487,29 +2527,29 @@ On Error GoTo errhandler
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
             If Val(str) > 255 Then
-                red = 255
+                Red = 255
             Else
-                red = Val(str)
+                Red = Val(str)
             End If
             
             str = ReadField(3, chat, 126)
             If Val(str) > 255 Then
-                green = 255
+                Green = 255
             Else
-                green = Val(str)
+                Green = Val(str)
             End If
             
             str = ReadField(4, chat, 126)
             If Val(str) > 255 Then
-                blue = 255
+                Blue = 255
             Else
-                blue = Val(str)
+                Blue = Val(str)
             End If
             
-        Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, Left$(chat, InStr(1, chat, "~") - 1), red, green, blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+        Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, Left$(chat, InStr(1, chat, "~") - 1), Red, Green, Blue, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         With FontTypes(FontIndex)
-            Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, chat, .red, .green, .blue, .bold, .italic)
+            Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, chat, .Red, .Green, .Blue, .bold, .italic)
         End With
     End If
     
@@ -3444,7 +3484,7 @@ Private Sub HandleStopWorking()
     Call incomingData.ReadByte
     
     With FontTypes(FontTypeNames.FONTTYPE_INFO)
-        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_WORK_FINISHED"), .red, .green, .blue, .bold, .italic)
+        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_WORK_FINISHED"), .Red, .Green, .Blue, .bold, .italic)
     End With
     If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
     If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
@@ -5393,7 +5433,7 @@ On Error GoTo errhandler
     
     With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
         For DenounceIndex = 0 To Upper_denounceList
-            Call frmMain.AddtoRichPicture(DenounceList(DenounceIndex), .red, .green, .blue, .bold, .italic)
+            Call frmMain.AddtoRichPicture(DenounceList(DenounceIndex), .Red, .Green, .Blue, .bold, .italic)
         Next DenounceIndex
     End With
     
@@ -10549,7 +10589,7 @@ End Sub
 ' @param    Blue The blue component of the new chat color.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChatColor(ByVal red As Byte, ByVal green As Byte, ByVal blue As Byte)
+Public Sub WriteChatColor(ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)
 '***************************************************
 'Author: Juan Martin Sotuyo Dodero (Maraxus)
 'Last Modification: 05/17/06
@@ -10559,9 +10599,9 @@ Public Sub WriteChatColor(ByVal red As Byte, ByVal green As Byte, ByVal blue As 
         Call .WriteByte(ClientPacketID.GMCommands)
         Call .WriteByte(eGMCommands.ChatColor)
         
-        Call .WriteByte(red)
-        Call .WriteByte(green)
-        Call .WriteByte(blue)
+        Call .WriteByte(Red)
+        Call .WriteByte(Green)
+        Call .WriteByte(Blue)
     End With
 End Sub
 
