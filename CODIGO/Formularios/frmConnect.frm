@@ -372,8 +372,17 @@ Private Sub btnTeclas_Click()
 End Sub
 
 Private Sub Form_Activate()
-    If Len(CurServerIp) Then IPTxt.Text = CurServerIp
-    If CurServerPort Then PortTxt.Text = CurServerPort
+    If Len(CurServerIp) Then
+        IPTxt.Text = CurServerIp
+    Else
+        CurServerIp = IPTxt.Text
+    End If
+    
+    If CurServerPort Then
+        PortTxt.Text = CurServerPort
+    Else
+        CurServerPort = Val(PortTxt.Text)
+    End If
 
     If CBool(GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "Remember")) = True Then
         Me.txtNombre = GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "UserName")
