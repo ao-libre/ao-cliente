@@ -174,6 +174,7 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
       '01/08/2009: ZaMa - Now invisible admins can't change position with caspers.
       '12/01/2020: Recox - Now we manage monturas.
       '06/04/2020: FrankoH298 - Si estamos montados, no nos deja ingresar a las casas.
+      '03/10/2020: WyroX - Quito los chequeos de montura.
       '*****************************************************************
 
       Dim CharIndex As Integer
@@ -255,22 +256,6 @@ Function Map_LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
                
             Exit Function
 
-      End If
-      
-      'Esta el usuario Equitando bajo un techo o dungeon?
-      If UserEquitando Then
-
-            If MapData(X, Y).Trigger = eTrigger.BAJOTECHO Or _
-               MapData(X, Y).Trigger = eTrigger.CASA Or _
-               mapInfo.Zona = "DUNGEON" Then
-                        
-                  If Not frmMain.MsgTimeadoOn Then
-                        frmMain.MsgTimeadoOn = True
-                        frmMain.MsgTimeado = JsonLanguage.item("MENSAJE_MONTURA_SALIR").item("TEXTO")
-                  End If
-
-                  Exit Function
-            End If
       End If
       
       If UserEvento Then Exit Function
