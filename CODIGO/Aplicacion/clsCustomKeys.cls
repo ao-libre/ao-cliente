@@ -50,7 +50,7 @@ Option Explicit
 
 ''
 'Number of Customizable Keys
-Private Const NUM_CUSTOM_KEYS As Byte = 27
+Private Const NUM_CUSTOM_KEYS As Byte = 28
 
 ''
 'Number of Key Configurations
@@ -107,6 +107,7 @@ Private ActiveConfig As Byte
 '@param mKeyCastSpellMacro Key for start/stop the Cast Spell Macro
 '@param mKeyWorkMacro Key for start/stop the Work Macro
 '@param mKeyExitGame Key for close the game
+'@param mKeyShowMap Key for openning the map
 Public Enum eKeyType
     mKeyUp = 1
     mKeyDown
@@ -135,6 +136,7 @@ Public Enum eKeyType
     mKeyCastSpellMacro
     mKeyWorkMacro
     mKeyExitGame
+    mKeyShowMap
 End Enum
 
 ''
@@ -313,7 +315,7 @@ Dim FileNum As Integer
 
     FileNum = FreeFile()
     
-    Open Game.path(INIT) & KeyboardConfigurationInUse  For Binary Access Write As FileNum
+    Open Game.path(INIT) & KeyboardConfigurationInUse For Binary Access Write As FileNum
     
     'Guardo la configuracion activa:
     Put FileNum, , ActiveConfig
@@ -408,6 +410,7 @@ Public Sub LoadDefaults(ByVal KeyConfig As Byte)
     mappedKeys(KeyConfig, eKeyType.mKeyCastSpellMacro) = KeyCodeConstants.vbKeyF7
     mappedKeys(KeyConfig, eKeyType.mKeyWorkMacro) = KeyCodeConstants.vbKeyF8
     mappedKeys(KeyConfig, eKeyType.mKeyExitGame) = KeyCodeConstants.vbKeyF12
+    mappedKeys(KeyConfig, eKeyType.mKeyShowMap) = KeyCodeConstants.vbKeyZ
 End Sub
 
 ''
@@ -502,7 +505,7 @@ Private Sub Class_Initialize()
 '06/11/2019: Recox - Ahora podemos manejar una configuracion default y una alternativa.
 '***************************************************
 
-    If ClientSetup.KeyboardBindKeysConfig  = "Alternative" Then
+    If ClientSetup.KeyboardBindKeysConfig = "Alternative" Then
         KeyboardConfigurationInUse = KEY_CONFIG_FILE_ALTERNATIVE
     Else
         KeyboardConfigurationInUse = KEY_CONFIG_FILE

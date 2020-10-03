@@ -232,6 +232,7 @@ Begin VB.Form frmConnect
       ForeColor       =   &H0000FF00&
       Height          =   195
       Left            =   4890
+      MaxLength       =   5
       TabIndex        =   3
       Text            =   "7667"
       Top             =   2760
@@ -332,6 +333,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Lector As clsIniManager
+Private OldPort As String
 
 Private Const AES_PASSWD As String = "tumamaentanga"
 
@@ -370,6 +372,9 @@ Private Sub btnTeclas_Click()
 End Sub
 
 Private Sub Form_Activate()
+    If Len(CurServerIp) Then IPTxt.Text = CurServerIp
+    If CurServerPort Then PortTxt.Text = CurServerPort
+
     If CBool(GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "Remember")) = True Then
         Me.txtNombre = GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "UserName")
         Me.txtPasswd = Cripto.AesDecryptString(GetVar(Game.path(INIT) & "Config.ini", "LOGIN", "Password"), AES_PASSWD)
@@ -404,6 +409,20 @@ Private Sub LoadTextsForm()
     lblRecordarme.Caption = JsonLanguage.item("LBL_RECORDARME").item("TEXTO")
     btnSalir.Caption = JsonLanguage.item("BTN_SALIR").item("TEXTO")
     btnTeclas.Caption = JsonLanguage.item("LBL_TECLAS").item("TEXTO")
+End Sub
+
+Private Sub IPTxt_Change()
+    CurServerIp = IPTxt.Text
+End Sub
+
+Private Sub PortTxt_Change()
+On Error GoTo Handler
+    CurServerPort = Val(PortTxt.Text)
+    OldPort = PortTxt.Text
+    Exit Sub
+
+Handler:
+    PortTxt.Text = OldPort
 End Sub
 
 Private Sub txtPasswd_KeyPress(KeyAscii As Integer)

@@ -909,7 +909,7 @@ Private Sub LoadInitialConfig()
                             True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
-    Call Inventario.Initialize(DirectD3D8, frmMain.picInv, MAX_INVENTORY_SLOTS, , 34, 34, , , , , True, 1, 1, GRH_INVENTORYSLOT_SELECTED)
+    Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , 34, 34, , , , , True, 1, 1, GRH_INVENTORYSLOT_SELECTED)
     
     'Set cKeys = New Collection
     Call AddtoRichTextBox(frmCargando.status, _
@@ -1524,14 +1524,6 @@ Public Sub SetSpeedUsuario()
         Engine_BaseSpeed = 0.018
     End If
 End Sub
-
-Public Function CurServerIp() As String
-    CurServerIp = frmConnect.IPTxt
-End Function
-
-Public Function CurServerPort() As Integer
-    CurServerPort = Val(frmConnect.PortTxt)
-End Function
 
 Public Function CheckIfIpIsNumeric(CurrentIp As String) As String
     If IsNumeric(mid$(CurrentIp, 1, 1)) Then

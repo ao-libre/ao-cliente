@@ -30,6 +30,26 @@ Begin VB.Form frmCustomKeys
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   225
+      Index           =   28
+      Left            =   6270
+      TabIndex        =   29
+      Top             =   6120
+      Width           =   1620
+   End
+   Begin VB.TextBox Text1 
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   225
       Index           =   6
       Left            =   6270
       TabIndex        =   17
@@ -568,6 +588,10 @@ Begin VB.Form frmCustomKeys
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCustomKeys.frx":0000
+      PICF            =   "frmCustomKeys.frx":001C
+      PICH            =   "frmCustomKeys.frx":0038
+      PICV            =   "frmCustomKeys.frx":0054
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9.75
@@ -590,6 +614,10 @@ Begin VB.Form frmCustomKeys
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
+      PICE            =   "frmCustomKeys.frx":0070
+      PICF            =   "frmCustomKeys.frx":008C
+      PICH            =   "frmCustomKeys.frx":00A8
+      PICV            =   "frmCustomKeys.frx":00C4
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Calibri"
          Size            =   9.75
@@ -685,8 +713,8 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadTextsForm()
-    imgDefaultKeys.Caption = JsonLanguage.Item("FRM_CUSTOMKEYS_DEFAULTKEYS").Item("TEXTO")
-    imgGuardar.Caption = JsonLanguage.Item("FRM_CUSTOMKEYS_GUARDAR").Item("TEXTO")
+    imgDefaultKeys.Caption = JsonLanguage.item("FRM_CUSTOMKEYS_DEFAULTKEYS").item("TEXTO")
+    imgGuardar.Caption = JsonLanguage.item("FRM_CUSTOMKEYS_GUARDAR").item("TEXTO")
 End Sub
 
 Private Sub imgDefaultKeys_Click()
@@ -701,7 +729,7 @@ Private Sub imgGuardar_Click()
     
     For i = 1 To CustomKeys.KeyCount
         If LenB(Text1(i).Text) = 0 Then
-            Call MsgBox(JsonLanguage.Item("CUSTOMKEYS_TECLA_INVALIDA").Item("TEXTO"), vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Argentum Online Libre")
+            Call MsgBox(JsonLanguage.item("CUSTOMKEYS_TECLA_INVALIDA").item("TEXTO"), vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Argentum Online Libre")
             Exit Sub
         End If
     Next i
@@ -710,19 +738,19 @@ Private Sub imgGuardar_Click()
     
     If SelectedConfig <> InitialConfig Then
 
-        sMsg = JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("TEXTO")
+        sMsg = JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("TEXTO")
         
         If SelectedConfig = 0 Then
-            sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.Item("PREDETERMINADA").Item("TEXTO"))
+            sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.item("PREDETERMINADA").item("TEXTO"))
         Else
-            sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.Item("PERSONALIZADA").Item("TEXTO"))
+            sMsg = Replace$(sMsg, "VAR_CONFIG_ELEGIDA", JsonLanguage.item("PERSONALIZADA").item("TEXTO"))
             sMsg = Replace$(sMsg, "VAR_CONFIG_CUSTOM_NUMERO", CStr(SelectedConfig))
         End If
         
         Call ShowConsoleMsg(sMsg, _
-                            JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("CUSTOMKEYS_CONFIG_CARGADA").Item("COLOR").Item(3), _
+                            JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(1), _
+                            JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(2), _
+                            JsonLanguage.item("CUSTOMKEYS_CONFIG_CARGADA").item("COLOR").item(3), _
                             True)
     End If
     
