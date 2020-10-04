@@ -46,6 +46,10 @@ Public amigos(1 To MAX_AMIGOS) As String
 Public Typing As Boolean
 Public lastTickEscribiendo As Long
 
+Public STATS_BARS_WIDTH As Integer
+Public STATS_BARS_LEFT As Integer
+Public STATS_BARS_LEFT_2 As Integer
+
 Public Inet As clsInet
 
 'Recuperar Cuenta mediante la API

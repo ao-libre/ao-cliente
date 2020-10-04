@@ -1734,6 +1734,10 @@ Private Sub Form_Load()
     bIsRecordingVideo = False
     uAOProgressDownloadFfmpeg.Visible = False
     
+    STATS_BARS_WIDTH = shpVida.Width
+    STATS_BARS_LEFT = shpVida.Left
+    STATS_BARS_LEFT_2 = shpHambre.Left
+    
     CONSOLE_VISIBLE_LINES = (pConsola.Height - CONSOLE_PADDING * 2) \ CONSOLE_LINE_HEIGHT
     
     SPELLS_VISIBLE_LINES = (pHechizos.Height - SPELLS_PADDING * 2) \ SPELLS_LINE_HEIGHT
