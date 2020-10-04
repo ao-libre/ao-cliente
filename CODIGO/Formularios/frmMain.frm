@@ -1413,11 +1413,11 @@ Private Const SPELLS_ARROWS_DISPLACEMENT As Integer = 1
 Private Const SPELLS_PADDING As Integer = 8
 Private SPELLS_VISIBLE_LINES As Integer
 
-Private Declare Function SetWindowLong _
-                Lib "user32" _
-                Alias "SetWindowLongA" (ByVal hWnd As Long, _
-                                        ByVal nIndex As Long, _
-                                        ByVal dwNewLong As Long) As Long
+Private Const WM_MOUSEWHEEL = &H20A
+Private WithEvents HookConsole As clsTrickSubclass2
+Attribute HookConsole.VB_VarHelpID = -1
+Private WithEvents HookSpells As clsTrickSubclass2
+Attribute HookSpells.VB_VarHelpID = -1
 
 Public Sub dragInventory_dragDone(ByVal originalSlot As Integer, ByVal newSlot As Integer)
     Call Protocol.WriteMoveItem(originalSlot, newSlot, eMoveType.Inventory)
@@ -1676,6 +1676,8 @@ End Sub
 
 Private Sub Form_Activate()
     Call Inventario.DrawInventory
+    
+    BarritaHechizos.Top = BarraHechizosCentro.Top
 End Sub
 
 Private Sub BarritaMover_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -1710,12 +1712,6 @@ Private Sub Form_Load()
 
     Call LoadTextsForm
     Call LoadAOCustomControlsPictures(Me)
-        
-    ' Detect links in console
-    Call EnableURLDetect(pConsola.hWnd, Me.hWnd)
-    
-    ' Hacer las consolas transparentes
-    'Call SetWindowLong(RecTxt.hwnd, -20, &H20&)
     
     ' Seteamos el caption
     Me.Caption = "Argentum Online Libre"
@@ -1745,6 +1741,49 @@ Private Sub Form_Load()
     Set hlst = New clsGraphicalList
     Call hlst.Initialize(pHechizos, pHechizos.ForeColor, SPELLS_PADDING, BarraHechizosCentro.Width, SPELLS_LINE_HEIGHT, SPELLS_VISIBLE_LINES)
     
+    Set HookConsole = New clsTrickSubclass2
+    Set HookSpells = New clsTrickSubclass2
+    HookConsole.Hook pConsola.hWnd
+    HookSpells.Hook pHechizos.hWnd
+    
+End Sub
+
+Private Sub HookConsole_WndProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long, Ret As Long, DefCall As Boolean)
+    ' Created 04/10/2020 - WyroX
+
+    If msg = WM_MOUSEWHEEL Then
+        If Sgn(wParam) > 0 Then
+            ' Mover consola para arriba
+            Call BarraConsolaUp_MouseUp(0, 0, 0, 0)
+        Else
+            ' Mover consola para abajo
+            Call BarraConsolaDown_MouseUp(0, 0, 0, 0)
+        End If
+        
+        DefCall = False
+        Exit Sub
+    End If
+    
+    DefCall = True
+End Sub
+
+Private Sub HookSpells_WndProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long, Ret As Long, DefCall As Boolean)
+    ' Created 04/10/2020 - WyroX
+
+    If msg = WM_MOUSEWHEEL Then
+        If Sgn(wParam) > 0 Then
+            ' Mover hechizos para arriba
+            Call BarraHechizosUp_MouseUp(0, 0, 0, 0)
+        Else
+            ' Mover hechizos para abajo
+            Call BarraHechizosDown_MouseUp(0, 0, 0, 0)
+        End If
+        
+        DefCall = False
+        Exit Sub
+    End If
+    
+    DefCall = True
 End Sub
 
 Private Sub LoadTextsForm()
@@ -2210,17 +2249,10 @@ Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As 
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
-
     If prgRun = True Then
         prgRun = False
         Cancel = 1
     End If
-End Sub
-
-Private Sub Form_Unload(Cancel As Integer)
-
-    Call DisableURLDetect
-    
 End Sub
 
 Private Sub GldLbl_Click()
@@ -3073,7 +3105,7 @@ Private Sub btnInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
     ' Activo controles de inventario
-    PicInv.Visible = True
+    picInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
@@ -3101,7 +3133,7 @@ Private Sub btnHechizos_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    PicInv.Visible = False
+    picInv.Visible = False
 
 End Sub
 
@@ -3218,8 +3250,8 @@ Public Sub SendCMSTXT_SendText()
             Typing = False
         End If
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         End If
 End Sub
 
