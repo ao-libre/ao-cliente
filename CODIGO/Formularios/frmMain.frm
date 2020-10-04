@@ -1745,7 +1745,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub HookConsole_WndProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long, Ret As Long, DefCall As Boolean)
-    ' Created 01/10/2020 - WyroX
+    ' Created 04/10/2020 - WyroX
 
     If msg = WM_MOUSEWHEEL Then
         If Sgn(wParam) > 0 Then
@@ -1764,7 +1764,7 @@ Private Sub HookConsole_WndProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wPa
 End Sub
 
 Private Sub HookSpells_WndProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long, Ret As Long, DefCall As Boolean)
-    ' Created 01/10/2020 - WyroX
+    ' Created 04/10/2020 - WyroX
 
     If msg = WM_MOUSEWHEEL Then
         If Sgn(wParam) > 0 Then
