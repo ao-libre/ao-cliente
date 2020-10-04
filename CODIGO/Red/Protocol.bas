@@ -1920,12 +1920,12 @@ Private Sub HandleUpdateSta()
     
     Dim bWidth As Byte
     
-    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 89)
+    bWidth = UserMinSTA / UserMaxSTA * STATS_BARS_WIDTH
     
-    frmMain.shpEnergia.Width = 89 - bWidth
-    frmMain.shpEnergia.Left = 794 + (89 - frmMain.shpEnergia.Width)
+    frmMain.shpEnergia.Width = STATS_BARS_WIDTH - bWidth
+    frmMain.shpEnergia.Left = STATS_BARS_LEFT + (STATS_BARS_WIDTH - frmMain.shpEnergia.Width)
     
-    frmMain.shpEnergia.Visible = (bWidth <> 89)
+    frmMain.shpEnergia.Visible = (bWidth <> STATS_BARS_WIDTH)
     
 End Sub
 
@@ -1955,12 +1955,12 @@ Private Sub HandleUpdateMana()
     Dim bWidth As Byte
     
     If UserMaxMAN > 0 Then _
-        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 89) 'ReyarB
+        bWidth = UserMinMAN / UserMaxMAN * STATS_BARS_WIDTH
         
-    frmMain.shpMana.Width = 89 - bWidth
-    frmMain.shpMana.Left = 794 + (89 - frmMain.shpMana.Width)
+    frmMain.shpMana.Width = STATS_BARS_WIDTH - bWidth
+    frmMain.shpMana.Left = STATS_BARS_LEFT + (STATS_BARS_WIDTH - frmMain.shpMana.Width)
     
-    frmMain.shpMana.Visible = (bWidth <> 89)
+    frmMain.shpMana.Visible = (bWidth <> STATS_BARS_WIDTH)
 End Sub
 
 ''
@@ -1988,12 +1988,12 @@ Private Sub HandleUpdateHP()
     
     Dim bWidth As Byte
     
-    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 89)
+    bWidth = UserMinHP / UserMaxHP * STATS_BARS_WIDTH
     
-    frmMain.shpVida.Width = 89 - bWidth
-    frmMain.shpVida.Left = 794 + (89 - frmMain.shpVida.Width)
+    frmMain.shpVida.Width = STATS_BARS_WIDTH - bWidth
+    frmMain.shpVida.Left = STATS_BARS_LEFT + (STATS_BARS_WIDTH - frmMain.shpVida.Width)
     
-    frmMain.shpVida.Visible = (bWidth <> 90)
+    frmMain.shpVida.Visible = (bWidth <> STATS_BARS_WIDTH)
     
     'Is the user alive??
     If UserMinHP = 0 Then
@@ -2107,7 +2107,7 @@ Private Sub HandleUpdateStrenghtAndDexterity()
     frmMain.lblStrg.ForeColor = getStrenghtColor()
     frmMain.lblDext.ForeColor = getDexterityColor()
     IntervaloDopas = incomingData.ReadLong
-    TiempoDopas = IntervaloDopas * 0.04
+    TiempoDopas = IntervaloDopas * 0.04 ' 40 / 1000 = 0.04 (Ticks del server = 40 milisegundos)
 End Sub
 
 ' Handles the UpdateStrenghtAndDexterity message.
@@ -3307,28 +3307,28 @@ Private Sub HandleUpdateUserStats()
     
     '***************************
     If UserMaxMAN > 0 Then _
-        bWidth = (((UserMinMAN / 100) / (UserMaxMAN / 100)) * 89)
+        bWidth = UserMinMAN / UserMaxMAN * STATS_BARS_WIDTH
         
-    frmMain.shpMana.Width = 89 - bWidth
-    frmMain.shpMana.Left = 794 + (90 - frmMain.shpMana.Width)
+    frmMain.shpMana.Width = STATS_BARS_WIDTH - bWidth
+    frmMain.shpMana.Left = STATS_BARS_LEFT + (STATS_BARS_WIDTH - frmMain.shpMana.Width)
     
-    frmMain.shpMana.Visible = (bWidth <> 89)
+    frmMain.shpMana.Visible = (bWidth <> STATS_BARS_WIDTH)
     '***************************
     
-    bWidth = (((UserMinHP / 100) / (UserMaxHP / 100)) * 89)
+    bWidth = UserMinHP / UserMaxHP * STATS_BARS_WIDTH
     
-    frmMain.shpVida.Width = 89 - bWidth
-    frmMain.shpVida.Left = 794 + (89 - frmMain.shpVida.Width)
+    frmMain.shpVida.Width = STATS_BARS_WIDTH - bWidth
+    frmMain.shpVida.Left = STATS_BARS_LEFT + (STATS_BARS_WIDTH - frmMain.shpVida.Width)
     
-    frmMain.shpVida.Visible = (bWidth <> 89)
+    frmMain.shpVida.Visible = (bWidth <> STATS_BARS_WIDTH)
     '***************************
     
-    bWidth = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 89)
+    bWidth = UserMinSTA / UserMaxSTA * STATS_BARS_WIDTH
     
-    frmMain.shpEnergia.Width = 89 - bWidth
-    frmMain.shpEnergia.Left = 794 + (89 - frmMain.shpEnergia.Width)
+    frmMain.shpEnergia.Width = STATS_BARS_WIDTH - bWidth
+    frmMain.shpEnergia.Left = STATS_BARS_LEFT + (STATS_BARS_WIDTH - frmMain.shpEnergia.Width)
     
-    frmMain.shpEnergia.Visible = (bWidth <> 89)
+    frmMain.shpEnergia.Visible = (bWidth <> STATS_BARS_WIDTH)
     '***************************
     
     If UserMinHP = 0 Then
@@ -4290,20 +4290,20 @@ Private Sub HandleUpdateHungerAndThirst()
 
     Dim bWidth As Byte
     
-    bWidth = (((UserMinHAM / 100) / (UserMaxHAM / 100)) * 89)
+    bWidth = UserMinHAM / UserMaxHAM * STATS_BARS_WIDTH
     
-    frmMain.shpHambre.Width = 89 - bWidth
-    frmMain.shpHambre.Left = 919 + (89 - frmMain.shpHambre.Width)
+    frmMain.shpHambre.Width = STATS_BARS_WIDTH - bWidth
+    frmMain.shpHambre.Left = STATS_BARS_LEFT_2 + (STATS_BARS_WIDTH - frmMain.shpHambre.Width)
     
-    frmMain.shpHambre.Visible = (bWidth <> 89)
+    frmMain.shpHambre.Visible = (bWidth <> STATS_BARS_WIDTH)
     '*********************************
     
-    bWidth = (((UserMinAGU / 100) / (UserMaxAGU / 100)) * 89)
+    bWidth = UserMinAGU / UserMaxAGU * STATS_BARS_WIDTH
     
-    frmMain.shpSed.Width = 89 - bWidth
-    frmMain.shpSed.Left = 919 + (89 - frmMain.shpSed.Width)
+    frmMain.shpSed.Width = STATS_BARS_WIDTH - bWidth
+    frmMain.shpSed.Left = STATS_BARS_LEFT_2 + (STATS_BARS_WIDTH - frmMain.shpSed.Width)
     
-    frmMain.shpSed.Visible = (bWidth <> 89)
+    frmMain.shpSed.Visible = (bWidth <> STATS_BARS_WIDTH)
     
 End Sub
 
@@ -4487,7 +4487,7 @@ Private Sub HandleSetInvisible()
     
     If CharIndex = UserCharIndex Then
         If UserInvisible And TiempoInvi <= 0 Then
-            TiempoInvi = (IntervaloInvi * 0.05) - 1 ' Qu�???
+            TiempoInvi = IntervaloInvi * 0.04 ' 40 / 1000 = 0.04 (Ticks del server = 40 milisegundos)
         Else
             TiempoInvi = 0
         End If
@@ -5171,7 +5171,7 @@ Private Sub HandleParalizeOK()
     UserParalizado = Not UserParalizado
 
     timeRemaining = incomingData.ReadInteger()
-    UserParalizadoSegundosRestantes = IIf(timeRemaining > 0, (timeRemaining * 0.04), 0) 'Cantidad en segundos
+    UserParalizadoSegundosRestantes = IIf(timeRemaining > 0, timeRemaining * 0.04, 0) ' 40 / 1000 = 0.04 (Ticks del server = 40 milisegundos)
 
     If UserParalizado And timeRemaining > 0 Then frmMain.timerPasarSegundo.Enabled = True
 
