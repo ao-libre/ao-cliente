@@ -185,8 +185,8 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
  
             Call .Texture.GetLevelDesc(0, surface_desc)
             
-            .texture_width = texture_info.Width
-            .texture_height = texture_info.Height
+            .texture_width = surface_desc.Width
+            .texture_height = surface_desc.Height
             .Size = surface_desc.Size
             
             TextureWidth = .texture_width
