@@ -676,7 +676,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 27/01/2020: Bugfix paquete CharacterChange (Wyr0X)
 * 27/01/2020: Lectura de indices de gráficos en Long. (jopiortiz-Wyr0X)
 
--v0.13.26
+- v0.13.26
 * 01/02/2020: Reimplemented #465: removido temblor en nombres (FrankoH298 - Wyr0X) 
 * 01/02/2020: Arreglado tiempo restante paralisis e invisivilidad (FrankoH298 - Wyr0X)
 * 01/02/2020: Sacados algunos colores del mainloop (Wyr0X)
@@ -688,12 +688,12 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 01/02/2020: Se mejoro color de la ventana conectar para que se lea el texto de informacion del server (Recox) 
 * 01/02/2020: Se arreglaron/incluyeron todos los cambios de mapas que hay en la version v0.13.26 del server (Recox-ReyarB)
 
--v0.13.27
+- v0.13.27
 * 16/02/2020: Se agregaron los mp3s faltantes para el mundo Alkon, ahora todos los mapas usan su mp3 correspondiente original (Recox)
 * 16/02/2020: Se agrego boton de creditos en el frmConnect, el mismo abre un modal con todas las personas que han colaborado en el juego en toda la historia del juego en las diferentes areas (Recox)
 * 16/02/2020: Se tradujo el formulario frmPanelAccount completamente (Recox)
 
--v0.13.28
+- v0.13.28
 * 09/03/2020: Reflejo del char en el agua. (abusiv0-jopiortiz)
 * 10/03/2020: Cambiar entre personajes de la misma cuenta sin tener que reloguear. (abusiv0-Wyr0X-jopiortiz)
 * 11/03/2020: Sombras en los personajes. Activables/desactivables desde Config.ini (abusiv0)
@@ -713,7 +713,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 30/03/2020: Se modificaron/mejoraron detalles en muchisimos mapas. (ReyarB)
 * 30/03/2020: clsIniManager respeta mayuscula/minuscula. (jopiortiz)
 
--v0.13.29
+- v0.13.29
 * 02/04/2020: Subida de texto mas suave, sin depender de los fps. (FrankoH298)
 * 02/04/2020: Arreglado reconectar al logear, y setAlpha() en drawText. (FrankoH298)
 * 03/04/2020: Si no se puede descargar la lista de servers de github por que tira error 500, no hacemos nada con sinfo.dat. (Recox)
@@ -726,7 +726,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 04/04/2020: fixed lblEnergia and buttonDropGold. (FrankoH298)
 * 04/04/2020: No te podes teletransportar a tu posición actual. Chequeo desde el cliente asi no mando el paquete, (jopiortiz)
 
--v0.13.30
+- v0.13.30
 * 12/04/2020: Removido FlushBuffer y metido en un timer. (FrankoH298)
 * 12/04/2020: No te tepearás en el mismo lugar!. (jopiortiz)
 * 12/04/2020: DoEvents fuera del timer. (FrankoH298)
@@ -736,13 +736,13 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 12/04/2020: Saco el evento Hunger Games alv. (#584). (jopiortiz)
 * 12/04/2020: Agregado FlushBuffer en boton de skills y estadisticas (Wyr0X - Recox)
 
--v0.13.31
+- v0.13.31
 * 13/04/2020: Arreglo de traducciones en frmMain. frmRetos. frmListaAmigos, /hogar cancelado y Protocol.bas (Recox)
 * 13/04/2020: Ahora solo me puedo ver invi a mi mismo y a los de mi clan. (Wyr0X)
 * 13/04/2020: Al usar /SALIR te manda a el panel de cuenta. (BelerianD - jopiortiz)
 * 13/04/2020: Prevenimos flood de paquetes al cambiio el heading agregando un intervalo. En especial cuando te tiran paralisis, maldicion o estupidez. (BelerianD)
 
--v0.13.32
+- v0.13.32
 * 20/04/2020: Se modificaron render de inventario en comercio y banco para mostrar colores de la mochila y alforja, se aprolijo un poco el codigo. (Recox)
 * 20/04/2020: Ahora se renderizan 7 filas de slots con su correspondiente color para mochila o alforja en el inventario principal. (Recox)
 * 20/04/2020: Se suben nuevos mapas de nieve, nuevos graficos y modificaciones en Mapas. (ReyarB)
@@ -751,23 +751,23 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 26/04/2020: se agrego mensaje en consola cuando me muevo si estoy con comando /hogar (Recox)
 * 27/04/2020: Se arreglan mapas. (ReyarB)
 
--v0.13.35
+- v0.13.35
 * 28/04/2020: Arreglo icono de mouse roto. (Recox)
 * 28/04/2020: Se arreglan mapas faltantes. (ReyarB)
 * 27/04/2020: Limitar FPS a 101 activable/desactivable desde Config.ini. (BelerianD - Chots)
 
--v0.13.36 
+- v0.13.36 
 * 21/05/2020: Revertido - Limitar FPS a 101 activable/desactivable desde Config.ini. (BelerianD - Chots)
 
--v0.13.37
+- v0.13.37
 * 27/05/2020: Cambios en muchos Dats y Mapas (ReyarB - Fakkerz)
 * 27/05/2020: Se tradujo el frmMapa al ingles (Recox)
 * 27/05/2020: Se reemplazan minimapas por los que no tienen puntito rojo de bloqueo (ReyarB - Recox)
 
--v0.13.38
+- v0.13.38
 * 09/06/2020: Cambios en muchos Dats y Mapas (ReyarB - Fakkerz)
 
--v0.13.39
+- v0.13.39
 * 17/06/2020: Arreglado runtime al comerciar con usuarios. (BelerianD)
 * 27/06/2020: Se sacaron acentos del archivo Tutorial_spanish.dat por que se corrompieron. (Recox)
 * 27/06/2020: Se agrando el ancho del label para que pueda entrar el texto Escriba la cantidad en el formulario de tirar oro (Recox)
@@ -780,10 +780,10 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 04/07/2020: Se eliminaron skins innecesarios por que son para version de 800 x 600 (Recox)
 * 04/07/2020: Eliminadas imagenes no usadas en el skin de Alkon 0.13 (Recox)
 
--v0.13.40
+- v0.13.40
 * 05/07/2020: Se arregla el skin predeterminado, ahora se usa el correcto. (jopiortiz)
 
--v0.13.41
+- v0.13.41
 * 07/07/2020: Ahora las flechas se equipan con doble click y los arcos se pueden usar haciendo doble click. (Recox)
 * 07/07/2020: Agrego boton de quests en frmMain para ver lista de questa facilmente. (Recox)
 * 07/07/2020: Vuelve la funcion de skins para la nueva resolucion (Recox)
@@ -795,7 +795,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 07/07/2020: Ahora dice que version tenemos y cual es la ultima version disponible cuando aparece el msgBox que dice que nuestra version no es la actual (Recox)
 * 07/07/2020: Saco algunas partículas que dan conflictos en el mapa (ReyarB)
 
--v0.13.42
+- v0.13.42
 * 07/07/2020: Solucioné un problema visual al crear personaje cuando se volvía a tener foco en el formulario de crear personaje (Cuicui)
 * 07/07/2020: Arreglé el formulario de amigos que desaparecía la lista de amigos (Cuicui)
 * 07/07/2020: Arreglé el problema que surgía cuando intentaban mover el frmMain estando en pantalla completa (Cuicui)
@@ -806,7 +806,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 12/07/2020: Se agrega boton para que la gente pueda reportar bugs en github facilmente (Recox)
 * 12/07/2020: Mensajes relacionados al combate (los q estan declarados en el cliente) se ven en una consola aparte. (jopiortiz)
 
--v0.13.44
+- v0.13.44
 * 12/07/2020: Problema al dopar con potas. MAXATRIBUTOS del cliente no coincidia con el del server. en consecuencia las funciones que controlaban el color del texto de la dopa daban error porque recibian valores mayores al esperado (waltersit0)
 * 12/07/2020: Muestra el juego en barra de tareas con nombre (Wyr0X)
 * 12/07/2020: Modifiqué la imágen de la ventana principal para corresponder con las medidas exactas (faltaba un pixel horizontal) (Wyr0X)
@@ -814,23 +814,23 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 13/07/2020: Los items que no te puedas equipar aparecen con una X roja" (waltersit0)
 * 13/07/2020: Arreglo linea que no deja compilar el proyecto al .exe (RecoX)
 
--v0.13.45
+- v0.13.45
 * 16/07/2020: Revierto seleccion automatica de config wasd, ahora pregunta de nuevo que configuracion quiero (RecoX)
 * 16/07/2020: Se agrega boton ver procesos en panel gm (ReyarB)
 * 16/07/2020: Encriptación Xor para codificar y decodificar bytearrays de forma redundante. https://www.gs-zone.org/temas/anti-clientes-externos-definitivo.16121/ (Gexur)
 
--v0.13.46
+- v0.13.46
 * 19/07/2020: Saco la consola de combate, vuelve la unificada. (jopiortiz)
 * 19/07/2020: Se sacan botones saltarines en frmConnect. (Neoranger)
 
--v0.13.47
+- v0.13.47
 * 21/07/2020: Cambios de Mapa (ReyarB)
 * 21/07/2020: Fix: No se detiene el timer del frmCrearPJ. (jopiortiz)
 * 21/07/2020: Depositar/Retirar items rapido de la boveda con Shift+Click (waltersit0)
 * 21/07/2020: Ahora se detecta automáticamente si se renderiza en modo MIXED, HARDWARE o SOFTWARE (jopiortiz)
 * 21/07/2020: Restauramos el DirectDevice si se pierde. (Al abrir un programa como administrador mientras jugabas, se crasheaba el motor gráfico) [Gracias @FrankoH298 !.] (jopiortiz)
 
--v0.13.48
+- v0.13.48
 * 27/07/2020: Fix #791: escribir mientras estás con /buscar (Wyr0x)
 * 27/07/2020: Fix #788: timers de las dopas (Wyr0x)
 * 27/07/2020: Fix #790: mover la ventana (Wyr0x)
@@ -842,7 +842,7 @@ http://www.aivosto.com/articles/stringopt.html (jopiortiz)
 * 31/07/2020: Mejoras en MiniMapas (ReyarB)
 * 31/07/2020: Se comenta la funcion hlst_DblClick que maneja el mover hechizo con doble click por que a la gente le molesta (Recox)
  
--v0.13.49
+- v0.13.49
 * 14/08/2020: Cambios en Mapas (ReyarB - Ronin)
 * 14/08/2020: Se agrega efecto escribiendo ... (CuiCui)
 * 14/08/2020: Fix desbordamiento en Damage_NewSize (Wyr0x)
@@ -869,19 +869,22 @@ Se retoco el mapa del fuerte pretoriano haciendo mas similar al fuerte original,
 * 18/08/2020: Cuando escribo un comando estando muerto el juego tira error, lo arreglo (Recox)
 * 18/08/2020: Agrego validacion para no enviar paquetes para mostrar ... cuando estoy invisible (Recox)
 
--v0.13.50
+- v0.13.50
 * 14/08/2020: Ahora me puedo equipar y desequipar mochilas con doble click y las cuchillas se pueden usar con doble click (Recox)
 
--v0.13.51
+- v0.13.51
 * 25/08/2020: Nueva música de dugeons y lugares nuevos (Ronin)
 * 25/08/2020: Se le saca la cara a este body ya que si te equipabas las alas se veía atrás la cara q venia con el grafico.El propósito también es utilizar este body para un npc llamado Valkiria. (Ronin)
 * 25/08/2020: Se baja un poco la calidad de la musica a 135kbps para reducir peso (Recox)
 
--v0.13.52
+- v0.13.52
 * 27/08/2020: Actualizo Minimapas (Ronin - ReyarB)
 * 27/08/2020: Ahora no se cierra el juego al tratar de mover la pantalla en fullscreen (Recox)
 
--v0.13.53
+- v0.13.53
 * 02/09/2020: FK.IND NUEVO QUE HACE QUE NO LLUEVA EN DUNGEONS (LORELEI-REYARB-WYROX)
 * 02/09/2020: Fix Inter Ciudades (ReyarB)
 * 02/09/2020: Ahora obtenemos el dato de ZONA en mapas para validar si caminar o no en dungeons. (Recox)
+
+- v0.13.54
+* 19/02/2021: Fix: Posible valor negativo al usar timeGetTime/GetTickCount (jopiortiz)
