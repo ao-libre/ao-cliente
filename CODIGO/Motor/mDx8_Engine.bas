@@ -5,8 +5,6 @@ Attribute VB_Name = "mDx8_Engine"
 
 Option Explicit
 
-Public Declare Function timeGetTime Lib "winmm.dll" () As Long
-
 ' No matter what you do with DirectX8, you will need to start with
 ' the DirectX8 object. You will need to create a new instance of
 ' the object, using the New keyword, rather than just getting a
@@ -126,7 +124,7 @@ Public Sub Engine_DirectX8_Init()
     'Inicializamos el resto de sistemas.
     Call Engine_DirectX8_Aditional_Init
     
-    EndTime = timeGetTime
+    EndTime = GetTickCount()
     
     Exit Sub
 EngineHandler:
@@ -363,10 +361,10 @@ Public Sub Engine_Update_FPS()
     '    Wend
     'End If
 
-    If FPSLastCheck + 1000 < timeGetTime Then
+    If FPSLastCheck + 1000 < GetTickCount() Then
         FPS = FramesPerSecCounter
         FramesPerSecCounter = 1
-        FPSLastCheck = timeGetTime
+        FPSLastCheck = GetTickCount()
     
     Else
         FramesPerSecCounter = FramesPerSecCounter + 1
@@ -384,7 +382,7 @@ Public Function Engine_ElapsedTime() As Long
     Dim Start_Time As Long
 
     'Get current time
-    Start_Time = timeGetTime
+    Start_Time = GetTickCount()
 
     'Calculate elapsed time
     Engine_ElapsedTime = Start_Time - EndTime

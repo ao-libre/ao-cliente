@@ -195,7 +195,7 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
         .textLine = FormatChat(chat)
         .lifeTime = MS_ADD_EXTRA + (MS_PER_CHAR * Len(chat))
         .Sube = 12
-        .startTickCount = timeGetTime + 12
+        .startTickCount = GetTickCount() + 12
     End With
 End Sub
 
@@ -334,9 +334,9 @@ Public Sub Render()
                 Offset = -(usedFont.Size + 2) * Upper_textLine
                 
                 'Letras suben desde la cabeza.
-                    If timeGetTime > .startTickCount Then
+                    If GetTickCount() > .startTickCount Then
                         .Sube = .Sube - 1
-                        .startTickCount = timeGetTime + 12
+                        .startTickCount = GetTickCount() + 12
                     End If
                     If .Sube > 0 Then .Y = .Y + .Sube
                 

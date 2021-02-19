@@ -739,10 +739,10 @@ Sub Main()
             lFrameTimer = GetTickCount
         End If
         
-        If timeGetTime >= lastFlush Then
+        If GetTickCount() >= lastFlush Then
             ' If there is anything to be sent, we send it
             Call FlushBuffer
-            lastFlush = timeGetTime + 10
+            lastFlush = GetTickCount() + 10
         End If
         
         DoEvents

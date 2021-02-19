@@ -884,4 +884,4 @@ Se retoco el mapa del fuerte pretoriano haciendo mas similar al fuerte original,
 -v0.13.53
 * 02/09/2020: FK.IND NUEVO QUE HACE QUE NO LLUEVA EN DUNGEONS (LORELEI-REYARB-WYROX)
 * 02/09/2020: Fix Inter Ciudades (ReyarB)
-* 02/09/2020: Ahora obtenemos el dato de ZONA en mapas para validarvalidar si caminar o no en dungeons. (Recox)
+* 02/09/2020: Ahora obtenemos el dato de ZONA en mapas para validar si caminar o no en dungeons. (Recox)

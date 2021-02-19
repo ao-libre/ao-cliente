@@ -89,15 +89,6 @@ Public Enum TimersIndex
     ChangeHeading = 9
 End Enum
 
-
-''
-' Window´s API Function.
-' A milisecond pricision counter.
-'
-' @return   Miliseconds since midnight.
-
-Private Declare Function GetTickCount Lib "kernel32" () As Long
-
 ''
 ' Sets a new interval for a timer.
 '
