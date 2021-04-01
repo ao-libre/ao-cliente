@@ -1,25 +1,19 @@
 [INIT]
-Cant=4
+Cant=3
 
 [S1]
 Desc=Rol - Alkon 0.13.X (Latinoamericano)
-IP=186.64.123.99
+IP=aolibre.cyberciudad.com
 PJ=7666
 Mundo=Alkon
 
 [S2]
-Desc=Facil - Alkon 0.13.X (xp/oro/trabajo x50)
-IP=186.64.123.99
-PJ=7665
-Mundo=Alkon
-
-[S3]
 Desc=AGITE- LORELEI[FULL] - Alkon 0.13.X
 IP=200.115.249.5 
 PJ=7666
 Mundo=Alkon
 
-[S4]
+[S3]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
