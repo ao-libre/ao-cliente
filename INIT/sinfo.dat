@@ -19,4 +19,8 @@ IP=localhost
 PJ=7666
 Mundo=Alkon
 
-
+[S4]
+Desc=AO México | Modo:Alkon 0.13.X
+IP=192.168.100.18
+PJ=7666
+Mundo=Alkon
