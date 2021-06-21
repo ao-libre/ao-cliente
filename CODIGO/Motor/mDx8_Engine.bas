@@ -119,7 +119,7 @@ Public Sub Engine_DirectX8_Init()
     
     'Sprite batching.
     Set SpriteBatch = New clsBatch
-    Call SpriteBatch.Initialise(2000)
+    Call SpriteBatch.Initialise(500)
     
     'Inicializamos el resto de sistemas.
     Call Engine_DirectX8_Aditional_Init
