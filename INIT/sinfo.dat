@@ -1,10 +1,16 @@
 [INIT]
-Cant=3
+Cant=4
 
 [S1]
 Desc=Rol - Alkon 0.13.X (Latinoamericano)
 IP=aolibre.cyberciudad.com
 PJ=7666
+Mundo=Alkon
+
+[S2]
+Desc=Fruta - AO Libre Plus (Exp/oro/x50)
+IP=aolibre.cyberciudad.com
+PJ=7667
 Mundo=Alkon
 
 [S2]
