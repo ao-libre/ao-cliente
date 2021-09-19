@@ -34,9 +34,12 @@
 /GRAFICOS/Fonts/font2.dat binary
 /GRAFICOS/Fonts/font3.dat binary
 
-# Declare encoding of all files for code.
-*.bas encoding=ansi
-*.cls encoding=ansi
-*.vbp encoding=ansi
-*.frm encoding=ansi
-*.json encoding=ansi
+# Declare encoding and file type
+.manifest text
+.rc text
+*.bas text working-tree-encoding=windows-1252
+*.cls text working-tree-encoding=windows-1252
+*.vbp text working-tree-encoding=windows-1252
+*.frm text working-tree-encoding=windows-1252
+*.json text working-tree-encoding=windows-1252
+*.dat text working-tree-encoding=windows-1252
