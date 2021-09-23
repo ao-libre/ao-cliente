@@ -13,13 +13,13 @@ IP=aolibre.cyberciudad.com
 PJ=7667
 Mundo=Alkon
 
-[S2]
-Desc=AGITE- LORELEI[FULL] - Alkon 0.13.X
-IP=200.115.249.5 
-PJ=7666
+[S3]
+Desc=Server Principal - Alkon 0.13.X
+IP=45.235.99.71
+PJ=2021
 Mundo=Alkon
 
-[S3]
+[S4]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
