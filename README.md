@@ -15,6 +15,15 @@ git clone https://www.github.com/ao-libre/ao-cliente
 
 ![AO Logo](https://ao-libre.github.io/ao-website/assets/images/logo.png)
 
+# Sponsors:
+### https://minehost.com.ar/
+![Minehost](http://argentumonline.org/assets/images/footer-logo-minehost.png)
+
+
+### https://www.conreco.com.ar/
+![Conreco](http://argentumonline.org/assets/images/footer-logo-conre.png)
+
+
 ## Wiki Desarrollo Argentum Online
 [Manual para entender el codigo de Argentum Online](http://es.dao.wikia.com/wiki/Wiki_Desarrollo_Argentum_Online).
 
