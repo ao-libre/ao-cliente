@@ -17,11 +17,11 @@ git clone https://www.github.com/ao-libre/ao-cliente
 
 # Sponsors:
 ### https://minehost.com.ar/
-![Minehost](http://argentumonline.org/assets/images/footer-logo-minehost.png)
+<img src="http://argentumonline.org/assets/images/footer-logo-minehost.png" width="200px" />
 
 
 ### https://www.conreco.com.ar/
-![Conreco](http://argentumonline.org/assets/images/footer-logo-conre.png)
+<img src="http://argentumonline.org/assets/images/footer-logo-conreco.png" width="200px" />
 
 
 ## Wiki Desarrollo Argentum Online
