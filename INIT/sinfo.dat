@@ -2,9 +2,9 @@
 Cant=4
 
 [S1]
-Desc=Server Principal - Alkon 0.13.X
-IP=45.235.98.29
-PJ=24582
+Desc=Rol - Alkon 0.13.X (Latinoamericano)
+IP=aolibre.cyberciudad.com
+PJ=7666
 Mundo=Alkon
 
 [S2]
@@ -14,9 +14,9 @@ PJ=7667
 Mundo=Alkon
 
 [S3]
-Desc=Rol - Alkon 0.13.X (Latinoamericano)
-IP=aolibre.cyberciudad.com
-PJ=7666
+Desc=Server Minehost - Alkon 0.13.X
+IP=45.235.98.29
+PJ=24582
 Mundo=Alkon
 
 [S4]
