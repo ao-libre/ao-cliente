@@ -1,25 +1,19 @@
 [INIT]
-Cant=4
+Cant=3
 
 [S1]
-Desc=Rol - Alkon 0.13.X (Latinoamericano)
-IP=aolibre.cyberciudad.com
-PJ=7666
-Mundo=Alkon
-
-[S2]
-Desc=Fruta - AO Libre Plus (Exp/oro/x50)
-IP=aolibre.cyberciudad.com
-PJ=7667
-Mundo=Alkon
-
-[S3]
 Desc=Server Minehost - Alkon 0.13.X
 IP=45.235.98.29
 PJ=24582
 Mundo=Alkon
 
-[S4]
+[S2]
+Desc=Fácil - AO Libre X50
+IP=aolibre.cyberciudad.com
+PJ=7667
+Mundo=Alkon
+
+[S3]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
