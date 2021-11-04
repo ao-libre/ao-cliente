@@ -1,5 +1,5 @@
 [INIT]
-Cant=3
+Cant=2
 
 [S1]
 Desc=Server Minehost - Alkon 0.13.X
@@ -8,12 +8,6 @@ PJ=24582
 Mundo=Alkon
 
 [S2]
-Desc=Facil - AO Libre X50
-IP=aolibre.cyberciudad.com
-PJ=7667
-Mundo=Alkon
-
-[S3]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
