@@ -2,21 +2,24 @@
 Cant=3
 
 [S1]
-Desc=Rol - Alkon 0.13.X (Latinoamericano)
-IP=aolibre.cyberciudad.com
-PJ=7666
+Desc=Server Minehost - Alkon 0.13.X
+IP=45.235.98.29
+PJ=24582
 Mundo=Alkon
 
 [S2]
-Desc=AGITE- LORELEI[FULL] - Alkon 0.13.X
-IP=200.115.249.5 
+Desc=Server Europa - AOL Fast x50
+IP=185.229.243.180
 PJ=7666
 Mundo=Alkon
+
 
 [S3]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666
 Mundo=Alkon
+
+
 
 
