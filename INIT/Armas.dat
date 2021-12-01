@@ -126,7 +126,7 @@ Dir1=19825
 Dir4=19826
 Dir2=19827
 
-'Caña de Pescar
+'CaÃ±a de Pescar
 [Arma20]
 Dir3=19746
 Dir1=19747
@@ -147,7 +147,7 @@ Dir1=19799
 Dir4=19800
 Dir2=19801
 
-'Hacha de Leñador
+'Hacha de LeÃ±ador
 [Arma23]
 Dir3=19850
 Dir1=19851
@@ -217,7 +217,7 @@ Dir1=20230
 Dir4=20231
 Dir2=20232
 
-'Antorcha Olímpica
+'Antorcha OlÃ­mpica
 [Arma33]
 Dir3=20483
 Dir1=20484
@@ -245,7 +245,7 @@ Dir1=20533
 Dir4=20534
 Dir2=20535
 
-'Hacha de leña éfica
+'Hacha de leÃ±a Ã©fica
 [Arma37]
 Dir3=21945
 Dir1=21946
@@ -322,7 +322,7 @@ Dir1=22471
 Dir4=22472
 Dir2=22473
 
-'Daga común(Petizos)
+'Daga comÃºn(Petizos)
 [Arma48]
 Dir3=22537
 Dir1=22538
@@ -413,14 +413,14 @@ Dir1=23232
 Dir4=23233
 Dir2=23234
 
-'Bastón nudoso (E/G)
+'BastÃ³n nudoso (E/G)
 [Arma61]
 Dir3=23257
 Dir1=23258
 Dir4=23259
 Dir2=23260
 
-'Báculo engarzado (E/G)
+'BÃ¡culo engarzado (E/G)
 [Arma62]
 Dir3=23283
 Dir1=23284
@@ -469,7 +469,7 @@ Dir1=23440
 Dir4=23441
 Dir2=23442
 
-'Antorchar olímpica (E/G)
+'Antorchar olÃ­mpica (E/G)
 [Arma69]
 Dir3=23465
 Dir1=23466
@@ -518,7 +518,7 @@ Dir1=23622
 Dir4=23623
 Dir2=23624
 
-'Caña de pescar (E/G)
+'CaÃ±a de pescar (E/G)
 [Arma76]
 Dir3=23647
 Dir1=23648
