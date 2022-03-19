@@ -24,25 +24,17 @@ Begin VB.Form frmPanelAccount
       TabIndex        =   27
       Top             =   6360
       Width           =   1695
-      _ExtentX        =   2990
-      _ExtentY        =   1085
-      TX              =   "Borrar Personaje"
-      ENAB            =   -1  'True
-      FCOL            =   255
-      OCOL            =   16777215
-      PICE            =   "frmPanelAccount.frx":678C1
-      PICF            =   "frmPanelAccount.frx":678DD
-      PICH            =   "frmPanelAccount.frx":678F9
-      PICV            =   "frmPanelAccount.frx":67915
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2990
+      _extenty        =   1085
+      tx              =   "Borrar Personaje"
+      enab            =   -1  'True
+      fcol            =   255
+      ocol            =   16777215
+      pice            =   "frmPanelAccount.frx":678C1
+      picf            =   "frmPanelAccount.frx":678DD
+      pich            =   "frmPanelAccount.frx":678F9
+      picv            =   "frmPanelAccount.frx":67915
+      font            =   "frmPanelAccount.frx":67931
    End
    Begin VB.PictureBox picChar 
       Appearance      =   0  'Flat
@@ -129,10 +121,10 @@ Begin VB.Form frmPanelAccount
       Left            =   8760
       ScaleHeight     =   80
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   76
+      ScaleWidth      =   73
       TabIndex        =   4
       Top             =   1695
-      Width           =   1140
+      Width           =   1095
    End
    Begin VB.PictureBox picChar 
       Appearance      =   0  'Flat
@@ -144,10 +136,10 @@ Begin VB.Form frmPanelAccount
       Left            =   7005
       ScaleHeight     =   80
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   76
+      ScaleWidth      =   73
       TabIndex        =   3
       Top             =   1695
-      Width           =   1140
+      Width           =   1095
    End
    Begin VB.PictureBox picChar 
       Appearance      =   0  'Flat
@@ -200,25 +192,17 @@ Begin VB.Form frmPanelAccount
       TabIndex        =   28
       Top             =   7920
       Width           =   1695
-      _ExtentX        =   2990
-      _ExtentY        =   1085
-      TX              =   "Conectar"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmPanelAccount.frx":67931
-      PICF            =   "frmPanelAccount.frx":6794D
-      PICH            =   "frmPanelAccount.frx":67969
-      PICV            =   "frmPanelAccount.frx":67985
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2990
+      _extenty        =   1085
+      tx              =   "Conectar"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmPanelAccount.frx":6795D
+      picf            =   "frmPanelAccount.frx":67979
+      pich            =   "frmPanelAccount.frx":67995
+      picv            =   "frmPanelAccount.frx":679B1
+      font            =   "frmPanelAccount.frx":679CD
    End
    Begin AOLibre.uAOButton uAOCrearPersonaje 
       Height          =   615
@@ -226,25 +210,17 @@ Begin VB.Form frmPanelAccount
       TabIndex        =   29
       Top             =   7920
       Width           =   1695
-      _ExtentX        =   2990
-      _ExtentY        =   1085
-      TX              =   "Crear Personaje"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmPanelAccount.frx":679A1
-      PICF            =   "frmPanelAccount.frx":679BD
-      PICH            =   "frmPanelAccount.frx":679D9
-      PICV            =   "frmPanelAccount.frx":679F5
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2990
+      _extenty        =   1085
+      tx              =   "Crear Personaje"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmPanelAccount.frx":679F9
+      picf            =   "frmPanelAccount.frx":67A15
+      pich            =   "frmPanelAccount.frx":67A31
+      picv            =   "frmPanelAccount.frx":67A4D
+      font            =   "frmPanelAccount.frx":67A69
    End
    Begin AOLibre.uAOButton uAOSalir 
       Height          =   615
@@ -252,25 +228,17 @@ Begin VB.Form frmPanelAccount
       TabIndex        =   30
       Top             =   7920
       Width           =   1695
-      _ExtentX        =   2990
-      _ExtentY        =   1085
-      TX              =   "Salir"
-      ENAB            =   -1  'True
-      FCOL            =   7314354
-      OCOL            =   16777215
-      PICE            =   "frmPanelAccount.frx":67A11
-      PICF            =   "frmPanelAccount.frx":67A2D
-      PICH            =   "frmPanelAccount.frx":67A49
-      PICV            =   "frmPanelAccount.frx":67A65
-      BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   2990
+      _extenty        =   1085
+      tx              =   "Salir"
+      enab            =   -1  'True
+      fcol            =   7314354
+      ocol            =   16777215
+      pice            =   "frmPanelAccount.frx":67A95
+      picf            =   "frmPanelAccount.frx":67AB1
+      pich            =   "frmPanelAccount.frx":67ACD
+      picv            =   "frmPanelAccount.frx":67AE9
+      font            =   "frmPanelAccount.frx":67B05
    End
    Begin VB.Label lblAccData 
       Alignment       =   2  'Center
@@ -714,7 +682,7 @@ End Sub
 
 Private Sub uAOCrearPersonaje_Click()
 
-    If NumberOfCharacters > 9 Then
+    If NumberOfCharacters >= MAX_CHARACTERS Then
         MsgBox JsonLanguage.item("ERROR_DEMASIADOS_PJS").item("TEXTO")
         Exit Sub
     End If
