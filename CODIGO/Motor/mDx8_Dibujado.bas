@@ -74,7 +74,10 @@ Public Sub CleanPJs()
         
     For LoopC = 1 To MAX_CHARACTERS
     
-        frmPanelAccount.lblAccData(LoopC).Caption = vbNullString
+        frmPanelAccount.lblAccData(LoopC - 1).Caption = vbNullString
+        frmPanelAccount.picChar(LoopC - 1).AutoRedraw = True
+        frmPanelAccount.picChar(LoopC - 1).Refresh
+        frmPanelAccount.picChar(LoopC - 1).AutoRedraw = False
         frmPanelAccount.picChar(LoopC - 1).Visible = False
         
     Next
