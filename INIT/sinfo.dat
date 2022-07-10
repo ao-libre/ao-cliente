@@ -1,5 +1,5 @@
 [INIT]
-Cant=3
+Cant=4
 
 [S1]
 Desc=Server Minehost - Alkon 0.13.X
@@ -8,7 +8,7 @@ PJ=24582
 Mundo=Alkon
 
 [S2]
-Desc=Server Europa - AOL Fast x50
+Desc=Server Europa - Alkon 0.13.X
 IP=185.229.243.180
 PJ=7666
 Mundo=Alkon
@@ -17,5 +17,11 @@ Mundo=Alkon
 [S3]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
+PJ=7666
+Mundo=Alkon
+
+[S4]
+Desc=Server FAST - Alkon 0.13.X
+IP=oc.cyberciudad.com
 PJ=7666
 Mundo=Alkon
