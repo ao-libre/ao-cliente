@@ -15,13 +15,13 @@ Mundo=Alkon
 
 
 [S3]
-Desc=Servidor Local | Modo:Alkon 0.13.X
-IP=localhost
+Desc=Server FAST - Alkon 0.13.X
+IP=oc.cyberciudad.com
 PJ=7666
 Mundo=Alkon
 
-[S4]
-Desc=Server FAST - Alkon 0.13.X
-IP=oc.cyberciudad.com
+[S4]Servidor Local | Modo:Alkon 0.13.X
+Desc=Serivdor Local
+IP=localhost
 PJ=7666
 Mundo=Alkon
