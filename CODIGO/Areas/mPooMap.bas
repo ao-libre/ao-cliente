@@ -99,69 +99,69 @@ Public Sub Map_SetBlocked(ByVal X As Byte, ByVal Y As Byte, ByVal block As Byte)
 End Sub
 
 Sub Map_MoveTo(ByVal Direccion As E_Heading)
-      '***************************************************
-      'Author: Alejandro Santos (AlejoLp)
-      'Last Modify Date: 06/28/2008
-      'Last Modified By: Lucas Tavolaro Ortiz (Tavo)
-      ' 06/03/2006: AlejoLp - Elimine las funciones Move[NSWE] y las converti a esta
-      ' 12/08/2007: Tavo    - Si el usuario esta paralizado no se puede mover.
-      ' 06/28/2008: NicoNZ - Saque lo que impedia que si el usuario estaba paralizado se ejecute el sub.
-      '***************************************************
+'***************************************************
+'Author: Alejandro Santos (AlejoLp)
+'Last Modify Date: 04/07/2022
+'***************************************************
 
-      Dim LegalOk As Boolean
-      Static lastmovement As Long
-      
-      If Cartel Then Cartel = False
+    If Viewing Then
+        Exit Sub
+    End If
+
+    Dim LegalOk As Boolean
+    Static lastmovement As Long
     
-      Select Case Direccion
-
-            Case E_Heading.NORTH
-                  LegalOk = Map_LegalPos(UserPos.X, UserPos.Y - 1)
-
-            Case E_Heading.EAST
-                  LegalOk = Map_LegalPos(UserPos.X + 1, UserPos.Y)
-
-            Case E_Heading.SOUTH
-                  LegalOk = Map_LegalPos(UserPos.X, UserPos.Y + 1)
-
-            Case E_Heading.WEST
-                  LegalOk = Map_LegalPos(UserPos.X - 1, UserPos.Y)
-                        
-      End Select
-
-      If LegalOk And Not UserParalizado And Not UserDescansar And Not UserMeditar Then
-          Call WriteWalk(Direccion)
-          Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
-
-          Call Char_MovebyHead(UserCharIndex, Direccion)
-          Call Char_MoveScreen(Direccion)
-      
-      Else
-      
-        If (charlist(UserCharIndex).Heading <> Direccion) Then
-            If MainTimer.Check(TimersIndex.ChangeHeading) Then
-                Call WriteChangeHeading(Direccion)
-                Call Char_SetHeading(UserCharIndex, Direccion)
-            End If
-        End If
-                
-      End If
-    
-      If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
-      If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
-
-      ' Update 3D sounds!
-      Call Audio.MoveListener(UserPos.X, UserPos.Y)
+    If Cartel Then Cartel = False
   
-      ' Esto es un parche por que por alguna razon si el pj esta meditando y nos movemos el juego explota por eso cambie
-      ' Las validaciones en la linea 131 y agregue esto para arreglarlo (Recox)
-      If UserMeditar Then
-        UserMeditar = Not UserMeditar
-      End If
+    Select Case Direccion
 
-      If UserDescansar Then
-        UserDescansar = Not UserDescansar
+          Case E_Heading.NORTH
+                LegalOk = Map_LegalPos(UserPos.X, UserPos.Y - 1)
+
+          Case E_Heading.EAST
+                LegalOk = Map_LegalPos(UserPos.X + 1, UserPos.Y)
+
+          Case E_Heading.SOUTH
+                LegalOk = Map_LegalPos(UserPos.X, UserPos.Y + 1)
+
+          Case E_Heading.WEST
+                LegalOk = Map_LegalPos(UserPos.X - 1, UserPos.Y)
+                      
+    End Select
+
+    If LegalOk And Not UserParalizado And Not UserDescansar And Not UserMeditar Then
+        Call WriteWalk(Direccion)
+        Call frmMain.ActualizarMiniMapa   'integrado por ReyarB
+
+        Call Char_MovebyHead(UserCharIndex, Direccion)
+        Call Char_MoveScreen(Direccion)
+    
+    Else
+    
+      If (charlist(UserCharIndex).Heading <> Direccion) Then
+          If MainTimer.Check(TimersIndex.ChangeHeading) Then
+              Call WriteChangeHeading(Direccion)
+              Call Char_SetHeading(UserCharIndex, Direccion)
+          End If
       End If
+              
+    End If
+  
+    If frmMain.macrotrabajo.Enabled Then Call frmMain.DesactivarMacroTrabajo
+    If frmMain.trainingMacro.Enabled Then Call frmMain.DesactivarMacroHechizos
+
+    ' Update 3D sounds!
+    Call Audio.MoveListener(UserPos.X, UserPos.Y)
+
+    ' Esto es un parche por que por alguna razon si el pj esta meditando y nos movemos el juego explota por eso cambie
+    ' Las validaciones en la linea 131 y agregue esto para arreglarlo (Recox)
+    If UserMeditar Then
+      UserMeditar = Not UserMeditar
+    End If
+
+    If UserDescansar Then
+      UserDescansar = Not UserDescansar
+    End If
         
 End Sub
 

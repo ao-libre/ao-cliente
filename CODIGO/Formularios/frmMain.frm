@@ -664,6 +664,7 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -690,10 +691,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":76819
-      PICF            =   "frmMain.frx":76835
-      PICH            =   "frmMain.frx":76851
-      PICV            =   "frmMain.frx":7686D
+      PICE            =   "frmMain.frx":76818
+      PICF            =   "frmMain.frx":76834
+      PICH            =   "frmMain.frx":76850
+      PICV            =   "frmMain.frx":7686C
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -716,10 +717,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":76889
-      PICF            =   "frmMain.frx":768A5
-      PICH            =   "frmMain.frx":768C1
-      PICV            =   "frmMain.frx":768DD
+      PICE            =   "frmMain.frx":76888
+      PICF            =   "frmMain.frx":768A4
+      PICH            =   "frmMain.frx":768C0
+      PICV            =   "frmMain.frx":768DC
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -810,9 +811,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":768F9
+      MouseIcon       =   "frmMain.frx":768F8
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":76A4B
+      Picture         =   "frmMain.frx":76A4A
       Top             =   3960
       Visible         =   0   'False
       Width           =   225
@@ -821,9 +822,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":76D8F
+      MouseIcon       =   "frmMain.frx":76D8E
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":76EE1
+      Picture         =   "frmMain.frx":76EE0
       Top             =   3705
       Visible         =   0   'False
       Width           =   225
@@ -2709,7 +2710,7 @@ Private Sub btnInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
     ' Activo controles de inventario
-    PicInv.Visible = True
+    picInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
@@ -2737,7 +2738,7 @@ Private Sub btnHechizos_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    PicInv.Visible = False
+    picInv.Visible = False
 
 End Sub
 
@@ -2802,8 +2803,8 @@ Private Sub RecTxt_Change()
            (Not frmCantidad.Visible) And _
            (Not MirandoParty) Then
 
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2817,8 +2818,8 @@ End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If PicInv.Visible Then
-        PicInv.SetFocus
+    If picInv.Visible Then
+        picInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2899,8 +2900,8 @@ Public Sub SendCMSTXT_SendText()
             Typing = False
         End If
         
-        If PicInv.Visible Then
-            PicInv.SetFocus
+        If picInv.Visible Then
+            picInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -3028,7 +3029,9 @@ Private Sub Client_Connect()
     'Clean input and output buffers
     Call incomingData.ReadASCIIStringFixed(incomingData.Length)
     Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
+    #If AntiExternos Then
     Security.Redundance = 13
+    #End If
     Second.Enabled = True
     
     Select Case EstadoLogin
@@ -3174,7 +3177,7 @@ Public Sub ActualizarMiniMapa()
     'Integrado por Reyarb
     'Se agrego campo de vision del render (Recox)
     'Ajustadas las coordenadas para centrarlo (WyroX)
-    'Ajuste de coordenadas y tamaño del visor (ReyarB)
+    'Ajuste de coordenadas y tamaÃ±o del visor (ReyarB)
     '***************************************************
     Me.UserM.Left = UserPos.X - 2
     Me.UserM.Top = UserPos.Y - 2

@@ -202,7 +202,7 @@ End Type
 
 'Info de un objeto
 Public Type obj
-    OBJIndex As Integer
+    ObjIndex As Integer
     Amount As Integer
 End Type
 
@@ -230,7 +230,7 @@ End Type
 'Info de cada mapa
 Public Type mapInfo
     Music As String
-    Name As String
+    name As String
     Zona As String
     StartPos As WorldPos
     MapVersion As Integer
@@ -780,7 +780,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
                             
                             ' Transparencia de Arboles
-                                If Abs(UserPos.X - X) < 2  And (Abs(UserPos.Y - Y)) < 5 And (Abs(UserPos.Y) < Y) Then
+                                If Abs(UserPos.X - X) < 2 And (Abs(UserPos.Y - Y)) < 5 And (Abs(UserPos.Y) < Y) Then
                                 Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1)
                             Else 'NORMAL
                                 Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
@@ -1519,18 +1519,18 @@ Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Inte
         
         If (.iHead > 0) And (.iBody = 617 Or .iBody = 612 Or .iBody = 614 Or .iBody = 616) Then
         
-            'Si está montando se dibuja de esta manera
+            'Si estÃ¡ montando se dibuja de esta manera
             Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 8, PixelOffsetY - 14, 1, Color_Shadow(), 0, False, 187, 1, 1.2) ' Shadow Body
             Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y - 13, 1, Color_Shadow(), 0, False, 187, 1, 1.2) ' Shadow Head
             Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 15, PixelOffsetY + .Body.HeadOffset.Y - 49, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Helmet
         
-        'Si está navegando se dibuja de esta manera
+        'Si estÃ¡ navegando se dibuja de esta manera
         ElseIf ((.iHead = 0) And (HayAgua(.Pos.X, .Pos.Y + 1) Or HayAgua(.Pos.X + 1, .Pos.Y) Or HayAgua(.Pos.X, .Pos.Y - 1) Or HayAgua(.Pos.X - 1, .Pos.Y))) Then
             Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 5, PixelOffsetY - 26, 1, Color_Shadow(), 0, False, 186, 1, 1.33) ' Shadow Body
         
         Else
         
-            'Si NO está montando ni navegando se dibuja de esta manera
+            'Si NO estÃ¡ montando ni navegando se dibuja de esta manera
             Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 8, PixelOffsetY - 11, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Body
             Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y - 10, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Head
             Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 18, PixelOffsetY + .Body.HeadOffset.Y - 45, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Helmet
@@ -1642,13 +1642,13 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
                             
                 ElseIf .iBody = 604 Or .iBody = 617 Or .iBody = 612 Or .iBody = 614 Or .iBody = 616 Then 'Define Body Montado
                     
-                    'Si además de estar montado está mirando para arriba o abajo
+                    'Si ademÃ¡s de estar montado estÃ¡ mirando para arriba o abajo
                     If .Heading = E_Heading.SOUTH Or .Heading = E_Heading.NORTH Then
                         Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 80, 1, ColorFinal(), 1, False, 360)
                         Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 76, 1, ColorFinal(), 0, False, 360)
                         Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 116, 1, ColorFinal(), 0, False, 360)
                     
-                    Else 'Si está mirando para izquierda o derecha entonces:
+                    Else 'Si estÃ¡ mirando para izquierda o derecha entonces:
                         Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 70, 1, ColorFinal(), 1, False, 360)
                         Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 76, 1, ColorFinal(), 0, False, 360)
                         Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 116, 1, ColorFinal(), 0, False, 360)
@@ -1657,7 +1657,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
                 
                 Else
                             
-                    'Reflejo completo si no está ni montado ni navegando
+                    'Reflejo completo si no estÃ¡ ni montado ni navegando
                     Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 44, 1, ColorFinal(), 1, False, 360)
                     Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 51, 1, ColorFinal(), 1, False, 360)
                     Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 55, 1, ColorFinal(), 1, False, 360)

@@ -36,6 +36,7 @@ Public IntervaloDopas As Long
 Public IntervaloInvi As Long
 Public TiempoInvi As Long
 Public TiempoDopas As Long
+Public Viewing As Boolean
 
 Public Const MAX_AMIGOS As Byte = 50
 Public Const MAX_CHARACTERS As Byte = 10

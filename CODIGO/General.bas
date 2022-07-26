@@ -139,9 +139,9 @@ Function AsciiValidos(ByVal cad As String) As Boolean
     Len_cad = Len(cad)
     
     For i = 1 To Len_cad
-        car = Asc(Mid$(cad, i, 1))
+        car = Asc(mid$(cad, i, 1))
         
-        If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
+        If ((car < 97 Or car > 122) Or car = Asc("Âº")) And (car <> 255) And (car <> 32) Then
             Exit Function
         End If
     Next i
@@ -158,31 +158,31 @@ Function CheckUserData() As Boolean
     Dim Len_accountName As Long, Len_accountPassword As Long
 
     If LenB(AccountPassword) = 0 Then
-        MsgBox JsonLanguage.Item("VALIDACION_PASSWORD").Item("TEXTO")
+        MsgBox JsonLanguage.item("VALIDACION_PASSWORD").item("TEXTO")
         Exit Function
     End If
     
     Len_accountPassword = Len(AccountPassword)
     
     For LoopC = 1 To Len_accountPassword
-        CharAscii = Asc(Mid$(AccountPassword, LoopC, 1))
+        CharAscii = Asc(mid$(AccountPassword, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
+            MsgBox Replace$(JsonLanguage.item("VALIDACION_BAD_PASSWORD").item("TEXTO").item(2), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
     Next LoopC
 
     If Len(AccountName) > 30 Then
-        MsgBox JsonLanguage.Item("VALIDACION_BAD_EMAIL").Item("TEXTO").Item(2)
+        MsgBox JsonLanguage.item("VALIDACION_BAD_EMAIL").item("TEXTO").item(2)
         Exit Function
     End If
         
     Len_accountName = Len(AccountName)
     
     For LoopC = 1 To Len_accountName
-        CharAscii = Asc(Mid$(AccountName, LoopC, 1))
+        CharAscii = Asc(mid$(AccountName, LoopC, 1))
         If Not LegalCharacter(CharAscii) Then
-            MsgBox Replace$(JsonLanguage.Item("VALIDACION_BAD_PASSWORD").Item("TEXTO").Item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
+            MsgBox Replace$(JsonLanguage.item("VALIDACION_BAD_PASSWORD").item("TEXTO").item(4), "VAR_CHAR_INVALIDO", Chr$(CharAscii))
             Exit Function
         End If
     Next LoopC
@@ -254,6 +254,7 @@ Sub SetConnected()
     Call frmMain.ControlSM(eSMType.sSafemode, False)
     frmMain.SendTxt.Visible = False
     Typing = False
+    Viewing = False
     
     FPSFLAG = True
 
@@ -319,7 +320,7 @@ Private Sub CheckKeys()
 
     'Si esta activada la opcion de sacar cartel, no nos movemos con chat abierto, sino si nos movemos.
     'Esto es mas que nada por la configuracion de teclas alternativa con WASD (RecoX)
-    If EsGm(UserCharIndex) Then
+    If EsGM(UserCharIndex) Then
 
         'Si esta chateando, no mover el pj, tanto para chat de clanes y normal
         If frmMain.SendTxt.Visible Then Exit Sub
@@ -411,7 +412,7 @@ Private Sub CheckKeys()
 CantMove:
     If bCantMove And intentemoverme Then
         If (Abs(GetTickCount - lastmsg)) > 1000 Then
-            Call ShowConsoleMsg(JsonLanguage.Item("MENSAJE_USUARIO_VIAJANDO_HOGAR").Item("TEXTO"), 110, 220, 0)
+            Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_USUARIO_VIAJANDO_HOGAR").item("TEXTO"), 110, 220, 0)
             lastmsg = Abs(GetTickCount)
         End If
     End If
@@ -447,12 +448,12 @@ Sub SwitchMap(ByVal Map As Integer)
     'Erase particle effects
     Call Particle_Group_Remove_All
     
-    dLen = FileLen(Game.Path(Mapas) & "Mapa" & Map & ".map")
+    dLen = FileLen(Game.path(Mapas) & "Mapa" & Map & ".map")
     ReDim dData(dLen - 1)
     
     handle = FreeFile()
     
-    Open Game.Path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
+    Open Game.path(Mapas) & "Mapa" & Map & ".map" For Binary As handle
         Get handle, , dData
     Close handle
      
@@ -548,8 +549,8 @@ Sub SwitchMap(ByVal Map As Integer)
     End With
     
     'Dibujamos el Mini-Mapa
-    If FileExist(Game.Path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
-        frmMain.MiniMapa.Picture = LoadPicture(Game.Path(Graficos) & "MiniMapa\" & Map & ".bmp")
+    If FileExist(Game.path(Graficos) & "MiniMapa\" & Map & ".bmp", vbArchive) Then
+        frmMain.MiniMapa.Picture = LoadPicture(Game.path(Graficos) & "MiniMapa\" & Map & ".bmp")
     Else
         frmMain.MiniMapa.Visible = False
         frmMain.RecTxt.Width = frmMain.RecTxt.Width + 100
@@ -591,9 +592,9 @@ Function ReadField(ByVal Pos As Integer, ByRef Text As String, ByVal SepASCII As
     Next i
     
     If CurrentPos = 0 Then
-        ReadField = Mid$(Text, lastPos + 1, Len(Text) - lastPos)
+        ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
     Else
-        ReadField = Mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
+        ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
     End If
 End Function
 
@@ -639,7 +640,7 @@ On Error Resume Next
     
     Set Inet = New clsInet
     
-    URL = GetVar(Game.Path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
+    URL = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "IpApiEndpoint")
     Endpoint = URL & Ip & "/json/"
     
     Response = Inet.OpenRequest(Endpoint, "GET")
@@ -648,7 +649,7 @@ On Error Resume Next
     
     Set JsonObject = JSON.parse(Response)
     
-    GetCountryFromIp = JsonObject.Item("country")
+    GetCountryFromIp = JsonObject.item("country")
     
     Set Inet = Nothing
 End Function
@@ -683,10 +684,10 @@ Sub Main()
     Call LeerLineaComandos
     
     'usaremos esto para ayudar en los parches
-    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.Path & "\")
+    Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.path & "\")
     
-    ChDrive App.Path
-    ChDir App.Path
+    ChDrive App.path
+    ChDir App.path
 
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution(1024, 768)
@@ -694,7 +695,7 @@ Sub Main()
     ' Load constants, classes, flags, graphics..
     Call LoadInitialConfig
     
-    If GetVar(Game.Path(INIT) & "Config.ini", "Parameters", "TestMode") <> 1 Then
+    If GetVar(Game.path(INIT) & "Config.ini", "Parameters", "TestMode") <> 1 Then
         frmPres.Show vbModal    'Es modal, asi que se detiene la ejecucionn de Main hasta que se desaparece
     End If
 
@@ -752,7 +753,7 @@ Sub Main()
 End Sub
 
 Public Function GetVersionOfTheGame() As String
-    GetVersionOfTheGame = GetVar(Game.Path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
+    GetVersionOfTheGame = GetVar(Game.path(INIT) & "Config.ini", "Cliente", "VersionTagRelease")
 End Function
 
 Private Sub LoadInitialConfig()
@@ -772,17 +773,17 @@ Private Sub LoadInitialConfig()
     End If
 
     ' Mouse Pointer and Mouse Icon (Loaded before opening any form with buttons in it)
-    Set picMouseIcon = LoadPicture(Game.Path(Graficos) & "MouseIcons\Baston.ico")
+    Set picMouseIcon = LoadPicture(Game.path(Graficos) & "MouseIcons\Baston.ico")
 
     ' Mouse Icon to use in the rest of the game this one is animated
     ' We load it in frmMain but for some reason is loaded in the rest of the game
     ' Better for us :)
     Dim CursorAniDir As String
     Dim Cursor As Long
-    CursorAniDir = Game.Path(Graficos) & "MouseIcons\General.ani"
-    hSwapCursor = SetClassLong(frmMain.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
-    hSwapCursor = SetClassLong(frmMain.MainViewPic.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
-    hSwapCursor = SetClassLong(frmMain.hlst.hWnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    CursorAniDir = Game.path(Graficos) & "MouseIcons\General.ani"
+    hSwapCursor = SetClassLong(frmMain.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.MainViewPic.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
+    hSwapCursor = SetClassLong(frmMain.hlst.hwnd, GLC_HCURSOR, LoadCursorFromFile(CursorAniDir))
    
     frmCargando.Show
     frmCargando.Refresh
@@ -791,11 +792,11 @@ Private Sub LoadInitialConfig()
     
     '#######
     ' CLASES
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_CLASES").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_CLASES").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_CLASES").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_CLASES").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_CLASES").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_CLASES").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
                             
     Set Dialogos = New clsDialogs
@@ -813,24 +814,24 @@ Private Sub LoadInitialConfig()
     Set keysMovementPressedQueue = New clsArrayList
     Call keysMovementPressedQueue.Initialize(1, 4)
 
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
     '#############
     ' DIRECT SOUND
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_SONIDO").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_SONIDO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_SONIDO").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_SONIDO").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_SONIDO").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_SONIDO").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
                             
     'Inicializamos el sonido
-    Call Audio.Initialize(DirectX, frmMain.hWnd, Game.Path(Sounds), Game.Path(Musica), Game.Path(MusicaMp3))
+    Call Audio.Initialize(DirectX, frmMain.hwnd, Game.path(Sounds), Game.path(Musica), Game.path(MusicaMp3))
 
     'Enable / Disable audio
     Audio.MusicActivated = ClientSetup.bMusic
@@ -842,20 +843,20 @@ Private Sub LoadInitialConfig()
     'Iniciamos cancion principal del juego turururuuuuuu
     Call Audio.PlayBackgroundMusic("6", MusicTypes.Mp3)
     
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
     '###########
     ' CONSTANTES
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_CONSTANTES").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_CONSTANTES").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_CONSTANTES").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_CONSTANTES").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_CONSTANTES").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_CONSTANTES").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
                             
     Call InicializarNombres
@@ -865,42 +866,42 @@ Private Sub LoadInitialConfig()
  
     UserMap = 1
     
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
 
     '##############
     ' MOTOR GRAFICO
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_MOTOR_GRAFICO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_MOTOR_GRAFICO").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
     'Iniciamos el Engine de DirectX 8
     Call mDx8_Engine.Engine_DirectX8_Init
     
     'Tile Engine
-    Call Mod_TileEngine.InitTileEngine(frmMain.hWnd, 32, 32, 8, 8)
+    Call Mod_TileEngine.InitTileEngine(frmMain.hwnd, 32, 32, 8, 8)
 
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
     '###################
     ' ANIMACIONES EXTRAS
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("INICIA_FXS").Item("TEXTO"), _
-                            JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("INICIA_FXS").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("INICIA_FXS").item("TEXTO"), _
+                            JsonLanguage.item("INICIA_FXS").item("COLOR").item(1), _
+                            JsonLanguage.item("INICIA_FXS").item("COLOR").item(2), _
+                            JsonLanguage.item("INICIA_FXS").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
                             
     Call CargarTips
@@ -909,22 +910,22 @@ Private Sub LoadInitialConfig()
     Call CargarAnimEscudos
     Call CargarColores
     
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            "   " & JsonLanguage.Item("HECHO").Item("TEXTO"), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("HECHO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            "   " & JsonLanguage.item("HECHO").item("TEXTO"), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(1), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(2), _
+                            JsonLanguage.item("HECHO").item("COLOR").item(3), _
                             True, False, False, rtfLeft)
     
     'Inicializamos el inventario grafico
     Call Inventario.Initialize(DirectD3D8, frmMain.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
     'Set cKeys = New Collection
-    Call AddtoRichTextBox(frmCargando.Status, _
-                            JsonLanguage.Item("BIENVENIDO").Item("TEXTO"), _
-                            JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(1), _
-                            JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(2), _
-                            JsonLanguage.Item("BIENVENIDO").Item("COLOR").Item(3), _
+    Call AddtoRichTextBox(frmCargando.status, _
+                            JsonLanguage.item("BIENVENIDO").item("TEXTO"), _
+                            JsonLanguage.item("BIENVENIDO").item("COLOR").item(1), _
+                            JsonLanguage.item("BIENVENIDO").item("COLOR").item(2), _
+                            JsonLanguage.item("BIENVENIDO").item("COLOR").item(3), _
                             True, False, True, rtfCenter)
                             
     '###################
@@ -1021,7 +1022,7 @@ On Error GoTo errHnd
         '3er test: Recorre todos los caracteres y los valida
         For lX = 0 To Len_sString
             If Not (lX = (lPos - 1)) Then   'No chequeamos la '@'
-                iAsc = Asc(Mid$(sString, (lX + 1), 1))
+                iAsc = Asc(mid$(sString, (lX + 1), 1))
                 If Not CMSValidateChar_(iAsc) Then _
                     Exit Function
             End If
@@ -1062,15 +1063,15 @@ Public Sub LeerLineaComandos()
 '
 '*************************************************
     
-    Dim i As Long, T() As String, Upper_t As Long, Lower_t As Long
+    Dim i As Long, t() As String, Upper_t As Long, Lower_t As Long
     
     'Parseo los comandos
-    T = Split(Command, " ")
-    Lower_t = LBound(T)
-    Upper_t = UBound(T)
+    t = Split(Command, " ")
+    Lower_t = LBound(t)
+    Upper_t = UBound(t)
     
     For i = Lower_t To Upper_t
-        Select Case UCase$(T(i))
+        Select Case UCase$(t(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
         End Select
@@ -1090,51 +1091,51 @@ Private Sub InicializarNombres()
     Ciudades(eCiudad.cLindos) = "Lindos"
     Ciudades(eCiudad.cArghal) = "Arghal"
     
-    ListaRazas(eRaza.Humano) = JsonLanguage.Item("RAZAS").Item("HUMANO")
-    ListaRazas(eRaza.Elfo) = JsonLanguage.Item("RAZAS").Item("ELFO")
-    ListaRazas(eRaza.ElfoOscuro) = JsonLanguage.Item("RAZAS").Item("ELFO_OSCURO")
-    ListaRazas(eRaza.Gnomo) = JsonLanguage.Item("RAZAS").Item("GNOMO")
-    ListaRazas(eRaza.Enano) = JsonLanguage.Item("RAZAS").Item("ENANO")
+    ListaRazas(eRaza.Humano) = JsonLanguage.item("RAZAS").item("HUMANO")
+    ListaRazas(eRaza.Elfo) = JsonLanguage.item("RAZAS").item("ELFO")
+    ListaRazas(eRaza.ElfoOscuro) = JsonLanguage.item("RAZAS").item("ELFO_OSCURO")
+    ListaRazas(eRaza.Gnomo) = JsonLanguage.item("RAZAS").item("GNOMO")
+    ListaRazas(eRaza.Enano) = JsonLanguage.item("RAZAS").item("ENANO")
 
-    ListaClases(eClass.Mage) = JsonLanguage.Item("CLASES").Item("MAGO")
-    ListaClases(eClass.Cleric) = JsonLanguage.Item("CLASES").Item("CLERIGO")
-    ListaClases(eClass.Warrior) = JsonLanguage.Item("CLASES").Item("GUERRERO")
-    ListaClases(eClass.Assasin) = JsonLanguage.Item("CLASES").Item("ASESINO")
-    ListaClases(eClass.Thief) = JsonLanguage.Item("CLASES").Item("LADRON")
-    ListaClases(eClass.Bard) = JsonLanguage.Item("CLASES").Item("BARDO")
-    ListaClases(eClass.Druid) = JsonLanguage.Item("CLASES").Item("DRUIDA")
-    ListaClases(eClass.Bandit) = JsonLanguage.Item("CLASES").Item("BANDIDO")
-    ListaClases(eClass.Paladin) = JsonLanguage.Item("CLASES").Item("PALADIN")
-    ListaClases(eClass.Hunter) = JsonLanguage.Item("CLASES").Item("CAZADOR")
-    ListaClases(eClass.Worker) = JsonLanguage.Item("CLASES").Item("TRABAJADOR")
-    ListaClases(eClass.Pirate) = JsonLanguage.Item("CLASES").Item("PIRATA")
+    ListaClases(eClass.Mage) = JsonLanguage.item("CLASES").item("MAGO")
+    ListaClases(eClass.Cleric) = JsonLanguage.item("CLASES").item("CLERIGO")
+    ListaClases(eClass.Warrior) = JsonLanguage.item("CLASES").item("GUERRERO")
+    ListaClases(eClass.Assasin) = JsonLanguage.item("CLASES").item("ASESINO")
+    ListaClases(eClass.Thief) = JsonLanguage.item("CLASES").item("LADRON")
+    ListaClases(eClass.Bard) = JsonLanguage.item("CLASES").item("BARDO")
+    ListaClases(eClass.Druid) = JsonLanguage.item("CLASES").item("DRUIDA")
+    ListaClases(eClass.Bandit) = JsonLanguage.item("CLASES").item("BANDIDO")
+    ListaClases(eClass.Paladin) = JsonLanguage.item("CLASES").item("PALADIN")
+    ListaClases(eClass.Hunter) = JsonLanguage.item("CLASES").item("CAZADOR")
+    ListaClases(eClass.Worker) = JsonLanguage.item("CLASES").item("TRABAJADOR")
+    ListaClases(eClass.Pirate) = JsonLanguage.item("CLASES").item("PIRATA")
    
-    SkillsNames(eSkill.Magia) = JsonLanguage.Item("HABILIDADES").Item("MAGIA").Item("TEXTO")
-    SkillsNames(eSkill.Robar) = JsonLanguage.Item("HABILIDADES").Item("ROBAR").Item("TEXTO")
-    SkillsNames(eSkill.Tacticas) = JsonLanguage.Item("HABILIDADES").Item("EVASION_EN_COMBATE").Item("TEXTO")
-    SkillsNames(eSkill.Armas) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CON_ARMAS").Item("TEXTO")
-    SkillsNames(eSkill.Meditar) = JsonLanguage.Item("HABILIDADES").Item("MEDITAR").Item("TEXTO")
-    SkillsNames(eSkill.Apunalar) = JsonLanguage.Item("HABILIDADES").Item("APUNALAR").Item("TEXTO")
-    SkillsNames(eSkill.Ocultarse) = JsonLanguage.Item("HABILIDADES").Item("OCULTARSE").Item("TEXTO")
-    SkillsNames(eSkill.Supervivencia) = JsonLanguage.Item("HABILIDADES").Item("SUPERVIVENCIA").Item("TEXTO")
-    SkillsNames(eSkill.Talar) = JsonLanguage.Item("HABILIDADES").Item("TALAR").Item("TEXTO")
-    SkillsNames(eSkill.Comerciar) = JsonLanguage.Item("HABILIDADES").Item("COMERCIO").Item("TEXTO")
-    SkillsNames(eSkill.Defensa) = JsonLanguage.Item("HABILIDADES").Item("DEFENSA_CON_ESCUDOS").Item("TEXTO")
-    SkillsNames(eSkill.Pesca) = JsonLanguage.Item("HABILIDADES").Item("PESCA").Item("TEXTO")
-    SkillsNames(eSkill.Mineria) = JsonLanguage.Item("HABILIDADES").Item("MINERIA").Item("TEXTO")
-    SkillsNames(eSkill.Carpinteria) = JsonLanguage.Item("HABILIDADES").Item("CARPINTERIA").Item("TEXTO")
-    SkillsNames(eSkill.Herreria) = JsonLanguage.Item("HABILIDADES").Item("HERRERIA").Item("TEXTO")
-    SkillsNames(eSkill.Liderazgo) = JsonLanguage.Item("HABILIDADES").Item("LIDERAZGO").Item("TEXTO")
-    SkillsNames(eSkill.Domar) = JsonLanguage.Item("HABILIDADES").Item("DOMAR_ANIMALES").Item("TEXTO")
-    SkillsNames(eSkill.Proyectiles) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_A_DISTANCIA").Item("TEXTO")
-    SkillsNames(eSkill.Wrestling) = JsonLanguage.Item("HABILIDADES").Item("COMBATE_CUERPO_A_CUERPO").Item("TEXTO")
-    SkillsNames(eSkill.Navegacion) = JsonLanguage.Item("HABILIDADES").Item("NAVEGACION").Item("TEXTO")
+    SkillsNames(eSkill.Magia) = JsonLanguage.item("HABILIDADES").item("MAGIA").item("TEXTO")
+    SkillsNames(eSkill.Robar) = JsonLanguage.item("HABILIDADES").item("ROBAR").item("TEXTO")
+    SkillsNames(eSkill.Tacticas) = JsonLanguage.item("HABILIDADES").item("EVASION_EN_COMBATE").item("TEXTO")
+    SkillsNames(eSkill.Armas) = JsonLanguage.item("HABILIDADES").item("COMBATE_CON_ARMAS").item("TEXTO")
+    SkillsNames(eSkill.Meditar) = JsonLanguage.item("HABILIDADES").item("MEDITAR").item("TEXTO")
+    SkillsNames(eSkill.Apunalar) = JsonLanguage.item("HABILIDADES").item("APUNALAR").item("TEXTO")
+    SkillsNames(eSkill.Ocultarse) = JsonLanguage.item("HABILIDADES").item("OCULTARSE").item("TEXTO")
+    SkillsNames(eSkill.Supervivencia) = JsonLanguage.item("HABILIDADES").item("SUPERVIVENCIA").item("TEXTO")
+    SkillsNames(eSkill.Talar) = JsonLanguage.item("HABILIDADES").item("TALAR").item("TEXTO")
+    SkillsNames(eSkill.Comerciar) = JsonLanguage.item("HABILIDADES").item("COMERCIO").item("TEXTO")
+    SkillsNames(eSkill.Defensa) = JsonLanguage.item("HABILIDADES").item("DEFENSA_CON_ESCUDOS").item("TEXTO")
+    SkillsNames(eSkill.Pesca) = JsonLanguage.item("HABILIDADES").item("PESCA").item("TEXTO")
+    SkillsNames(eSkill.Mineria) = JsonLanguage.item("HABILIDADES").item("MINERIA").item("TEXTO")
+    SkillsNames(eSkill.Carpinteria) = JsonLanguage.item("HABILIDADES").item("CARPINTERIA").item("TEXTO")
+    SkillsNames(eSkill.Herreria) = JsonLanguage.item("HABILIDADES").item("HERRERIA").item("TEXTO")
+    SkillsNames(eSkill.Liderazgo) = JsonLanguage.item("HABILIDADES").item("LIDERAZGO").item("TEXTO")
+    SkillsNames(eSkill.Domar) = JsonLanguage.item("HABILIDADES").item("DOMAR_ANIMALES").item("TEXTO")
+    SkillsNames(eSkill.Proyectiles) = JsonLanguage.item("HABILIDADES").item("COMBATE_A_DISTANCIA").item("TEXTO")
+    SkillsNames(eSkill.Wrestling) = JsonLanguage.item("HABILIDADES").item("COMBATE_CUERPO_A_CUERPO").item("TEXTO")
+    SkillsNames(eSkill.Navegacion) = JsonLanguage.item("HABILIDADES").item("NAVEGACION").item("TEXTO")
 
-    AtributosNames(eAtributos.Fuerza) = JsonLanguage.Item("ATRIBUTOS").Item("FUERZA")
-    AtributosNames(eAtributos.Agilidad) = JsonLanguage.Item("ATRIBUTOS").Item("AGILIDAD")
-    AtributosNames(eAtributos.Inteligencia) = JsonLanguage.Item("ATRIBUTOS").Item("INTELIGENCIA")
-    AtributosNames(eAtributos.Carisma) = JsonLanguage.Item("ATRIBUTOS").Item("CARISMA")
-    AtributosNames(eAtributos.Constitucion) = JsonLanguage.Item("ATRIBUTOS").Item("CONSTITUCION")
+    AtributosNames(eAtributos.Fuerza) = JsonLanguage.item("ATRIBUTOS").item("FUERZA")
+    AtributosNames(eAtributos.Agilidad) = JsonLanguage.item("ATRIBUTOS").item("AGILIDAD")
+    AtributosNames(eAtributos.Inteligencia) = JsonLanguage.item("ATRIBUTOS").item("INTELIGENCIA")
+    AtributosNames(eAtributos.Carisma) = JsonLanguage.item("ATRIBUTOS").item("CARISMA")
+    AtributosNames(eAtributos.Constitucion) = JsonLanguage.item("ATRIBUTOS").item("CONSTITUCION")
 End Sub
 
 ''
@@ -1252,19 +1253,19 @@ Public Sub checkText(ByVal Text As String)
     
     Dim Nivel As Integer
 
-    If Right$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").Item("TEXTO") Then
+    If Right$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_TE_HA_MATADO").item("TEXTO") Then
         Call ScreenCapture(True)
         Exit Sub
     End If
 
-    If Left$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_MATADO").Item("TEXTO") Then
+    If Left$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_MATADO").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_MATADO").item("TEXTO") Then
         EsperandoLevel = True
         Exit Sub
     End If
 
     If EsperandoLevel Then
-        If Right$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO"))) = JsonLanguage.Item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").Item("TEXTO") Then
-            If CInt(Mid$(Text, Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")), (Len(Text) - (Len(JsonLanguage.Item("MENSAJE_FRAGSHOOTER_HAS_GANADO").Item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
+        If Right$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").item("TEXTO"))) = JsonLanguage.item("MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA").item("TEXTO") Then
+            If CInt(mid$(Text, Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_GANADO").item("TEXTO")), (Len(Text) - (Len(JsonLanguage.item("MENSAJE_FRAGSHOOTER_HAS_GANADO").item("TEXTO")))))) / 2 > ClientSetup.byMurderedLevel Then
                 Call ScreenCapture(True)
             End If
         End If
@@ -1486,7 +1487,7 @@ Public Sub GetPostsFromReddit()
             Dim JsonObject     As Object
             Dim Endpoint       As String
         
-            Endpoint = GetVar(Game.Path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
+            Endpoint = GetVar(Game.path(INIT) & "Config.ini", "Parameters", "SubRedditEndpoint")
     
             ResponseReddit = Inet.OpenRequest(Endpoint, "GET")
             ResponseReddit = Inet.Execute
@@ -1494,7 +1495,7 @@ Public Sub GetPostsFromReddit()
         
             Set JsonObject = JSON.parse(ResponseReddit)
         
-            Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.Item("data").Item("children").Count
+            Dim qtyPostsOnReddit As Integer: qtyPostsOnReddit = JsonObject.item("data").item("children").Count
         
             ReDim Preserve Posts(qtyPostsOnReddit)
         
@@ -1507,11 +1508,11 @@ Public Sub GetPostsFromReddit()
             Do While i <= qtyPostsOnReddit
 
                 With Posts(i)
-                    .Title = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title")
-                    .URL = JsonObject.Item("data").Item("children").Item(i).Item("data").Item("url")
+                    .Title = JsonObject.item("data").item("children").item(i).item("data").item("title")
+                    .URL = JsonObject.item("data").item("children").item(i).item("data").item("url")
                 End With
             
-                Call .AddItem(JsonObject.Item("data").Item("children").Item(i).Item("data").Item("title"))
+                Call .AddItem(JsonObject.item("data").item("children").item(i).item("data").item("title"))
             
                 i = i + 1
             Loop
@@ -1531,8 +1532,8 @@ Public Sub GetPostsFromReddit()
 
 ErrorHandler:
 
-    If Err.Number Then
-        Call LogError(Err.Number, Err.Description, "Mod_General.GetPostsFromReddit")
+    If Err.number Then
+        Call LogError(Err.number, Err.Description, "Mod_General.GetPostsFromReddit")
     End If
     
 End Sub
@@ -1552,7 +1553,7 @@ Function ImgRequest(ByVal sFile As String) As String
             sFile = ImgRequest(sFile)
         Else
             Call MsgBox("ADVERTENCIA: El juego seguira funcionando sin alguna imagen!", vbInformation + vbOKOnly)
-            sFile = Game.Path(Interfaces) & "blank.bmp"
+            sFile = Game.path(Interfaces) & "blank.bmp"
         End If
         
     End If
@@ -1568,7 +1569,7 @@ Public Sub LoadAOCustomControlsPictures(ByRef tForm As Form)
     'Cargamos las imagenes de los uAOControls en los formularios.
     '***************************************************
     Dim DirButtons As String
-        DirButtons = Game.Path(Graficos) & "\Botones\"
+        DirButtons = Game.path(Graficos) & "\Botones\"
 
     Dim cControl As Control
 
@@ -1604,7 +1605,7 @@ Public Function CurServerPort() As Integer
 End Function
 
 Public Function CheckIfIpIsNumeric(CurrentIp As String) As String
-    If IsNumeric(Mid$(CurrentIp, 1, 1)) Then
+    If IsNumeric(mid$(CurrentIp, 1, 1)) Then
         CheckIfIpIsNumeric = True
     Else
         CheckIfIpIsNumeric = False
