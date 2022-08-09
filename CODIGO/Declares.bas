@@ -36,7 +36,8 @@ Public IntervaloDopas As Long
 Public IntervaloInvi As Long
 Public TiempoInvi As Long
 Public TiempoDopas As Long
-Public Viewing As Boolean
+Public ImWatching As Boolean
+Public WatchingMe As Boolean
 
 Public Const MAX_AMIGOS As Byte = 50
 Public Const MAX_CHARACTERS As Byte = 10
@@ -711,7 +712,7 @@ Public cPJ() As PjCuenta
 
 Public NPCInventory(1 To MAX_NPC_INVENTORY_SLOTS) As NpCinV
 Public UserMeditar As Boolean
-Public UserName As String
+Public username As String
 Public AccountName As String
 Public AccountPassword As String
 Public AccountHash As String

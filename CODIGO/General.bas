@@ -243,7 +243,7 @@ Sub SetConnected()
     'Vaciamos la cola de movimiento
     keysMovementPressedQueue.Clear
 
-    frmMain.lblName.Caption = UserName
+    frmMain.lblName.Caption = username
     
     'Load main form
     frmMain.Visible = True
@@ -254,7 +254,9 @@ Sub SetConnected()
     Call frmMain.ControlSM(eSMType.sSafemode, False)
     frmMain.SendTxt.Visible = False
     Typing = False
-    Viewing = False
+    
+    ImWatching = False
+    WatchingMe = False
     
     FPSFLAG = True
 

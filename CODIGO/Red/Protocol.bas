@@ -178,7 +178,8 @@ Private Enum ServerPacketID
     Proyectil = 122
     PlayIsInChatMode = 123
     
-    ModeViewing = 124 'View
+    ModeWatching = 124 'View
+    watchingMouse = 125
 End Enum
 
 Private Enum ClientPacketID
@@ -339,7 +340,8 @@ Private Enum ClientPacketID
     SendProcessList = 155
     SendIfCharIsInChatMode = 156
     
-    ViewPlayer = 157 ' View
+    WatchPlayer = 157 ' View
+    WatchMouse = 158
 End Enum
 
 Public Enum FontTypeNames
@@ -572,8 +574,11 @@ On Error Resume Next
         Case ServerPacketID.PlayIsInChatMode
             Call HandleSetTypingFlagToCharIndex
             
-        Case ServerPacketID.ModeViewing
-            Call HandleModeViewing
+        Case ServerPacketID.ModeWatching
+            Call HandleModeWatching
+            
+        Case ServerPacketID.watchingMouse
+            Call HandleWatchingMouse
             
         Case ServerPacketID.logged                  ' LOGGED
             Call HandleLogged
@@ -1731,7 +1736,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
@@ -11781,11 +11786,10 @@ errhandler:
     
 End Sub
 
-
-Private Sub HandleModeViewing()
+Private Sub HandleWatchingMouse()
 '***************************************************
 'Author: ^[GS]^
-'Last Modification: 27/06/2022
+'Last Modification: 08/08/2022
 '***************************************************
     If incomingData.Length < 2 Then
         Err.Raise incomingData.NotEnoughDataErrCode
@@ -11798,21 +11802,92 @@ Private Sub HandleModeViewing()
 
     'Remove packet ID
     Call Buffer.ReadByte
-    Viewing = Buffer.ReadBoolean()
+    Dim PosX As Integer
+    Dim PosY As Integer
+    Dim State As Byte
+    
+    PosX = Buffer.ReadInteger()
+    PosY = Buffer.ReadInteger()
+    State = Buffer.ReadByte()
+    
+    If Not frmMain.cWatchingMouse.Visible Then frmMain.cWatchingMouse.Visible = True
+    
+    frmMain.cWatchingMouse.Left = PosX - (frmMain.cWatchingMouse.Width / 8)
+    frmMain.cWatchingMouse.Top = PosY - (frmMain.cWatchingMouse.Height / 8)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(Buffer)
 
 End Sub
 
-Public Sub WriteViewPlayer(ByVal operation As Boolean, ByVal username As String)
+Private Sub HandleModeWatching()
+'***************************************************
+'Author: ^[GS]^
+'Last Modification: 08/08/2022
+'
+' State
+' 0 - No estas observando / No te estan observando
+' 1 - Estas observando
+' 2 - Estas siendo observado
+'***************************************************
+    If incomingData.Length < 2 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+
+    'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
+    Dim Buffer As New clsByteQueue
+    Call Buffer.CopyBuffer(incomingData)
+
+    'Remove packet ID
+    Call Buffer.ReadByte
+    Dim flag As Byte
+    flag = Buffer.ReadByte()
+    If flag = 1 Then
+        ImWatching = True
+        WatchingMe = False
+    ElseIf flag = 2 Then
+        ImWatching = False
+        WatchingMe = True
+    Else ' 0
+        If frmMain.cWatchingMouse.Visible Then frmMain.cWatchingMouse.Visible = False
+            
+        ImWatching = False
+        WatchingMe = False
+    End If
+    
+    'If we got here then packet is complete, copy data back to original queue
+    Call incomingData.CopyBuffer(Buffer)
+
+End Sub
+
+Public Sub WriteWatchMouse(ByVal PosX As Integer, ByVal PosY As Integer, ByVal mouse As Byte)
+'***************************************************
+'Author: ^[GS]^
+'Last Modification: 08/08/2022
+'Writes the "WatchMouse" message and write the nickname of another user to the outgoing data buffer
+'
+' mouse:
+' 0 - normal
+' 1 - click
+' 2 - acción cargada
+'***************************************************
+    With outgoingData
+        Call .WriteByte(ClientPacketID.WatchMouse)
+        Call .WriteInteger(PosX)
+        Call .WriteInteger(PosY)
+        Call .WriteByte(mouse)
+    End With
+End Sub
+
+Public Sub WriteWatchPlayer(ByVal operation As Boolean, ByVal username As String)
 '***************************************************
 'Author: ^[GS]^
 'Last Modification: 04/06/2022
-'Writes the "ViewPlayer" message and write the nickname of another user to the outgoing data buffer
+'Writes the "WatchPlayer" message and write the nickname of another user to the outgoing data buffer
 '***************************************************
     With outgoingData
-        Call .WriteByte(ClientPacketID.ViewPlayer)
+        Call .WriteByte(ClientPacketID.WatchPlayer)
         Call .WriteBoolean(operation)
         Call .WriteASCIIString(username)
     End With

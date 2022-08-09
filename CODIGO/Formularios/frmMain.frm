@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -37,6 +37,18 @@ Begin VB.Form frmMain
    ScaleWidth      =   1022
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.PictureBox cWatchingMouse 
+      BackColor       =   &H000000FF&
+      BorderStyle     =   0  'None
+      Height          =   255
+      Left            =   11040
+      ScaleHeight     =   255
+      ScaleWidth      =   255
+      TabIndex        =   49
+      Top             =   2640
+      Visible         =   0   'False
+      Width           =   255
+   End
    Begin AOLibre.uAOProgress uAOProgressDownloadFfmpeg 
       Height          =   255
       Left            =   2160
@@ -295,36 +307,6 @@ Begin VB.Form frmMain
       Top             =   2550
       Visible         =   0   'False
       Width           =   2685
-   End
-   Begin VB.PictureBox MainViewPic 
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      Height          =   9120
-      Left            =   180
-      MousePointer    =   99  'Custom
-      ScaleHeight     =   608
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   736
-      TabIndex        =   30
-      Top             =   2325
-      Width           =   11040
-      Begin InetCtlsObjects.Inet InetDownloadFfmpeg 
-         Left            =   120
-         Top             =   1560
-         _ExtentX        =   1005
-         _ExtentY        =   1005
-         _Version        =   393216
-      End
-      Begin VB.Timer tmrCounters 
-         Left            =   5760
-         Top             =   840
-      End
-      Begin VB.Timer trainingMacro 
-         Enabled         =   0   'False
-         Interval        =   3200
-         Left            =   10200
-         Top             =   600
-      End
    End
    Begin AOLibre.uAOButton btnMapa 
       Height          =   255
@@ -664,7 +646,6 @@ Begin VB.Form frmMain
       _ExtentY        =   2937
       _Version        =   393217
       BackColor       =   0
-      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       ScrollBars      =   2
       DisableNoScroll =   -1  'True
@@ -730,6 +711,36 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+   End
+   Begin VB.PictureBox MainViewPic 
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      Height          =   9120
+      Left            =   180
+      MousePointer    =   99  'Custom
+      ScaleHeight     =   608
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   736
+      TabIndex        =   30
+      Top             =   2280
+      Width           =   11040
+      Begin InetCtlsObjects.Inet InetDownloadFfmpeg 
+         Left            =   120
+         Top             =   1560
+         _ExtentX        =   1005
+         _ExtentY        =   1005
+         _Version        =   393216
+      End
+      Begin VB.Timer tmrCounters 
+         Left            =   5760
+         Top             =   840
+      End
+      Begin VB.Timer trainingMacro 
+         Enabled         =   0   'False
+         Interval        =   3200
+         Left            =   10200
+         Top             =   600
+      End
    End
    Begin VB.Label lblPorcLvl 
       AutoSize        =   -1  'True
@@ -1317,6 +1328,14 @@ Private Sub DownloadFfmpeg()
 
         Exit Sub
     End If
+End Sub
+
+Private Sub Form_GotFocus()
+    If Not IsOnFocus Then IsOnFocus = True
+End Sub
+
+Private Sub Form_LostFocus()
+    If IsOnFocus Then IsOnFocus = False
 End Sub
 
 Private Sub InetDownloadFfmpeg_StateChanged(ByVal State As Integer)
@@ -2710,7 +2729,7 @@ Private Sub btnInventario_Click()
     Call Audio.PlayWave(SND_CLICK)
 
     ' Activo controles de inventario
-    picInv.Visible = True
+    PicInv.Visible = True
 
     ' Desactivo controles de hechizo
     hlst.Visible = False
@@ -2738,7 +2757,7 @@ Private Sub btnHechizos_Click()
     cmdMoverHechi(1).Visible = True
     
     ' Desactivo controles de inventario
-    picInv.Visible = False
+    PicInv.Visible = False
 
 End Sub
 
@@ -2803,8 +2822,8 @@ Private Sub RecTxt_Change()
            (Not frmCantidad.Visible) And _
            (Not MirandoParty) Then
 
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         ElseIf hlst.Visible Then
             hlst.SetFocus
         End If
@@ -2818,8 +2837,8 @@ End Sub
 
 Private Sub RecTxt_KeyDown(KeyCode As Integer, Shift As Integer)
 
-    If picInv.Visible Then
-        picInv.SetFocus
+    If PicInv.Visible Then
+        PicInv.SetFocus
     Else
         hlst.SetFocus
     End If
@@ -2900,8 +2919,8 @@ Public Sub SendCMSTXT_SendText()
             Typing = False
         End If
         
-        If picInv.Visible Then
-            picInv.SetFocus
+        If PicInv.Visible Then
+            PicInv.SetFocus
         Else
             hlst.SetFocus
         End If
@@ -3288,3 +3307,5 @@ End Sub
 Private Sub btnRetos_Click()
     Call FrmRetos.Show(vbModeless, frmMain)
 End Sub
+
+

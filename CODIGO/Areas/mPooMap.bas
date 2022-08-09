@@ -104,7 +104,7 @@ Sub Map_MoveTo(ByVal Direccion As E_Heading)
 'Last Modify Date: 04/07/2022
 '***************************************************
 
-    If Viewing Then
+    If ImWatching Then
         Exit Sub
     End If
 

@@ -59,6 +59,10 @@ Public Const YMinMapSize As Byte = 1
 
 Private Const GrhFogata As Long = 1521
 
+Private Const TIME_MS_MOUSE As Byte = 10
+Private MouseLastUpdate As Long
+Private MouseTimeAcumulated As Long
+
 ''
 'Sets a Grh animation to loop indefinitely.
 Private Const INFINITE_LOOPS As Integer = -1
@@ -1150,6 +1154,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         ' Calculamos los FPS y los mostramos
         Call Engine_Update_FPS
+        
+        MouseTimeAcumulated = MouseTimeAcumulated + timerElapsedTime
+        If MouseLastUpdate + TIME_MS_MOUSE <= MouseTimeAcumulated Then
+            Call SendPositionMouse
+            MouseLastUpdate = MouseTimeAcumulated
+        End If
 
         'Get timing info
         timerElapsedTime = GetElapsedTime()

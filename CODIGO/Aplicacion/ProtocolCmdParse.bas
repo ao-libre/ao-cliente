@@ -119,9 +119,9 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
     If Left$(Comando, 1) = "/" Then
         ' Comando normal
         
-        If Viewing Then
+        If ImWatching Then
             If Comando = "/VER" Then
-                Call WriteViewPlayer(False, "")
+                Call WriteWatchPlayer(False, "")
                 
                 Exit Sub
             End If
@@ -129,14 +129,18 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
         
         Select Case Comando
             Case "/VER"
-                If notNullArguments Then
-                    Call WriteViewPlayer(True, ArgumentosRaw)
-                Else
-                    'Avisar que falta el parametro
-                    Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_FALTAN_PARAMETROS").item("TEXTO") & " /VER NICKNAME.")
+                If Not WatchingMe Then
+                    If notNullArguments Then
+                        Call WriteWatchPlayer(True, ArgumentosRaw)
+                    Else
+                        'Avisar que falta el parametro
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_FALTAN_PARAMETROS").item("TEXTO") & " /VER NICKNAME.")
+                    End If
                 End If
             Case "/NOVER"
-                Call WriteViewPlayer(False, "")
+                If ImWatching Then
+                    Call WriteWatchPlayer(False, "")
+                End If
             Case "/ONLINE"
                 Call WriteOnline
                 
