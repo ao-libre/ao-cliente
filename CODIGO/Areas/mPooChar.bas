@@ -172,22 +172,39 @@ Public Sub Char_UserPos()
     '// Actualizamo el lbl de la posicion del usuario
  
     Dim X As Byte
-
     Dim Y As Byte
-     
-    If Char_Check(UserCharIndex) Then
+    
+    If Char_Check(WatchingIndex) Then
+    
+        Dim Direccion As E_Heading
         
-        '// Damos valor a las variables asi sacamos la pos del usuario.
-        Call Char_MapPosGet(UserCharIndex, X, Y)
-                
+        If charlist(WatchingIndex).Pos.X < X Then
+            Direccion = E_Heading.WEST
+        ElseIf charlist(WatchingIndex).Pos.X > X Then
+            Direccion = E_Heading.EAST
+        ElseIf charlist(WatchingIndex).Pos.Y < Y Then
+            Direccion = E_Heading.SOUTH
+        ElseIf charlist(WatchingIndex).Pos.Y > Y Then
+            Direccion = E_Heading.NORTH
+        Else
+            Direccion = E_Heading.nada
+        End If
+              
+        Call Char_MovebyHead(WatchingIndex, Direccion)
+        Call Char_MoveScreen(Direccion)
+    
+        Call Char_MapPosGet(WatchingIndex, X, Y)
         bTecho = Char_Techo '// Pos : Techo :P
-               
         frmMain.Coord.Caption = "Map:" & UserMap & " X:" & X & " Y:" & Y
-
         Call frmMain.ActualizarMiniMapa
- 
-        Exit Sub
- 
+        
+    ElseIf Char_Check(UserCharIndex) Then
+        ' Damos valor a las variables asi sacamos la pos del usuario.
+        
+        Call Char_MapPosGet(UserCharIndex, X, Y)
+        bTecho = Char_Techo '// Pos : Techo :P
+        frmMain.Coord.Caption = "Map:" & UserMap & " X:" & X & " Y:" & Y
+        Call frmMain.ActualizarMiniMapa
     End If
 
 End Sub

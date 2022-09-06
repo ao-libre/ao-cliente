@@ -8,6 +8,7 @@ End Type
 
 Private Declare Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long
 
+Public WatchingIndex As Integer
 Public IsOnFocus As Boolean
 
 Private MouseX       As Integer

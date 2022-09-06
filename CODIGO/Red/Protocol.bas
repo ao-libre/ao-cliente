@@ -1736,7 +1736,7 @@ Private Sub HandleBankInit()
     
     BankGold = incomingData.ReadLong
     Call InvBanco(0).Initialize(DirectD3D8, frmBancoObj.PicBancoInv, MAX_BANCOINVENTORY_SLOTS)
-    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.picInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
+    Call InvBanco(1).Initialize(DirectD3D8, frmBancoObj.PicInv, MAX_INVENTORY_SLOTS, , , , , , , , True)
     
     For i = 1 To MAX_INVENTORY_SLOTS
         With Inventario
@@ -11823,7 +11823,7 @@ End Sub
 Private Sub HandleModeWatching()
 '***************************************************
 'Author: ^[GS]^
-'Last Modification: 08/08/2022
+'Last Modification: 05/09/2022
 '
 ' State
 ' 0 - No estas observando / No te estan observando
@@ -11843,6 +11843,7 @@ Private Sub HandleModeWatching()
     Call Buffer.ReadByte
     Dim flag As Byte
     flag = Buffer.ReadByte()
+    WatchingIndex = Buffer.ReadInteger()
     If flag = 1 Then
         ImWatching = True
         WatchingMe = False
