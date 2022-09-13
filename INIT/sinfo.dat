@@ -1,5 +1,5 @@
 [INIT]
-Cant=4
+Cant=3
 
 [S1]
 Desc=Server Minehost - Alkon 0.13.X
@@ -14,12 +14,6 @@ PJ=7666
 Mundo=Alkon
 
 [S3]
-Desc=Server FAST - Exp300/Oro500
-IP=45.7.228.106
-PJ=7666
-Mundo=Alkon
-
-[S4]
 Desc=Servidor Local | Modo:Alkon 0.13.X
 IP=localhost
 PJ=7666

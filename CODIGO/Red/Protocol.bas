@@ -2187,13 +2187,15 @@ Private Sub HandlePosUpdate()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call Map_RemoveOldUser
-    
-    '// Seteamos la Posicion en el Mapa
-    Call Char_MapPosSet(incomingData.ReadByte(), incomingData.ReadByte())
-
-    'Update pos label
-    Call Char_UserPos
+    If ImWatching Then
+        Call ChangeCameraPos(incomingData.ReadByte(), incomingData.ReadByte())
+    Else
+        Call Map_RemoveOldUser
+        '// Seteamos la Posicion en el Mapa
+        Call Char_MapPosSet(incomingData.ReadByte(), incomingData.ReadByte())
+        'Update pos label
+        Call Char_UserPos
+    End If
 End Sub
 
 Private Sub WriteChatOverHeadInConsole(ByVal CharIndex As Integer, ByVal ChatText As String, ByVal Red As Byte, ByVal Green As Byte, ByVal Blue As Byte)

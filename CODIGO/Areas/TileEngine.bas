@@ -1090,7 +1090,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         Call DesvanecimientoTechos
         Call DesvanecimientoMsg
         
-        If UserMoving Then
+        If UserMoving = 1 Then
         
             '****** Move screen Left and Right if needed ******
             If AddtoUserPos.X <> 0 Then
@@ -1099,7 +1099,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
                     OffsetCounterX = 0
                     AddtoUserPos.X = 0
-                    UserMoving = False
+                    UserMoving = 0
 
                 End If
                 
@@ -1112,7 +1112,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
                     OffsetCounterY = 0
                     AddtoUserPos.Y = 0
-                    UserMoving = False
+                    UserMoving = 0
                     
                 End If
 
