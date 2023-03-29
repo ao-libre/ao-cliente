@@ -202,7 +202,7 @@ End Type
 
 'Info de un objeto
 Public Type obj
-    OBJIndex As Integer
+    ObjIndex As Integer
     Amount As Integer
 End Type
 
@@ -780,7 +780,7 @@ Sub RenderScreen(ByVal tilex As Integer, _
                         If .Graphic(3).GrhIndex = 735 Or .Graphic(3).GrhIndex >= 6994 And .Graphic(3).GrhIndex <= 7002 Then
                             
                             ' Transparencia de Arboles
-                                If Abs(UserPos.X - X) < 2  And (Abs(UserPos.Y - Y)) < 5 And (Abs(UserPos.Y) < Y) Then
+                                If Abs(UserPos.X - X) < 2 And (Abs(UserPos.Y - Y)) < 5 And (Abs(UserPos.Y) < Y) Then
                                 Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, Color_Arbol(), 1)
                             Else 'NORMAL
                                 Call Draw_Grh(.Graphic(3), PixelOffsetXTemp, PixelOffsetYTemp, 1, .Engine_Light(), 1)
@@ -1230,7 +1230,6 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 If (Sgn(.scrollDirectionX) = 1 And .MoveOffsetX >= 0) Or (Sgn(.scrollDirectionX) = -1 And .MoveOffsetX <= 0) Then
                     .MoveOffsetX = 0
                     .scrollDirectionX = 0
-
                 End If
 
             End If
@@ -1278,12 +1277,15 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
             If Not .Heading <> 0 Then .Heading = EAST
             
             .Body.Walk(.Heading).Started = 0
+            .Body.Walk(.Heading).FrameCounter = 0
             
             '//Movimiento del arma y el escudo
             If Not .Movement And Not .attacking Then
                 .Arma.WeaponWalk(.Heading).Started = 0
+                .Arma.WeaponWalk(.Heading).FrameCounter = 0
                 
                 .Escudo.ShieldWalk(.Heading).Started = 0
+                .Escudo.ShieldWalk(.Heading).FrameCounter = 0
 
             End If
             
