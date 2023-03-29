@@ -118,14 +118,14 @@ Public Type GrhData
     NumFrames As Integer
     Frames() As Long
     
-    speed As Single
+    Speed As Single
 End Type
 
 'apunta a una estructura grhdata y mantiene la animacion
 Public Type Grh
     GrhIndex As Long
     FrameCounter As Single
-    speed As Single
+    Speed As Single
     Started As Byte
     Loops As Integer
     angle As Single
@@ -421,7 +421,7 @@ Public Sub InitGrh(ByRef Grh As Grh, ByVal GrhIndex As Long, Optional ByVal Star
     End If
     
     Grh.FrameCounter = 1
-    Grh.speed = GrhData(Grh.GrhIndex).speed
+    Grh.Speed = GrhData(Grh.GrhIndex).Speed
 End Sub
 
 Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
@@ -1219,7 +1219,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 
                 'Start animations
                 'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
-                If .Body.Walk(.Heading).speed > 0 Then .Body.Walk(.Heading).Started = 1
+                If .Body.Walk(.Heading).Speed > 0 Then .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
                 
@@ -1240,7 +1240,7 @@ Private Sub CharRender(ByVal CharIndex As Long, ByVal PixelOffsetX As Integer, B
                 
                 'Start animations
                 'TODO : Este parche es para evita los uncornos exploten al moverse!! REVER!!!
-                If .Body.Walk(.Heading).speed > 0 Then .Body.Walk(.Heading).Started = 1
+                If .Body.Walk(.Heading).Speed > 0 Then .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
                 
@@ -1818,7 +1818,7 @@ Sub Draw_Grh(ByRef Grh As Grh, ByVal X As Integer, ByVal Y As Integer, ByVal Cen
 On Error GoTo Error
     If Animate Then
         If Grh.Started = 1 Then
-            FrameDuration = Grh.speed / GrhData(Grh.GrhIndex).NumFrames
+            FrameDuration = Grh.Speed / GrhData(Grh.GrhIndex).NumFrames
             Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime / FrameDuration) * Movement_Speed
     
             If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
@@ -1833,7 +1833,7 @@ On Error GoTo Error
                 End If
             End If
         ElseIf Grh.FrameCounter > 1 Then
-            FrameDuration = Grh.speed / GrhData(Grh.GrhIndex).NumFrames
+            FrameDuration = Grh.Speed / GrhData(Grh.GrhIndex).NumFrames
             Grh.FrameCounter = Grh.FrameCounter + (timerElapsedTime / FrameDuration) * Movement_Speed
     
             If Grh.FrameCounter > GrhData(Grh.GrhIndex).NumFrames Then
@@ -1904,7 +1904,7 @@ Public Sub GrhUninitialize(Grh As Grh)
         
                 'Set frame counters
                 .FrameCounter = 0
-                .speed = 0
+                .Speed = 0
                 
         End With
 
