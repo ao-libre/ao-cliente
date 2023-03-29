@@ -65,7 +65,7 @@ Public Sub SetAlpha(ByVal IsAlpha As Boolean)
         ' Update the new state of the batch
         '
         If IsAlpha Then
-            Call DirectDevice.SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE)
+            Call DirectDevice.SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA)
             Call DirectDevice.SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE)
         Else
             Call DirectDevice.SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA)
