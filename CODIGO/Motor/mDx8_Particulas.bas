@@ -11,11 +11,11 @@ Option Explicit
 Public Type RGB
     r As Long
     g As Long
-    b As Long
+    B As Long
 End Type
 
 Public Type Stream
-    name As String
+    Name As String
     NumOfParticles As Long
     NumGrhs As Long
     id As Long
@@ -47,7 +47,7 @@ Public Type Stream
     grh_list() As Long
     colortint(0 To 3) As RGB
     
-    speed As Single
+    Speed As Single
     life_counter As Long
 End Type
 
@@ -140,7 +140,7 @@ Private Type Particle_Group
     rgb_list(0 To 3) As Long
     
     'Added by Juan Martin Sotuyo Dodero
-    speed As Single
+    Speed As Single
     life_counter As Long
 End Type
 
@@ -153,7 +153,7 @@ Public StreamData() As Stream
 
 Public Const PI As Single = 3.14159265358979
 
-Private RainParticle as Long
+Private RainParticle As Long
 
 Public Enum eWeather
     Rain
@@ -178,7 +178,7 @@ Public Sub CargarParticulas()
     'fill StreamData array with info from Particles.ini
     For LoopC = 1 To TotalStreams
         With StreamData(LoopC)
-            .name = Leer.GetValue(Val(LoopC), "Name")
+            .Name = Leer.GetValue(Val(LoopC), "Name")
             .NumOfParticles = Leer.GetValue(Val(LoopC), "NumOfParticles")
             .x1 = Leer.GetValue(Val(LoopC), "X1")
             .y1 = Leer.GetValue(Val(LoopC), "Y1")
@@ -206,7 +206,7 @@ Public Sub CargarParticulas()
             .move_y1 = Leer.GetValue(Val(LoopC), "move_y1")
             .move_y2 = Leer.GetValue(Val(LoopC), "move_y2")
             .life_counter = Leer.GetValue(Val(LoopC), "life_counter")
-            .speed = Val(Leer.GetValue(Val(LoopC), "Speed"))
+            .Speed = Val(Leer.GetValue(Val(LoopC), "Speed"))
             
             .NumGrhs = Leer.GetValue(Val(LoopC), "NumGrhs")
             
@@ -223,7 +223,7 @@ Public Sub CargarParticulas()
                 TempSet = Leer.GetValue(Val(LoopC), "ColorSet" & ColorSet)
                 .colortint(ColorSet - 1).r = ReadField(1, TempSet, Asc(","))
                 .colortint(ColorSet - 1).g = ReadField(2, TempSet, Asc(","))
-                .colortint(ColorSet - 1).b = ReadField(3, TempSet, Asc(","))
+                .colortint(ColorSet - 1).B = ReadField(3, TempSet, Asc(","))
             Next ColorSet
 
         End With
@@ -240,12 +240,13 @@ Public Function General_Char_Particle_Create(ByVal ParticulaInd As Long, _
     Dim rgb_list(0 To 3) As Long
 
     With StreamData(ParticulaInd)
-        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).b)
-        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).b)
-        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).b)
-        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).b)
+        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).B)
+        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).B)
+        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).B)
+        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).B)
+        
 
-        General_Char_Particle_Create = Char_Particle_Group_Create(char_index, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
+        General_Char_Particle_Create = Char_Particle_Group_Create(char_index, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
 
     End With
 
@@ -259,12 +260,12 @@ Public Function General_Particle_Create(ByVal ParticulaInd As Long, _
     Dim rgb_list(0 To 3) As Long
 
     With StreamData(ParticulaInd)
-        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).b)
-        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).b)
-        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).b)
-        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).b)
+        rgb_list(0) = RGB(.colortint(0).r, .colortint(0).g, .colortint(0).B)
+        rgb_list(1) = RGB(.colortint(1).r, .colortint(1).g, .colortint(1).B)
+        rgb_list(2) = RGB(.colortint(2).r, .colortint(2).g, .colortint(2).B)
+        rgb_list(3) = RGB(.colortint(3).r, .colortint(3).g, .colortint(3).B)
     
-        General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, rgb_list(), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
+        General_Particle_Create = Particle_Group_Create(X, Y, .grh_list, SetARGB_Alpha(rgb_list(), 180), .NumOfParticles, ParticulaInd, .alphaBlend, IIf(particle_life = 0, .life_counter, particle_life), .Speed, , .x1, .y1, .angle, .vecx1, .vecx2, .vecy1, .vecy2, .life1, .life2, .friction, .spin_speedL, .gravity, .grav_strength, .bounce_strength, .x2, .y2, .XMove, .move_x1, .move_x2, .move_y1, .move_y2, .YMove, .spin_speedH, .spin)
 
     End With
 
@@ -274,7 +275,7 @@ Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, _
                                            ByVal stream_type As Long)
 
     '**************************************************************
-    'Author: Augusto Jos� Rando
+    'Author: Augusto Josï¿½ Rando
     '**************************************************************
     Dim char_part_index As Integer
 
@@ -834,7 +835,7 @@ Private Function Char_Particle_Group_Find(ByVal char_index As Integer, _
                                           ByVal stream_type As Long) As Integer
 
     '*****************************************************************
-    'Author: Augusto Jos� Rando
+    'Author: Augusto Josï¿½ Rando
     'Modified: returns slot or -1
     '*****************************************************************
     On Error Resume Next
@@ -1039,7 +1040,7 @@ Public Sub Engine_Weather_Update()
         ElseIf RainParticle > 0 Then
             Call mDx8_Particulas.Particle_Group_Render(RainParticle, 250, -1)
         End If
-    Else 
+    Else
         'Borramos las particulas de lluvia en caso de que pare la lluvia o nos escondamos en un techo
         Call mDx8_Particulas.RemoveWeatherParticles(eWeather.Rain)
     End If
@@ -1069,7 +1070,7 @@ Public Sub RemoveWeatherParticles(ByVal Weather As Byte)
     Select Case Weather
 
         Case eWeather.Rain
-            Particle_Group_Remove(RainParticle)
+            Particle_Group_Remove (RainParticle)
             RainParticle = 0
 
     End Select
