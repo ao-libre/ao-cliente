@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
-Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "MSINET.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{48E59290-9880-11CF-9754-00AA00C00908}#1.0#0"; "msinet.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -37,6 +37,18 @@ Begin VB.Form frmMain
    ScaleWidth      =   1022
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.PictureBox cWatchingMouse 
+      BackColor       =   &H000000FF&
+      BorderStyle     =   0  'None
+      Height          =   255
+      Left            =   11040
+      ScaleHeight     =   255
+      ScaleWidth      =   255
+      TabIndex        =   49
+      Top             =   2640
+      Visible         =   0   'False
+      Width           =   255
+   End
    Begin AOLibre.uAOProgress uAOProgressDownloadFfmpeg 
       Height          =   255
       Left            =   2160
@@ -295,36 +307,6 @@ Begin VB.Form frmMain
       Top             =   2550
       Visible         =   0   'False
       Width           =   2685
-   End
-   Begin VB.PictureBox MainViewPic 
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      Height          =   9120
-      Left            =   180
-      MousePointer    =   99  'Custom
-      ScaleHeight     =   608
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   736
-      TabIndex        =   30
-      Top             =   2325
-      Width           =   11040
-      Begin InetCtlsObjects.Inet InetDownloadFfmpeg 
-         Left            =   120
-         Top             =   1560
-         _ExtentX        =   1005
-         _ExtentY        =   1005
-         _Version        =   393216
-      End
-      Begin VB.Timer tmrCounters 
-         Left            =   5760
-         Top             =   840
-      End
-      Begin VB.Timer trainingMacro 
-         Enabled         =   0   'False
-         Interval        =   3200
-         Left            =   10200
-         Top             =   600
-      End
    End
    Begin AOLibre.uAOButton btnMapa 
       Height          =   255
@@ -690,10 +672,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":76819
-      PICF            =   "frmMain.frx":76835
-      PICH            =   "frmMain.frx":76851
-      PICV            =   "frmMain.frx":7686D
+      PICE            =   "frmMain.frx":76818
+      PICF            =   "frmMain.frx":76834
+      PICH            =   "frmMain.frx":76850
+      PICV            =   "frmMain.frx":7686C
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -716,10 +698,10 @@ Begin VB.Form frmMain
       ENAB            =   -1  'True
       FCOL            =   7314354
       OCOL            =   16777215
-      PICE            =   "frmMain.frx":76889
-      PICF            =   "frmMain.frx":768A5
-      PICH            =   "frmMain.frx":768C1
-      PICV            =   "frmMain.frx":768DD
+      PICE            =   "frmMain.frx":76888
+      PICF            =   "frmMain.frx":768A4
+      PICH            =   "frmMain.frx":768C0
+      PICV            =   "frmMain.frx":768DC
       BeginProperty FONT {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -729,6 +711,36 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+   End
+   Begin VB.PictureBox MainViewPic 
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      Height          =   9120
+      Left            =   180
+      MousePointer    =   99  'Custom
+      ScaleHeight     =   608
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   736
+      TabIndex        =   30
+      Top             =   2280
+      Width           =   11040
+      Begin InetCtlsObjects.Inet InetDownloadFfmpeg 
+         Left            =   120
+         Top             =   1560
+         _ExtentX        =   1005
+         _ExtentY        =   1005
+         _Version        =   393216
+      End
+      Begin VB.Timer tmrCounters 
+         Left            =   5760
+         Top             =   840
+      End
+      Begin VB.Timer trainingMacro 
+         Enabled         =   0   'False
+         Interval        =   3200
+         Left            =   10200
+         Top             =   600
+      End
    End
    Begin VB.Label lblPorcLvl 
       AutoSize        =   -1  'True
@@ -810,9 +822,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   0
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":768F9
+      MouseIcon       =   "frmMain.frx":768F8
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":76A4B
+      Picture         =   "frmMain.frx":76A4A
       Top             =   3960
       Visible         =   0   'False
       Width           =   225
@@ -821,9 +833,9 @@ Begin VB.Form frmMain
       Height          =   240
       Index           =   1
       Left            =   14790
-      MouseIcon       =   "frmMain.frx":76D8F
+      MouseIcon       =   "frmMain.frx":76D8E
       MousePointer    =   99  'Custom
-      Picture         =   "frmMain.frx":76EE1
+      Picture         =   "frmMain.frx":76EE0
       Top             =   3705
       Visible         =   0   'False
       Width           =   225
@@ -1316,6 +1328,14 @@ Private Sub DownloadFfmpeg()
 
         Exit Sub
     End If
+End Sub
+
+Private Sub Form_GotFocus()
+    If Not IsOnFocus Then IsOnFocus = True
+End Sub
+
+Private Sub Form_LostFocus()
+    If IsOnFocus Then IsOnFocus = False
 End Sub
 
 Private Sub InetDownloadFfmpeg_StateChanged(ByVal State As Integer)
@@ -3028,7 +3048,9 @@ Private Sub Client_Connect()
     'Clean input and output buffers
     Call incomingData.ReadASCIIStringFixed(incomingData.Length)
     Call outgoingData.ReadASCIIStringFixed(outgoingData.Length)
+    #If AntiExternos Then
     Security.Redundance = 13
+    #End If
     Second.Enabled = True
     
     Select Case EstadoLogin
@@ -3174,7 +3196,7 @@ Public Sub ActualizarMiniMapa()
     'Integrado por Reyarb
     'Se agrego campo de vision del render (Recox)
     'Ajustadas las coordenadas para centrarlo (WyroX)
-    'Ajuste de coordenadas y tamaño del visor (ReyarB)
+    'Ajuste de coordenadas y tamaÃ±o del visor (ReyarB)
     '***************************************************
     Me.UserM.Left = UserPos.X - 2
     Me.UserM.Top = UserPos.Y - 2
@@ -3285,3 +3307,5 @@ End Sub
 Private Sub btnRetos_Click()
     Call FrmRetos.Show(vbModeless, frmMain)
 End Sub
+
+

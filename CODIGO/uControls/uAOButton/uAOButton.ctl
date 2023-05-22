@@ -268,7 +268,7 @@ On Error Resume Next
     
     RaiseEvent MouseMove(Button, Shift, X, Y)
     If lastButton < 2 And IsEnabled Then
-        lastHwnd = bButton.hWnd
+        lastHwnd = bButton.hwnd
         If Not isMouseOver Then
             Call Redraw(0)
             'Debug.Print "bButton_MouseMove0"

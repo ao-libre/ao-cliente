@@ -31,22 +31,22 @@ Public Enum eNumber_Types
     ent_Trigger
 End Enum
 
-Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
+Public Sub AuxWriteWhisper(ByVal username As String, ByVal Mensaje As String)
 '***************************************************
 'Author: Unknown
 'Last Modification: 03/12/2010
 '03/12/2010: Enanoh - Ahora se envia el nick en vez del index del usuario.
 '***************************************************
-    If LenB(UserName) = 0 Then Exit Sub
+    If LenB(username) = 0 Then Exit Sub
     
     
-    If (InStrB(UserName, "+") <> 0) Then
-        UserName = Replace$(UserName, "+", " ")
+    If (InStrB(username, "+") <> 0) Then
+        username = Replace$(username, "+", " ")
     End If
     
-    UserName = UCase$(UserName)
+    username = UCase$(username)
     
-    Call WriteWhisper(UserName, Mensaje)
+    Call WriteWhisper(username, Mensaje)
     
 End Sub
 
@@ -119,7 +119,28 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
     If Left$(Comando, 1) = "/" Then
         ' Comando normal
         
+        If ImWatching Then
+            If Comando = "/VER" Then
+                Call WriteWatchPlayer(False, "")
+                
+                Exit Sub
+            End If
+        End If
+        
         Select Case Comando
+            Case "/VER"
+                If Not WatchingMe Then
+                    If notNullArguments Then
+                        Call WriteWatchPlayer(True, ArgumentosRaw)
+                    Else
+                        'Avisar que falta el parametro
+                        Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_FALTAN_PARAMETROS").item("TEXTO") & " /VER NICKNAME.")
+                    End If
+                End If
+            Case "/NOVER"
+                If ImWatching Then
+                    Call WriteWatchPlayer(False, "")
+                End If
             Case "/ONLINE"
                 Call WriteOnline
                 
@@ -1764,7 +1785,7 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
             Case "/VERPROCESOS"
                 If notNullArguments Then
-                    Call writeLookProcess(ArgumentosRaw)
+                    Call WriteLookProcess(ArgumentosRaw)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg(JsonLanguage.item("MENSAJE_FALTAN_PARAMETROS").item("TEXTO") & " /VERPROCESOS NICKNAME.")

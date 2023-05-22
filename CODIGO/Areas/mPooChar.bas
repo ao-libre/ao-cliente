@@ -172,22 +172,15 @@ Public Sub Char_UserPos()
     '// Actualizamo el lbl de la posicion del usuario
  
     Dim X As Byte
-
     Dim Y As Byte
-     
+    
     If Char_Check(UserCharIndex) Then
+        ' Damos valor a las variables asi sacamos la pos del usuario.
         
-        '// Damos valor a las variables asi sacamos la pos del usuario.
         Call Char_MapPosGet(UserCharIndex, X, Y)
-                
         bTecho = Char_Techo '// Pos : Techo :P
-               
         frmMain.Coord.Caption = "Map:" & UserMap & " X:" & X & " Y:" & Y
-
         Call frmMain.ActualizarMiniMapa
- 
-        Exit Sub
- 
     End If
 
 End Sub

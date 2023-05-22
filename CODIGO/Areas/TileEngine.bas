@@ -59,6 +59,10 @@ Public Const YMinMapSize As Byte = 1
 
 Private Const GrhFogata As Long = 1521
 
+Private Const TIME_MS_MOUSE As Byte = 10
+Private MouseLastUpdate As Long
+Private MouseTimeAcumulated As Long
+
 ''
 'Sets a Grh animation to loop indefinitely.
 Private Const INFINITE_LOOPS As Integer = -1
@@ -230,7 +234,7 @@ End Type
 'Info de cada mapa
 Public Type mapInfo
     Music As String
-    Name As String
+    name As String
     Zona As String
     StartPos As WorldPos
     MapVersion As Integer
@@ -1086,7 +1090,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         Call DesvanecimientoTechos
         Call DesvanecimientoMsg
         
-        If UserMoving Then
+        If UserMoving = 1 Then
         
             '****** Move screen Left and Right if needed ******
             If AddtoUserPos.X <> 0 Then
@@ -1095,7 +1099,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
                     OffsetCounterX = 0
                     AddtoUserPos.X = 0
-                    UserMoving = False
+                    UserMoving = 0
 
                 End If
                 
@@ -1108,7 +1112,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
                     OffsetCounterY = 0
                     AddtoUserPos.Y = 0
-                    UserMoving = False
+                    UserMoving = 0
                     
                 End If
 
@@ -1150,6 +1154,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         ' Calculamos los FPS y los mostramos
         Call Engine_Update_FPS
+        
+        MouseTimeAcumulated = MouseTimeAcumulated + timerElapsedTime
+        If MouseLastUpdate + TIME_MS_MOUSE <= MouseTimeAcumulated Then
+            Call SendPositionMouse
+            MouseLastUpdate = MouseTimeAcumulated
+        End If
 
         'Get timing info
         timerElapsedTime = GetElapsedTime()
@@ -1521,18 +1531,18 @@ Private Sub RenderSombras(ByVal CharIndex As Integer, ByVal PixelOffsetX As Inte
         
         If (.iHead > 0) And (.iBody = 617 Or .iBody = 612 Or .iBody = 614 Or .iBody = 616) Then
         
-            'Si está montando se dibuja de esta manera
+            'Si estÃ¡ montando se dibuja de esta manera
             Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 8, PixelOffsetY - 14, 1, Color_Shadow(), 0, False, 187, 1, 1.2) ' Shadow Body
             Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y - 13, 1, Color_Shadow(), 0, False, 187, 1, 1.2) ' Shadow Head
             Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 15, PixelOffsetY + .Body.HeadOffset.Y - 49, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Helmet
         
-        'Si está navegando se dibuja de esta manera
+        'Si estÃ¡ navegando se dibuja de esta manera
         ElseIf ((.iHead = 0) And (HayAgua(.Pos.X, .Pos.Y + 1) Or HayAgua(.Pos.X + 1, .Pos.Y) Or HayAgua(.Pos.X, .Pos.Y - 1) Or HayAgua(.Pos.X - 1, .Pos.Y))) Then
             Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 5, PixelOffsetY - 26, 1, Color_Shadow(), 0, False, 186, 1, 1.33) ' Shadow Body
         
         Else
         
-            'Si NO está montando ni navegando se dibuja de esta manera
+            'Si NO estÃ¡ montando ni navegando se dibuja de esta manera
             Call Draw_Grh(.Body.Walk(.Heading), PixelOffsetX + 8, PixelOffsetY - 11, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Body
             Call Draw_Grh(.Head.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 12, PixelOffsetY + .Body.HeadOffset.Y - 10, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Head
             Call Draw_Grh(.Casco.Head(.Heading), PixelOffsetX + .Body.HeadOffset.X + 18, PixelOffsetY + .Body.HeadOffset.Y - 45, 1, Color_Shadow(), 0, False, 195, 1, 1.2) ' Shadow Helmet
@@ -1644,13 +1654,13 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
                             
                 ElseIf .iBody = 604 Or .iBody = 617 Or .iBody = 612 Or .iBody = 614 Or .iBody = 616 Then 'Define Body Montado
                     
-                    'Si además de estar montado está mirando para arriba o abajo
+                    'Si ademÃ¡s de estar montado estÃ¡ mirando para arriba o abajo
                     If .Heading = E_Heading.SOUTH Or .Heading = E_Heading.NORTH Then
                         Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 80, 1, ColorFinal(), 1, False, 360)
                         Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 76, 1, ColorFinal(), 0, False, 360)
                         Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 116, 1, ColorFinal(), 0, False, 360)
                     
-                    Else 'Si está mirando para izquierda o derecha entonces:
+                    Else 'Si estÃ¡ mirando para izquierda o derecha entonces:
                         Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 70, 1, ColorFinal(), 1, False, 360)
                         Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 76, 1, ColorFinal(), 0, False, 360)
                         Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 116, 1, ColorFinal(), 0, False, 360)
@@ -1659,7 +1669,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffsetX As Int
                 
                 Else
                             
-                    'Reflejo completo si no está ni montado ni navegando
+                    'Reflejo completo si no estÃ¡ ni montado ni navegando
                     Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffsetX, PixelOffsetY + 44, 1, ColorFinal(), 1, False, 360)
                     Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X, PixelOffsetY + 51, 1, ColorFinal(), 1, False, 360)
                     Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffsetX + .Body.HeadOffset.X - 1, PixelOffsetY + .Body.HeadOffset.Y + 55, 1, ColorFinal(), 1, False, 360)
