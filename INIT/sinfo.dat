@@ -1,5 +1,5 @@
 [INIT]
-Cant=3
+Cant=4
 
 [S1]
 Desc=Server Minehost - Alkon 0.13.X
@@ -19,3 +19,8 @@ IP=localhost
 PJ=7666
 Mundo=Alkon
 
+[S4]
+Desc=EternalDragons AO | Modo:Alkon 0.13.X
+IP=160.20.247.150
+PJ=24582
+Mundo=Alkon
