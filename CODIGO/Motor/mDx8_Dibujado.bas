@@ -8,7 +8,7 @@ Private Const DAMAGE_FONT_S As Byte = 12
  
 Private Enum EDType
      edPunal = 1    'Apunalo.
-     edNormal = 2   'Hechizo o golpe com�n.
+     edNormal = 2   'Hechizo o golpe comï¿½n.
      edCritico = 3  'Golpe Critico
      edFallo = 4    'Fallo el ataque
      edCurar = 5    'Curacion a usuario
@@ -18,7 +18,7 @@ End Enum
 Private DNormalFont    As New StdFont
  
 Type DList
-     DamageVal      As Integer      'Cantidad de da�o.
+     DamageVal      As Integer      'Cantidad de daï¿½o.
      ColorRGB       As Long         'Color.
      DamageType     As EDType       'Tipo, se usa para saber si es apu o no.
      DamageFont     As New StdFont  'Efecto del apu.
@@ -46,7 +46,7 @@ Sub DrawGrhtoHdc(ByRef Pic As PictureBox, _
         
     Call Draw_GrhIndex(GrhIndex, 0, 0, 0, Normal_RGBList())
         
-    Call Engine_EndScene(DestRect, Pic.hWnd)
+    Call Engine_EndScene(DestRect, Pic.hwnd)
     
     Call DrawBuffer.LoadPictureBlt(Pic.hdc)
 
@@ -68,10 +68,29 @@ Public Sub CleanDrawBuffer()
     Set DrawBuffer = Nothing
 End Sub
 
+Public Sub CleanPJs()
+    
+    Dim LoopC As Long
+        
+    For LoopC = 1 To MAX_CHARACTERS
+    
+        frmPanelAccount.lblAccData(LoopC - 1).Caption = vbNullString
+        frmPanelAccount.picChar(LoopC - 1).AutoRedraw = True
+        frmPanelAccount.picChar(LoopC - 1).Refresh
+        frmPanelAccount.picChar(LoopC - 1).AutoRedraw = False
+        frmPanelAccount.picChar(LoopC - 1).Visible = False
+        
+    Next
+    DoEvents
+    
+End Sub
+
 Public Sub DrawPJ(ByVal Index As Byte)
 
     If LenB(cPJ(Index).Nombre) = 0 Then Exit Sub
     DoEvents
+    
+    frmPanelAccount.picChar(Index - 1).Visible = True
     
     Dim cColor       As Long
     Dim Head_OffSet  As Integer
@@ -128,7 +147,7 @@ Public Sub DrawPJ(ByVal Index As Byte)
     
     End With
 
-    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hWnd)
+    Call Engine_EndScene(RE, frmPanelAccount.picChar(Index - 1).hwnd)
 
     Call DrawBuffer.LoadPictureBlt(frmPanelAccount.picChar(Index - 1).hdc)
 
@@ -147,7 +166,7 @@ Sub Damage_Initialize()
         .Size = 20
         .italic = False
         .bold = False
-        .Name = "Tahoma"
+        .name = "Tahoma"
     End With
 
 End Sub
@@ -175,7 +194,7 @@ Sub Damage_Create(ByVal X As Byte, _
 
                 With .DamageFont
                     .Size = Val(DAMAGE_FONT_S)
-                    .Name = "Tahoma"
+                    .name = "Tahoma"
                     .bold = False
                     Exit Sub
 

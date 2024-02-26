@@ -38,6 +38,7 @@ Public TiempoInvi As Long
 Public TiempoDopas As Long
 
 Public Const MAX_AMIGOS As Byte = 50
+Public Const MAX_CHARACTERS As Byte = 10
 Public amigos(1 To MAX_AMIGOS) As String
 
 Public Typing As Boolean
@@ -599,7 +600,7 @@ End Enum
 
 'Inventario
 Type Inventory
-    OBJIndex As Integer
+    ObjIndex As Integer
     name As String
     GrhIndex As Long
     Amount As Long
@@ -614,7 +615,7 @@ Type Inventory
 End Type
 
 Type NpCinV
-    OBJIndex As Integer
+    ObjIndex As Integer
     name As String
     GrhIndex As Long
     Amount As Integer
@@ -656,7 +657,7 @@ End Type
 
 Type tItemsConstruibles
     name As String
-    OBJIndex As Integer
+    ObjIndex As Integer
     GrhIndex As Long
     LinH As Integer
     LinP As Integer
@@ -670,14 +671,14 @@ End Type
 
 Type tItemCrafteo
     name As String
-    OBJIndex As Integer
+    ObjIndex As Integer
     GrhIndex As Long
     Amount As Integer
 End Type
 
 Type tItemArtesano
     name As String
-    OBJIndex As Integer
+    ObjIndex As Integer
     GrhIndex As Long
     
     ItemsCrafteo() As tItemCrafteo
@@ -889,8 +890,6 @@ Public Const GLC_HCURSOR = (-12)
 Public hSwapCursor As Long
 Public Declare Function LoadCursorFromFile Lib "user32" Alias "LoadCursorFromFileA" (ByVal lpFileName As String) As Long
 '******End Mouse Cursor****
-
-Public Declare Function GetTickCount Lib "kernel32" () As Long
 
 'para escribir y leer variables
 Public Declare Function writeprivateprofilestring Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpString As String, ByVal lpFileName As String) As Long

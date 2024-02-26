@@ -533,7 +533,7 @@ End Sub
 
 Public Sub DrawDragAndDrop()
 
-    If ((DragItem <> 0 And Drag = 1) And (timeGetTime - InventoryTickCount > 40)) Then
+    If ((DragItem <> 0 And Drag = 1) And (GetTickCount() - InventoryTickCount > 40)) Then
 
         Call Inventario.DrawInventory
 

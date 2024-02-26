@@ -5,8 +5,6 @@ Attribute VB_Name = "mDx8_Engine"
 
 Option Explicit
 
-Public Declare Function timeGetTime Lib "winmm.dll" () As Long
-
 ' No matter what you do with DirectX8, you will need to start with
 ' the DirectX8 object. You will need to create a new instance of
 ' the object, using the New keyword, rather than just getting a
@@ -121,12 +119,12 @@ Public Sub Engine_DirectX8_Init()
     
     'Sprite batching.
     Set SpriteBatch = New clsBatch
-    Call SpriteBatch.Initialise(2000)
+    Call SpriteBatch.Initialise(500)
     
     'Inicializamos el resto de sistemas.
     Call Engine_DirectX8_Aditional_Init
     
-    EndTime = timeGetTime
+    EndTime = GetTickCount()
     
     Exit Sub
 EngineHandler:
@@ -285,7 +283,7 @@ Public Sub Engine_DirectX8_Aditional_Init()
         ' Seteamos algunos colores por adelantado y unica vez.
         Call Engine_Long_To_RGB_List(Normal_RGBList(), -1)
         Call Engine_Long_To_RGB_List(Color_Shadow(), D3DColorARGB(50, 0, 0, 0))
-        Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(100, 100, 100, 100))
+        Call Engine_Long_To_RGB_List(Color_Arbol(), D3DColorARGB(190, 100, 100, 100))
         Color_Paralisis = D3DColorARGB(180, 230, 230, 250)
         Color_Invisibilidad = D3DColorARGB(180, 236, 136, 66)
         Color_Montura = D3DColorARGB(180, 15, 230, 40)
@@ -363,10 +361,10 @@ Public Sub Engine_Update_FPS()
     '    Wend
     'End If
 
-    If FPSLastCheck + 1000 < timeGetTime Then
+    If FPSLastCheck + 1000 < GetTickCount() Then
         FPS = FramesPerSecCounter
         FramesPerSecCounter = 1
-        FPSLastCheck = timeGetTime
+        FPSLastCheck = GetTickCount()
     
     Else
         FramesPerSecCounter = FramesPerSecCounter + 1
@@ -384,7 +382,7 @@ Public Function Engine_ElapsedTime() As Long
     Dim Start_Time As Long
 
     'Get current time
-    Start_Time = timeGetTime
+    Start_Time = GetTickCount()
 
     'Calculate elapsed time
     Engine_ElapsedTime = Start_Time - EndTime

@@ -21,6 +21,11 @@ Attribute VB_Name = "Application"
 Option Explicit
 
 ''
+' Retrieves the amount of ticks since the computer started running.
+'
+Private Declare Function timeGetTime Lib "winmm.dll" () As Long
+
+''
 ' Retrieves the active window's hWnd for this app.
 '
 ' @return Retrieves the active window's hWnd for this app. If this app is not in the foreground it returns 0.
@@ -172,3 +177,12 @@ Public Sub LogError(ByVal Numero As Long, ByVal Descripcion As String, ByVal Com
                             False, False, True)
 
 End Sub
+
+Public Function GetTickCount() As Long
+    
+    ' Funcion wrapper de timeGetTime que remueve el signo negativo al valor de retorno de la API timeGetTime
+    
+    GetTickCount = timeGetTime And &H7FFFFFFF
+        
+End Function
+

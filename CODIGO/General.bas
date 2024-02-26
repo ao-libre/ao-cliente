@@ -739,10 +739,10 @@ Sub Main()
             lFrameTimer = GetTickCount
         End If
         
-        If timeGetTime >= lastFlush Then
+        If GetTickCount() >= lastFlush Then
             ' If there is anything to be sent, we send it
             Call FlushBuffer
-            lastFlush = timeGetTime + 10
+            lastFlush = GetTickCount() + 10
         End If
         
         DoEvents
@@ -1386,7 +1386,6 @@ Public Sub ResetAllInfo(Optional ByVal UnloadForms As Boolean = True)
     Traveling = False
     UserNavegando = False
     UserEvento = False
-    bFogata = False
     bRain = False
     bFogata = False
     Comerciando = False

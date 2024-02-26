@@ -108,7 +108,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
     ' Obtenemos los parametros actuales de la resolucion
     Dim lRes As Long: lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
     
-    If ClientSetup.bNoRes Then Exit Sub
+    'If ClientSetup.bNoRes Then Exit Sub
     
     ' Obtenemos la resolucion original.
     oldResWidth = Screen.Width \ Screen.TwipsPerPixelX
@@ -118,7 +118,8 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
     If oldResWidth <> newWidth Or oldResHeight <> newHeight Then
 
         ' Si no es igual, pregunto si quiere cambiarla.
-        If MsgBox(JsonLanguage.item("PANTALLA_COMPLETA").item("TEXTO"), vbYesNo, "Argentum Online Libre") = vbYes Then
+        ' MsgBox(JsonLanguage.item("PANTALLA_COMPLETA").item("TEXTO"), vbYesNo, "Argentum Online Libre") = vbYes
+        If ClientSetup.bFullScreen Then
                         
             ' Establezco los parametros para realizar el cambio
             With MiDevM

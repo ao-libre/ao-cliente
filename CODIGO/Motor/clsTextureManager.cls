@@ -135,7 +135,6 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
     On Error GoTo errhandler
 
     Dim surface_desc As D3DSURFACE_DESC
-    Dim texture_info As D3DXIMAGE_INFO
     Dim Index        As Integer
     Dim Buffer()     As Byte
     
@@ -160,7 +159,7 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                 
                 'Seteamos la textura.
                 Set .Texture = DirectD3D.CreateTextureFromFileInMemoryEx(DirectDevice, Buffer(0), UBound(Buffer()) + 1, D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
-                                                                         D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
+                                                                         D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
                 Erase Buffer
                 
             #Else
@@ -170,11 +169,11 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
                 
                 If FileExist(Graphic & ".bmp", vbNormal) Then
                     Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".bmp", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
-                                                                     D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
+                                                                     D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
                 
                 ElseIf FileExist(Graphic & ".png", vbNormal) Then
                     Set .Texture = DirectD3D.CreateTextureFromFileEx(DirectDevice, Graphic & ".png", D3DX_DEFAULT, D3DX_DEFAULT, 0, 0, D3DFMT_A8R8G8B8, _
-                                                                     D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, texture_info, ByVal 0)
+                                                                     D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
                 
                 Else
                     Call MsgBox("No se ha podido cargar el grafico con indice: " & Graphic)
@@ -186,8 +185,8 @@ Private Function CrearGrafico(ByVal Archivo As Integer, _
  
             Call .Texture.GetLevelDesc(0, surface_desc)
             
-            .texture_width = texture_info.Width
-            .texture_height = texture_info.Height
+            .texture_width = surface_desc.Width
+            .texture_height = surface_desc.Height
             .Size = surface_desc.Size
             
             TextureWidth = .texture_width

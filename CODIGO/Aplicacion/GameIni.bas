@@ -38,7 +38,7 @@ Public Type tSetupMods
     UsarSombras     As Boolean
     ParticleEngine  As Boolean
     LimiteFPS       As Boolean
-    bNoRes          As Boolean
+    bFullScreen     As Boolean
     OverrideVertexProcess As Byte
     
     ' AUDIO
@@ -157,7 +157,7 @@ Public Sub LeerConfiguracion()
     
         ' VIDEO
         .byMemory = Lector.GetValue("VIDEO", "DynamicMemory")
-        .bNoRes = CBool(Lector.GetValue("VIDEO", "DisableResolutionChange"))
+        .bFullScreen = CBool(Lector.GetValue("VIDEO", "FullScreen"))
         .ProyectileEngine = CBool(Lector.GetValue("VIDEO", "ProjectileEngine"))
         .PartyMembers = CBool(Lector.GetValue("VIDEO", "PartyMembers"))
         .TonalidadPJ = CBool(Lector.GetValue("VIDEO", "TonalidadPJ"))
@@ -190,7 +190,7 @@ Public Sub LeerConfiguracion()
         .KeyboardBindKeysConfig = Lector.GetValue("OTHER", "BIND_KEYS")
 
         Debug.Print "byMemory: " & .byMemory
-        Debug.Print "bNoRes: " & .bNoRes
+        Debug.Print "bFullScreen: " & .bFullScreen
         Debug.Print "ProyectileEngine: " & .ProyectileEngine
         Debug.Print "PartyMembers: " & .PartyMembers
         Debug.Print "TonalidadPJ: " & .TonalidadPJ
@@ -236,7 +236,7 @@ Public Sub GuardarConfiguracion()
         
         ' VIDEO
         Call Lector.ChangeValue("VIDEO", "DynamicMemory", .byMemory)
-        Call Lector.ChangeValue("VIDEO", "DisableResolutionChange", IIf(.bNoRes, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "FullScreen", IIf(.bFullScreen, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "ProjectileEngine", IIf(.ProyectileEngine, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "PartyMembers", IIf(.PartyMembers, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "TonalidadPJ", IIf(.TonalidadPJ, "True", "False"))
