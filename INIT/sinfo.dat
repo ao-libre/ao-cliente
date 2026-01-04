@@ -1,5 +1,5 @@
 [INIT]
-Cant=5
+Cant=6
 
 [S1]
 Desc=Server Minehost - Alkon 0.13.X
@@ -28,5 +28,11 @@ Mundo=Alkon
 [S5]
 Desc=Servidor AOGolang | Modo:Alkon 0.13.X
 IP=45.235.98.205
+PJ=7666
+Mundo=Alkon
+
+[S6]
+Desc=Servidor DokeAO | Modo:Alkon 0.13.X
+IP=44.214.16.192
 PJ=7666
 Mundo=Alkon
