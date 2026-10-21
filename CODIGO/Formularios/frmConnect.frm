@@ -1009,3 +1009,8 @@ Error:
     Call MsgBox(JsonLanguage.item("ERROR_DESCARGA_SERVIDORES_INET").item("TEXTO") & " " & Err.Description, vbCritical + vbOKOnly, "Argentum Online Libre " & Err.number)
     Exit Sub
 End Sub
+
+' aobench: launch observer mode form
+Private Sub cmdObserver_Click()
+    frmObserver.Show
+End Sub

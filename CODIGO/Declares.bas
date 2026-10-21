@@ -1053,6 +1053,7 @@ Public UserEquitandoSegundosRestantes As Long
 
 Public QuantityServers As Integer
 Public IpApiEnabled As Boolean
+Public ObserveMode As Boolean  ' aobench: true when in observer mode
 
 #If AntiExternos Then
 Public Security As New clsSecurity
