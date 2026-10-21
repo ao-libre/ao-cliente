@@ -1073,6 +1073,16 @@ Public Sub LeerLineaComandos()
         Select Case UCase$(T(i))
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
+            Case "/BOT"
+                ' aobench: /bot email password charname
+                ' Requires 3 additional arguments after the flag
+                If i + 3 <= Upper_t Then
+                    BotAutoLogin   = True
+                    BotEmail       = T(i + 1)
+                    BotPassword_CL = T(i + 2)
+                    BotCharName    = T(i + 3)
+                    i = i + 3  ' skip the consumed args
+                End If
         End Select
     Next i
 

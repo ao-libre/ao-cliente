@@ -698,6 +698,15 @@ Private Sub Form_Activate()
 
     'Hacemos click en el primer server para poder obtener su info y setear mundoseleccionado
     Call lstServers_Click
+    ' aobench: auto-login when launched with /bot flag
+    If BotAutoLogin Then
+        AccountName = BotEmail
+        AccountPassword = BotPassword_CL
+        txtNombre.Text = AccountName
+        txtPasswd.Text = AccountPassword
+        Call btnConectarse_Click
+    End If
+
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)

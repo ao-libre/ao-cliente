@@ -198,6 +198,13 @@ Public UserEstupido As Boolean
 
 Public NoRes As Boolean 'no cambiar la resolucion
 
+' aobench: bot auto-login via command line args
+' Usage: Argentum.exe /bot email@host.com password CharName
+Public BotAutoLogin    As Boolean  ' True when /bot flag present
+Public BotEmail        As String   ' Account email/name
+Public BotPassword_CL  As String   ' Account password (command-line)
+Public BotCharName     As String   ' Character name to auto-select
+
 Public RainBufferIndex As Long
 Public FogataBufferIndex As Long
 
